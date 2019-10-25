@@ -1,13 +1,14 @@
 package com.dubinostech.rideshareapp.data
 
-import com.dubinostech.rideshareapp.data.model.LoggedInUser
+import com.dubinostech.rideshareapp.model.loginModel.LoggedInUser
+import com.dubinostech.rideshareapp.presenter.LoginPresenter
 
 /**
  * Class that requests authentication and user information from the remote data source and
  * maintains an in-memory cache of login status and user credentials information.
  */
 
-class LoginRepository(val dataSource: LoginDataSource) {
+class LoginRepository(val presenter: LoginPresenter) {
 
     // in-memory cache of the loggedInUser object
     var user: LoggedInUser? = null
@@ -24,12 +25,12 @@ class LoginRepository(val dataSource: LoginDataSource) {
 
     fun logout() {
         user = null
-        dataSource.logout()
+        presenter.logout()
     }
 
     fun login(username: String, password: String): Result<LoggedInUser> {
         // handle login
-        val result = dataSource.login(username, password)
+        val result = presenter.login(username, password)
 
         if (result is Result.Success) {
             setLoggedInUser(result.data)

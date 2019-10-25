@@ -16,6 +16,7 @@ import android.widget.ProgressBar
 import android.widget.Toast
 
 import com.dubinostech.rideshareapp.R
+import com.dubinostech.rideshareapp.model.loginModel.LoginViewModel
 
 class LoginActivity : AppCompatActivity() {
 

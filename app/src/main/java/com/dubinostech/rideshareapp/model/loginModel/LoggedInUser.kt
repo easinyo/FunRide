@@ -1,4 +1,4 @@
-package com.dubinostech.rideshareapp.data.model
+package com.dubinostech.rideshareapp.model.loginModel
 
 /**
  * Data class that captures user information for logged in users retrieved from LoginRepository

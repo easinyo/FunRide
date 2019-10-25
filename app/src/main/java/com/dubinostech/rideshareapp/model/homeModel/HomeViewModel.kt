@@ -1,4 +1,4 @@
-package com.dubinostech.rideshareapp.ui.home
+package com.dubinostech.rideshareapp.model.homeModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

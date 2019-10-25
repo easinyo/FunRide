@@ -1,4 +1,4 @@
-package com.dubinostech.rideshareapp.ui.login
+package com.dubinostech.rideshareapp.model.loginModel
 
 /**
  * Data validation state of the login form.

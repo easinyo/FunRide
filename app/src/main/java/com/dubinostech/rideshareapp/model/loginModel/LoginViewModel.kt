@@ -1,4 +1,4 @@
-package com.dubinostech.rideshareapp.ui.login
+package com.dubinostech.rideshareapp.model.loginModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,6 +8,7 @@ import com.dubinostech.rideshareapp.data.LoginRepository
 import com.dubinostech.rideshareapp.data.Result
 
 import com.dubinostech.rideshareapp.R
+import com.dubinostech.rideshareapp.ui.login.LoggedInUserView
 
 class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
 
@@ -23,19 +24,27 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
 
         if (result is Result.Success) {
             _loginResult.value =
-                LoginResult(success = LoggedInUserView(displayName = result.data.displayName))
+                LoginResult(
+                    success = LoggedInUserView(
+                        displayName = result.data.displayName
+                    )
+                )
         } else {
-            _loginResult.value = LoginResult(error = R.string.login_failed)
+            _loginResult.value =
+                LoginResult(error = R.string.login_failed)
         }
     }
 
     fun loginDataChanged(username: String, password: String) {
         if (!isUserNameValid(username)) {
-            _loginForm.value = LoginFormState(usernameError = R.string.invalid_username)
+            _loginForm.value =
+                LoginFormState(usernameError = R.string.invalid_username)
         } else if (!isPasswordValid(password)) {
-            _loginForm.value = LoginFormState(passwordError = R.string.invalid_password)
+            _loginForm.value =
+                LoginFormState(passwordError = R.string.invalid_password)
         } else {
-            _loginForm.value = LoginFormState(isDataValid = true)
+            _loginForm.value =
+                LoginFormState(isDataValid = true)
         }
     }
 

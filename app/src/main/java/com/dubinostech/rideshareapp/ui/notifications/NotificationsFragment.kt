@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.dubinostech.rideshareapp.R
+import com.dubinostech.rideshareapp.model.notificationsModel.NotificationsViewModel
 
 class NotificationsFragment : Fragment() {
 

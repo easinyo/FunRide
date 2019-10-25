@@ -2,8 +2,9 @@ package com.dubinostech.rideshareapp.ui.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.dubinostech.rideshareapp.data.LoginDataSource
+import com.dubinostech.rideshareapp.presenter.LoginPresenter
 import com.dubinostech.rideshareapp.data.LoginRepository
+import com.dubinostech.rideshareapp.model.loginModel.LoginViewModel
 
 /**
  * ViewModel provider factory to instantiate LoginViewModel.
@@ -16,7 +17,7 @@ class LoginViewModelFactory : ViewModelProvider.Factory {
         if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
             return LoginViewModel(
                 loginRepository = LoginRepository(
-                    dataSource = LoginDataSource()
+                    presenter = LoginPresenter()
                 )
             ) as T
         }
