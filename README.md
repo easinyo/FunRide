@@ -4,4 +4,5 @@ More details will be provided.
 
 ## Database Schema
 
+![](DB.png)
 
