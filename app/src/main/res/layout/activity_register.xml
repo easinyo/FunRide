@@ -14,7 +14,7 @@
 
 
     <Button
-        android:id="@+id/register"
+        android:id="@+id/signup"
         android:layout_width="141dp"
         android:layout_height="49dp"
         android:layout_gravity="start"
@@ -143,7 +143,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
