@@ -1,49 +1,46 @@
 package com.dubinostech.rideshareapp.ui.signup;
 
-        import android.content.Intent;
-        import android.os.Bundle;
-        import android.view.View;
-        import android.widget.Button;
-        import android.widget.EditText;
-        import android.widget.TextView;
-        import android.widget.Toast;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
-        import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
-        import com.dubinostech.rideshareapp.R;
-        import com.dubinostech.rideshareapp.data.User;
-        import com.dubinostech.rideshareapp.ui.home.HomeFragment;
+import com.dubinostech.rideshareapp.R;
+import com.dubinostech.rideshareapp.presenter.SignupPresenter;
+import com.dubinostech.rideshareapp.ui.home.HomeFragment;
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener{
     private Button signup;
     private TextView title;
     private EditText firstname, lastname,email,phone,password,confirmpassword;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        signup = (Button)findViewById(R.id.signup);
-        title = (TextView)findViewById(R.id.title);
-        firstname = (EditText) findViewById(R.id.firstname);
-        lastname = (EditText) findViewById(R.id.lastname);
-        email = (EditText) findViewById(R.id.email);
-        phone = (EditText) findViewById(R.id.phone);
-        password = (EditText) findViewById(R.id.password);
-        confirmpassword = (EditText) findViewById(R.id.confirmpassword);
+        signup = findViewById(R.id.signup);
+        title = findViewById(R.id.title);
+        firstname = findViewById(R.id.firstname);
+        lastname = findViewById(R.id.lastname);
+        email = findViewById(R.id.email);
+        phone = findViewById(R.id.phone);
+        password = findViewById(R.id.password);
+        confirmpassword = findViewById(R.id.confirmpassword);
         signup.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        switch(v.getId()){
-            case R.id.signup:
-                register();
-                finish();
-                break;
-            default:
-
+        if (v.getId() == R.id.signup) {
+            register();
+            finish();
         }
     }
 
@@ -79,18 +76,12 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             displayToast("passwords doesnt match ");
         }
         else{
-            User u =new User();
-            u.setFirstName(firstnameStr);
-            u.setLastName(lastnameStr);
-            u.setEmail(emailStr);
-            u.setPhone(phoneStr);
-            u.setPassword(passwordStr);
-            u.setConfirmPassword(confirmPasswordStr);
-
+            SignupPresenter presenter = new SignupPresenter();
+            presenter.register(firstnameStr, lastnameStr, emailStr, phoneStr, passwordStr, confirmPasswordStr);
             startActivity(new Intent(SignUpActivity.this, HomeFragment.class));
             finish();
             //dbhelper.insertUser(u); here we will add the user to DB
-                displayToast("Welcome to the FunRide Family !!");
+            displayToast("Welcome to the FunRide Family !!");
             finish();
         }
     }
