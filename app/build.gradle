@@ -41,4 +41,20 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+
+    //RETROFIT https://github.com/square/retrofit
+    compile 'com.squareup.retrofit:retrofit:1.9.0'
+
+    //GSON https://github.com/google/gson
+    compile 'com.google.code.gson:gson:2.6.2'
+
+    //GLIDE https://github.com/bumptech/glide
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+
+    //OKHTTP
+    compile 'com.squareup.okhttp:okhttp:2.5.0'
+
+    //BUTTERKNIFE https://github.com/JakeWharton/butterknife
+    compile 'com.jakewharton:butterknife:7.0.1'
+
 }
