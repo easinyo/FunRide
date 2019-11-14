@@ -5,19 +5,15 @@ import com.squareup.okhttp.OkHttpClient;
 
 import java.util.concurrent.TimeUnit;
 
-import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
-import retrofit.http.Body;
-import retrofit.http.Headers;
-import retrofit.http.POST;
 
 public class GatewayAPI {
 
     private static final String TAG = "GatewayAPI";
-    private static ServicesApiInterface servicesApiInterface;
+    private static GatewayAPIInterface servicesApiInterface;
 
-    public static ServicesApiInterface getMyApiClient() {
+    public static GatewayAPIInterface getMyApiClient() {
 
         if (servicesApiInterface == null) {
 
@@ -27,27 +23,12 @@ public class GatewayAPI {
                     .setLogLevel(RestAdapter.LogLevel.FULL)
                     .build();
 
-            servicesApiInterface = restAdapter.create(ServicesApiInterface.class);
+            servicesApiInterface = restAdapter.create(GatewayAPIInterface.class);
         }
         return servicesApiInterface;
     }
 
-    public interface ServicesApiInterface {
 
-        ///<version name>/users/login
-        //@Headers({"Content-Type: application/json"})
-
-
-        @Headers({
-                "Content-Type: application/json",
-                "application-id: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxx",
-                "secret-key: xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxx",
-                "application-type: REST"
-        })
-
-        @POST("/v1/users/login")
-        void login(@Body LoginRaw raw, Callback<LoginResponse> callback);
-    }
 
     private static OkHttpClient getClient() {
         OkHttpClient client = new OkHttpClient();

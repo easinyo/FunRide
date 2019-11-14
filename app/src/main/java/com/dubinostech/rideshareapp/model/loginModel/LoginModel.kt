@@ -15,25 +15,27 @@ class LoginModel {
 
 
     fun login(logInRaw: LoginRaw, logInCallback: LogInCallback) {
-        GatewayAPI.getMyApiClient().login(logInRaw, object : Callback<LoginResponse> {
-            override fun success(loginResponse: LoginResponse, response: Response) {
-                logInCallback.onResponse(loginResponse, response)
-            }
 
-            override fun failure(error: RetrofitError) {
-                var json: String? = null
-                try {
-                    json = String((error.response.body as TypedByteArray).bytes)
-                } catch (e: NullPointerException) {
-                }
+        GatewayAPI.getMyApiClient().
+            login(logInRaw, object : Callback<LoginResponse> {
+                    override fun success(loginResponse: LoginResponse, response: Response) {
+                        logInCallback.onResponse(loginResponse, response)
+                    }
 
-                Log.v(TAG, "json >>>> " + json!!)
-                if (json != null) {
-                    logInCallback.onError(error, json)
-                } else {
-                    error.message?.let { logInCallback.onServerError(it) }
-                }
-            }
+                    override fun failure(error: RetrofitError) {
+                        var json: String? = null
+                        try {
+                            json = String((error.response.body as TypedByteArray).bytes)
+                        } catch (e: NullPointerException) {
+                        }
+
+                        Log.v(TAG, "json >>>> " + json!!)
+                        if (json != null) {
+                            logInCallback.onError(error, json)
+                        } else {
+                            error.message?.let { logInCallback.onServerError(it) }
+                        }
+                    }
         })
     }
 }
