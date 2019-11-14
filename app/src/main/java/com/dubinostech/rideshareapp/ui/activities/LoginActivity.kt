@@ -1,4 +1,4 @@
-package com.dubinostech.rideshareapp.ui.activityies
+package com.dubinostech.rideshareapp.ui.activities
 
 
 import android.content.Context
