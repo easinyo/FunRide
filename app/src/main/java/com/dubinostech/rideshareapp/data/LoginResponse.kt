@@ -1,19 +1,74 @@
 package com.dubinostech.rideshareapp.data
 
+import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-class LoginResponse : BaseResponse() {
+class LoginResponse{
 
-    //@SerializedName("name")
-    var name: String? = null
+    @SerializedName("id")
+    @Expose
+    private var id: String? = null
 
-    @SerializedName("___class")
-    var type: String? = null
+    @SerializedName("nickname")
+    @Expose
+    private var nickname: String? = null
 
-    @SerializedName("user-token")
-    var token: String? = null
+    @SerializedName("email")
+    @Expose
+    private var email: String? = null
 
-    var username: String? = null
+    /**
+     *
+     * @return
+     * The id
+     */
+    fun getId(): String? {
+        return id
+    }
 
-    var objectId: String? = null
+    /**
+     *
+     * @param id
+     * The id
+     */
+    fun setId(id: String) {
+        this.id = id
+    }
+
+    /**
+     *
+     * @return
+     * The nickname
+     */
+    fun getNickname(): String? {
+        return nickname
+    }
+
+    /**
+     *
+     * @param nickname
+     * The nickname
+     */
+    fun setNickname(nickname: String) {
+        this.nickname = nickname
+    }
+
+    /**
+     *
+     * @return
+     * The email
+     */
+    fun getEmail(): String? {
+        return email
+    }
+
+    /**
+     *
+     * @param email
+     * The email
+     */
+    fun setEmail(email: String) {
+        this.email = email
+    }
+
 }

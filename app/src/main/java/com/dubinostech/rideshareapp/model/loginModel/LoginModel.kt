@@ -1,41 +1,88 @@
 package com.dubinostech.rideshareapp.model.loginModel
 
-import android.util.Log
-import com.dubinostech.rideshareapp.data.GatewayAPI
-import com.dubinostech.rideshareapp.data.LoginRaw
-import com.dubinostech.rideshareapp.data.LoginResponse
-import retrofit.Callback
-import retrofit.RetrofitError
-import retrofit.client.Response
-import retrofit.mime.TypedByteArray
+import android.text.TextUtils
+import com.dubinostech.rideshareapp.data.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
-class LoginModel {
-    private val TAG = "LogInInteractor"
+class LoginModel: LogInCallback {
+    private val TAG = "LoginModel"
 
 
-    fun login(logInRaw: LoginRaw, logInCallback: LogInCallback) {
+    private var gatewayAPI: GatewayAPI? = null
 
-        GatewayAPI.getMyApiClient().
-            login(logInRaw, object : Callback<LoginResponse> {
-                    override fun success(loginResponse: LoginResponse, response: Response) {
-                        logInCallback.onResponse(loginResponse, response)
-                    }
 
-                    override fun failure(error: RetrofitError) {
-                        var json: String? = null
-                        try {
-                            json = String((error.response.body as TypedByteArray).bytes)
-                        } catch (e: NullPointerException) {
-                        }
+    override fun login(
+        userName: String,
+        passWord: String,
+        validationErrorListener: LogInCallback.IValidationErrorListener,
+        loginFinishedListener: LogInCallback.IOnLoginFinishedListener
+    ) {
+        if (isDataValid(userName, passWord, validationErrorListener)) {
 
-                        Log.v(TAG, "json >>>> " + json!!)
-                        if (json != null) {
-                            logInCallback.onError(error, json)
+            gatewayAPI = GatewayAPI(null)
+            val loginRaw = LoginRaw(userName, passWord)
+
+            val responseLoginCallback = gatewayAPI!!.login(loginRaw)
+
+
+            responseLoginCallback.enqueue(object : Callback<LoginResponse> {
+                override fun onResponse(
+                    call: Call<LoginResponse>,
+                    response: Response<LoginResponse>
+                ) {
+
+                    if (response.body() != null && response.isSuccess) {
+                        loginFinishedListener.getUserData(response.body())
+                    } else {
+
+                        if (response.errorBody() != null) {
+                            val error = WebErrorUtils.parseError(response)
+                            loginFinishedListener.errorMsg(error.message)
                         } else {
-                            error.message?.let { logInCallback.onServerError(it) }
+                            loginFinishedListener.errorMsg("Problem getting user !! Try again later.")
                         }
                     }
-        })
+                }
+
+                override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                    loginFinishedListener.errorMsg("Problem getting user !! Try again later.")
+                }
+            })
+        }
+    }
+
+
+    private fun isDataValid(
+        userName: String,
+        password: String,
+        validationErrorListener: LogInCallback.IValidationErrorListener
+    ): Boolean {
+
+        if (TextUtils.isEmpty(userName)) {
+
+            validationErrorListener.emailError(ErrorCode.ENTER_EMAIL)
+            return false
+
+        } else if (!Utils.isValidEmail(userName)) {
+
+            validationErrorListener.emailError(ErrorCode.EMAIL_INVALID)
+            return false
+
+        } else if (TextUtils.isEmpty(password)) {
+
+            validationErrorListener.passwordError(ErrorCode.ENTER_PASSWORD)
+            return false
+
+        } else if (password.length < 6) {
+
+            validationErrorListener.passwordError(ErrorCode.PASSWORD_INVALID)
+            return false
+
+        } else {
+            return true
+        }
     }
 }

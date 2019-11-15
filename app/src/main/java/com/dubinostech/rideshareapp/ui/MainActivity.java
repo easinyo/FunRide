@@ -1,4 +1,4 @@
-package com.dubinostech.rideshareapp.ui.Base_And_Main_Activities;
+package com.dubinostech.rideshareapp.ui;
 
 import android.os.Bundle;
 

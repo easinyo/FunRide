@@ -1,7 +1,7 @@
 package com.dubinostech.rideshareapp.data
 
-class LoginRaw {
+class LoginRaw(eUserName: String, passWord: String) {
 
-    var login: String? = null
-    var password: String? = null
+    private var  email: String? = eUserName
+    private var password: String? = passWord
 }

@@ -1,75 +1,84 @@
 package com.dubinostech.rideshareapp.ui.activities
 
 
-import android.content.Context
+import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
-import android.view.View
+import android.widget.Button
 import android.widget.EditText
-import butterknife.Bind
-import butterknife.ButterKnife
+import android.widget.Toast
 import com.dubinostech.rideshareapp.R
-import com.dubinostech.rideshareapp.data.LoggedInUser
+import com.dubinostech.rideshareapp.data.ErrorCode
+import com.dubinostech.rideshareapp.data.LoginResponse
+import com.dubinostech.rideshareapp.data.Utils
+import com.dubinostech.rideshareapp.model.loginModel.LoginModel
 import com.dubinostech.rideshareapp.presenter.LoginPresenter
-import com.dubinostech.rideshareapp.ui.Base_And_Main_Activities.BaseActivity
-import com.dubinostech.rideshareapp.ui.Base_And_Main_Activities.MainActivity
+import com.dubinostech.rideshareapp.ui.BaseActivity
+import com.dubinostech.rideshareapp.ui.MainActivity
 import com.dubinostech.rideshareapp.ui.view.LoginView
 
 
+
+
+
+@Suppress("DEPRECATION")
 class LoginActivity: BaseActivity() , LoginView {
+
     private val TAG = "LoginActivity"
 
-    @Bind(R.id.login)
-    internal var login: View? = null
 
-    @Bind(R.id.register)
-    internal var register: View? = null
+    private var username: EditText? = null
+    private var password: EditText? = null
+    private var login: Button? = null
+    private var register: Button? = null
 
-    @Bind(R.id.llayLoading)
-    internal var llayLoading: View? = null
+    private var progressDialog: ProgressDialog? = null
 
-    @Bind(R.id.password)
-    internal var password: EditText? = null
+    private var presenter : LoginPresenter? = null
 
-    @Bind(R.id.username)
-    internal var username: EditText? = null
-
-    @Bind(R.id.loading)
-    internal var loading: View? = null
-
-    @Bind(R.id.container)
-    internal var container: View? = null
-
-    private lateinit var presenter: LoginPresenter
     private var usernameString: String? = null
     private var passwordString: String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+    }
 
-        setContentView(R.layout.activity_login)
-        injectView()
+    override fun getLayout(): Int {
+        return R.layout.activity_login
+    }
 
+    override fun init() {
+        username = findViewById<EditText>(R.id.username)
+        password = findViewById<EditText>(R.id.password)
+        login = findViewById<Button>(R.id.login)
+        register = findViewById<Button>(R.id.register)
 
-        presenter = LoginPresenter()
-        presenter.attachedView(this)
+        progressDialog = ProgressDialog(this@LoginActivity)
 
+        presenter = LoginPresenter(this, LoginModel())
 
         login?.setOnClickListener {
-            loading?.visibility = View.VISIBLE
             if (validateForm()) {
-                presenter.login(
-                    usernameString!!,
-                    passwordString!!
-                )
+                if (Utils.isNetworkAvailable(this@LoginActivity)) {
+                    presenter?.callLogin(
+                        username?.text.toString(),
+                        password?.text.toString()
+                    )
+                } else {
+                    Utils.displayCommonAlertDialog(
+                        this@LoginActivity,
+                        this@LoginActivity.resources.getString(R.string.connection_issue_msg)
+                    )
+                }
+            }
+            else{
+                Toast.makeText(this, R.string.username_password_empty, Toast.LENGTH_LONG).show()
             }
         }
 
         register?.setOnClickListener {
-            loading?.visibility = View.VISIBLE
             register(
                 usernameString!!,
                 passwordString!!
@@ -77,17 +86,12 @@ class LoginActivity: BaseActivity() , LoginView {
         }
     }
 
-
-    private fun injectView() {
-        ButterKnife.bind(this)
-    }
-
     private fun validateForm(): Boolean {
         this.usernameString = username?.text.toString().trim { it <= ' ' }
         this.passwordString = password?.text.toString().trim { it <= ' ' }
 
         if (TextUtils.isEmpty(usernameString)) return false
-        return !(TextUtils.isEmpty(passwordString)) && (passwordString!!.length > 5)
+        return (TextUtils.isEmpty(passwordString))
 
     }
     private fun register(username: String, password: String) {
@@ -103,33 +107,60 @@ class LoginActivity: BaseActivity() , LoginView {
         this.startActivity(intent)
     }
 
+    override fun setEmailError(code: ErrorCode?) {
+        if (username != null) {
+            if (code?.getId() === ErrorCode.ENTER_EMAIL.id) {
+                username?.setError(resources.getString(R.string.activity_login_enter_email))
+            } else if (code?.getId() === ErrorCode.EMAIL_INVALID.id) {
+                username?.setError(resources.getString(R.string.activity_login_email_invalid))
+            }
+        }    }
+
+    override fun setPasswordError(code: ErrorCode?) {
+        if (password != null) {
+            if (code?.getId() === ErrorCode.ENTER_PASSWORD.id) {
+                password?.setError(resources.getString(R.string.activity_login_enter_password))
+            } else if (code?.getId() === ErrorCode.PASSWORD_INVALID.id) {
+                password?.setError(resources.getString(R.string.activity_login_password_err))
+            }
+        }    }
+
+    override fun loginSuccess(user: LoginResponse?) {
+        val intent = Intent(this@LoginActivity, MainActivity::class.java)
+        intent.putExtra("home_msg", "This is HOME")
+        startActivity(intent)
+        finish()    }
+
+    override fun loginFailure(code: ErrorCode) {
+        if (code.id === 4) {
+            Toast.makeText(
+                this,
+                resources.getString(R.string.activity_login_fail_msg) ,
+                Toast.LENGTH_LONG
+            ).show()
+        }
+    }
+
+    override fun loginFailure(code: String) {
+        Toast.makeText(this, code, Toast.LENGTH_LONG).show()
+    }
     override fun showLoading() {
-        this.llayLoading?.setVisibility(View.VISIBLE)
+        progressDialog?.setTitle(null)
+        progressDialog?.setTitle(null)
+        progressDialog?.setMessage(resources.getString(R.string.activity_login_loading_msg))
+        progressDialog?.show()
     }
 
     override fun hideLoading() {
-        this.llayLoading?.setVisibility(View.GONE)
+        if (progressDialog != null && progressDialog?.isShowing()!!)
+        progressDialog?.dismiss()
     }
 
-    override fun showConnectionErrorMessage() {
-
-    }
-
-    override fun showError(message: String) {
-        Log.v(TAG, " message $message")
-
-        showMessage(container, message)
-    }
-
-    override fun onLoginSuccess(loggedInUser: LoggedInUser) {
-        Log.v(TAG, "onLoginsuccess " + loggedInUser.toString())
-        val bundle = Bundle()
-        bundle.putSerializable("ENTITY", loggedInUser)
-        next(bundle, MainActivity::class.java, true)
-    }
-
-    fun getContext(): Context {
-        return this
+    override fun onDestroy() {
+        super.onDestroy()
+        if (progressDialog != null && progressDialog?.isShowing()!!) {
+            progressDialog?.cancel()
+        }
     }
 }
 

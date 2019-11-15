@@ -1,39 +1,73 @@
 package com.dubinostech.rideshareapp.data;
 
 import com.dubinostech.rideshareapp.BuildConfig;
-import com.squareup.okhttp.OkHttpClient;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.concurrent.TimeUnit;
 
-import retrofit.RestAdapter;
-import retrofit.client.OkClient;
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class GatewayAPI {
 
     private static final String TAG = "GatewayAPI";
-    private static GatewayAPIInterface servicesApiInterface;
+    private GatewayAPIInterface service;
+    private Retrofit retrofit;
+    private Interceptor mHeaderInterceptor;
 
-    public static GatewayAPIInterface getMyApiClient() {
+    public static final String WS_URL = "https://fun-ride.herokuapp.com/";
 
-        if (servicesApiInterface == null) {
 
-            RestAdapter restAdapter = new RestAdapter.Builder()
-                    .setEndpoint(BuildConfig.HOST_URL)
-                    .setClient(new OkClient(getClient()))
-                    .setLogLevel(RestAdapter.LogLevel.FULL)
-                    .build();
+    public GatewayAPI(Interceptor headerInterceptor) {
+        mHeaderInterceptor = headerInterceptor;
+        retrofit = getRetrofit();
+        service = retrofit.create(GatewayAPIInterface.class);
+    }
 
-            servicesApiInterface = restAdapter.create(GatewayAPIInterface.class);
+    public Retrofit getRetrofit() {
+
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient client;
+
+        if (mHeaderInterceptor != null) {
+            OkHttpClient.Builder builder = new OkHttpClient.Builder()
+                    .addInterceptor(mHeaderInterceptor)
+                    .connectTimeout(120, TimeUnit.SECONDS)
+                    .readTimeout(90, TimeUnit.SECONDS);
+            if (BuildConfig.DEBUG)
+                builder.addInterceptor(interceptor);
+            client = builder.build();
+        } else {
+            OkHttpClient.Builder builder = new OkHttpClient.Builder()
+                    .connectTimeout(120, TimeUnit.SECONDS)
+                    .readTimeout(90, TimeUnit.SECONDS);
+            if (BuildConfig.DEBUG)
+                builder.addInterceptor(interceptor);
+            client = builder.build();
         }
-        return servicesApiInterface;
+
+        Gson gson = new GsonBuilder()
+//                .registerTypeAdapterFactory(new ItemTypeAdapterFactory())
+                .create();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(WS_URL)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .client(client)
+                .build();
+
+        return retrofit;
+    }
+
+    public Call<LoginResponse> login(LoginRaw raw) {
+        return service.login(raw);
     }
 
 
-
-    private static OkHttpClient getClient() {
-        OkHttpClient client = new OkHttpClient();
-        client.setConnectTimeout(2, TimeUnit.MINUTES);
-        client.setReadTimeout(2, TimeUnit.MINUTES);
-        return client;
-    }
 }

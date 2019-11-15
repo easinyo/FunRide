@@ -1,17 +1,30 @@
 package com.dubinostech.rideshareapp.model.loginModel
 
+import com.dubinostech.rideshareapp.data.ErrorCode
 import com.dubinostech.rideshareapp.data.LoginResponse
-import retrofit.RetrofitError
-import retrofit.client.Response
+
 
 interface LogInCallback {
 
-    fun onResponse(loginResponse: LoginResponse, response: Response)
 
-    fun onError(retrofitError: RetrofitError)
-    fun onError(retrofitError: RetrofitError, json: String)
+    fun login(
+        userName: String,
+        passWord: String,
+        validationErrorListener: IValidationErrorListener,
+        loginFinishedListener: IOnLoginFinishedListener
+    )
 
-    fun onNetworkConnectionError()
+    interface IOnLoginFinishedListener {
 
-    fun onServerError(message: String)
+        fun getUserData(user: LoginResponse)
+
+        fun errorMsg(errorMsg: String)
+    }
+
+    interface IValidationErrorListener {
+
+        fun emailError(code: ErrorCode)
+
+        fun passwordError(code: ErrorCode)
+    }
 }

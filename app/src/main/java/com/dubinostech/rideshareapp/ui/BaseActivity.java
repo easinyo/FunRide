@@ -1,4 +1,4 @@
-package com.dubinostech.rideshareapp.ui.Base_And_Main_Activities;
+package com.dubinostech.rideshareapp.ui;
 
 
 import android.content.Intent;
@@ -7,13 +7,22 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.material.snackbar.Snackbar;
 
 /**
  * Created by Emmanuel
  */
-public class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(getLayout());
+        init();
+    }
 
 
     protected void showMessage(View container, String message)
@@ -33,4 +42,8 @@ public class BaseActivity extends AppCompatActivity {
         startActivity(intent);
         if(destroy)finish();
     }
+
+    public abstract int getLayout();
+
+    public abstract void init();
 }

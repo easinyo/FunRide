@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.dubinostech.rideshareapp.R;
 import com.dubinostech.rideshareapp.presenter.SignupPresenter;
-import com.dubinostech.rideshareapp.ui.home.HomeFragment;
+import com.dubinostech.rideshareapp.ui.activities.HomeFragment;
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener{
     private Button signup;

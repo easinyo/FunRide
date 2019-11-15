@@ -1,8 +1,7 @@
 package com.dubinostech.rideshareapp.presenter.interfaces
 
-interface LoginPresenterInterface<V> {
+interface LoginPresenterInterface {
 
-    fun attachedView(view: V)
+    fun callLogin(userName: String, passWord: String)
 
-    fun detachView()
 }
