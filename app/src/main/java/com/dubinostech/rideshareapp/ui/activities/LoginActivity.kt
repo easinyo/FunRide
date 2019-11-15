@@ -60,7 +60,7 @@ class LoginActivity: BaseActivity() , LoginView {
         presenter = LoginPresenter(this, LoginModel())
 
         login?.setOnClickListener {
-            if (validateForm()) {
+            if (isNotEmpty()) {
                 if (Utils.isNetworkAvailable(this@LoginActivity)) {
                     presenter?.callLogin(
                         username?.text.toString(),
@@ -86,13 +86,11 @@ class LoginActivity: BaseActivity() , LoginView {
         }
     }
 
-    private fun validateForm(): Boolean {
+    private fun isNotEmpty(): Boolean {
         this.usernameString = username?.text.toString().trim { it <= ' ' }
         this.passwordString = password?.text.toString().trim { it <= ' ' }
 
-        if (TextUtils.isEmpty(usernameString)) return false
-        return (TextUtils.isEmpty(passwordString))
-
+        return !(TextUtils.isEmpty(passwordString) || TextUtils.isEmpty(usernameString))
     }
     private fun register(username: String, password: String) {
         val bundle = Bundle()
