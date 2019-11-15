@@ -35,12 +35,14 @@ class LoginModel: LogInCallback {
                 ) {
 
                     if (response.body() != null && response.isSuccess) {
-                        loginFinishedListener.getUserData(response.body())
+                        if ( response.code()== 202)
+                            loginFinishedListener.errorMsg("Email or Password is wrong !! Try again later.")
+                        else loginFinishedListener.getUserData(response.body())
                     } else {
 
                         if (response.errorBody() != null) {
                             val error = WebErrorUtils.parseError(response)
-                            loginFinishedListener.errorMsg(error.message)
+                            error?.message?.let { loginFinishedListener.errorMsg(it) }
                         } else {
                             loginFinishedListener.errorMsg("Problem getting user !! Try again later.")
                         }

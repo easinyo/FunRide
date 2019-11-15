@@ -44,7 +44,7 @@ public class LoginPresenter implements LoginPresenterInterface {
 
             @Override public void errorMsg(String errorMsg) {
                 loginView.hideLoading();
-                loginView.loginFailure(errorMsg + "------------");
+                loginView.loginFailure(errorMsg);
             }
 
         });
