@@ -156,7 +156,7 @@ class LoginActivity: BaseActivity() , LoginView {
 
     override fun onDestroy() {
         super.onDestroy()
-        if (progressDialog != null && progressDialog?.isShowing()!!) {
+        if (progressDialog != null && progressDialog?.isShowing!!) {
             progressDialog?.cancel()
         }
     }
