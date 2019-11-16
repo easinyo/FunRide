@@ -1,4 +1,4 @@
-package com.dubinostech.rideshareapp.ui.dashboard;
+package com.dubinostech.rideshareapp.ui.activities;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

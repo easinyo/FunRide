@@ -19,4 +19,30 @@
     <string name="prompt_phone">Phone number</string>
     <string name="prompt_fname">First name</string>
     <string name="prompt_lname">Last name</string>
+
+    <string name="connection_issue_msg">Please check your internet connection.</string>
+
+    <string name="connection_dialog"> Connection Error</string>
+
+    <string name="activity_login_alert_ok">OK</string>
+
+    <string name="activity_login_loading_msg">Please wait, Loading ...</string>
+
+    <string name="activity_login_fail_msg">Login Failed !! Try again later.</string>
+
+    <string name="activity_login_enter_email">Please enter EmailID.</string>
+
+    <string name="activity_login_enter_password">Please enter Password.</string>
+
+    <string name="activity_login_password_err">Password should be grater than 6 characters.</string>
+
+    <string name="activity_login_email_invalid">EmailID is invalid.</string>
+
+    <string name="activity_login_password_wrong">Password is wrong.</string>
+
+    <string name="username_password_empty">Username and/or password empty, Please Try again..</string>
+
+
+
+
 </resources>
