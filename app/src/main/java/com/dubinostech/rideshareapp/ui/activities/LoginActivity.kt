@@ -16,6 +16,7 @@ import com.dubinostech.rideshareapp.model.loginModel.LoginModel
 import com.dubinostech.rideshareapp.presenter.LoginPresenter
 import com.dubinostech.rideshareapp.ui.BaseActivity
 import com.dubinostech.rideshareapp.ui.MainActivity
+import com.dubinostech.rideshareapp.ui.signup.SignUpActivity
 import com.dubinostech.rideshareapp.ui.view.LoginView
 
 
@@ -40,10 +41,6 @@ class LoginActivity: BaseActivity() , LoginView {
     private var usernameString: String? = null
     private var passwordString: String? = null
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun getLayout(): Int {
         return R.layout.activity_login
@@ -79,10 +76,8 @@ class LoginActivity: BaseActivity() , LoginView {
         }
 
         register?.setOnClickListener {
-            register(
-                usernameString!!,
-                passwordString!!
-            )
+            val intent = Intent(this, SignUpActivity::class.java)
+            this.startActivity(intent)
         }
     }
 
@@ -98,8 +93,8 @@ class LoginActivity: BaseActivity() , LoginView {
         bundle.putString("password", password)
 
         //To be changed to registerActivity
-        val intent = Intent(this, MainActivity::class.java).apply {
-            putExtras(bundle)
+        val intent = Intent(this, SignUpActivity::class.java).apply {
+            //putExtras(bundle)
         }
 
         this.startActivity(intent)
@@ -107,19 +102,19 @@ class LoginActivity: BaseActivity() , LoginView {
 
     override fun setEmailError(code: ErrorCode?) {
         if (username != null) {
-            if (code?.getId() === ErrorCode.ENTER_EMAIL.id) {
-                username?.setError(resources.getString(R.string.activity_login_enter_email))
-            } else if (code?.getId() === ErrorCode.EMAIL_INVALID.id) {
-                username?.setError(resources.getString(R.string.activity_login_email_invalid))
+            if (code?.id === ErrorCode.ENTER_EMAIL.id) {
+                username?.error = resources.getString(R.string.activity_login_enter_email)
+            } else if (code?.id === ErrorCode.EMAIL_INVALID.id) {
+                username?.error = resources.getString(R.string.activity_login_email_invalid)
             }
         }    }
 
     override fun setPasswordError(code: ErrorCode?) {
         if (password != null) {
-            if (code?.getId() === ErrorCode.ENTER_PASSWORD.id) {
-                password?.setError(resources.getString(R.string.activity_login_enter_password))
-            } else if (code?.getId() === ErrorCode.PASSWORD_INVALID.id) {
-                password?.setError(resources.getString(R.string.activity_login_password_err))
+            if (code?.id === ErrorCode.ENTER_PASSWORD.id) {
+                password?.error = resources.getString(R.string.activity_login_enter_password)
+            } else if (code?.id === ErrorCode.PASSWORD_INVALID.id) {
+                password?.error = resources.getString(R.string.activity_login_password_err)
             }
         }    }
 
@@ -150,7 +145,7 @@ class LoginActivity: BaseActivity() , LoginView {
     }
 
     override fun hideLoading() {
-        if (progressDialog != null && progressDialog?.isShowing()!!)
+        if (progressDialog != null && progressDialog?.isShowing!!)
         progressDialog?.dismiss()
     }
 

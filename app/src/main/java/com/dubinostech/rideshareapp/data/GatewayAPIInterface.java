@@ -6,9 +6,13 @@ import retrofit2.http.POST;
 
 public interface GatewayAPIInterface {
 
-    static final String LOGIN = "signin";
+    String LOGIN = "signin";
+    String SIGNUP = "signup";
 
     @POST(LOGIN)
     Call<LoginResponse> login(@Body LoginRaw loginCall);
+
+    @POST(SIGNUP)
+    Call<SignupResponse> signup(@Body SignupRaw signUpCall);
 }
 
