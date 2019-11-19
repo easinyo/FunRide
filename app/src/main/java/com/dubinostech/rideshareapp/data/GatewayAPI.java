@@ -69,5 +69,8 @@ public class GatewayAPI {
         return service.login(raw);
     }
 
+    public Call<SignupResponse> signup(SignupRaw raw) {
+        return service.signup(raw);
+    }
 
 }
