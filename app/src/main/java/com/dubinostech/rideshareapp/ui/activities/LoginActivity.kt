@@ -8,6 +8,7 @@ import android.text.TextUtils
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import com.dubinostech.rideshareapp.R
 import com.dubinostech.rideshareapp.data.ErrorCode
 import com.dubinostech.rideshareapp.data.LoginResponse
@@ -51,6 +52,9 @@ class LoginActivity: BaseActivity() , LoginView {
         password = findViewById<EditText>(R.id.password)
         login = findViewById<Button>(R.id.login)
         register = findViewById<Button>(R.id.register)
+
+        val permissions = arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION)
+        ActivityCompat.requestPermissions(this, permissions, 0)
 
         progressDialog = ProgressDialog(this@LoginActivity)
 
