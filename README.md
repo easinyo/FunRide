@@ -10,7 +10,13 @@ We created FunRide as a way for passengers to reserve rideshares without having 
 
 For more information, take a look at the list of sections on our wiki https://github.com/kanouche/CapstoneBackEnd/wiki.
 
-### Setup
+## Features
+* Browse for rides for a specific trip. 
+* Book your ride and secure your spot.
+* Post your trip and get people to book available seats in your trip.
+* Win-Win financially, environmentally and socially.
+
+## Setup
 
 For the back-end setup, please visit: https://github.com/kanouche/CapstoneBackEnd/blob/master/README.md
 
