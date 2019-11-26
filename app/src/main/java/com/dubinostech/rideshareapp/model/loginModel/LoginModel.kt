@@ -10,9 +10,7 @@ import retrofit2.Response
 class LoginModel: LogInCallback {
     private val TAG = "LoginModel"
 
-
     private var gatewayAPI: GatewayAPI? = null
-
 
     override fun login(
         userName: String,
@@ -26,7 +24,6 @@ class LoginModel: LogInCallback {
             val loginRaw = LoginRaw(userName, passWord)
 
             val responseLoginCallback = gatewayAPI!!.login(loginRaw)
-
 
             responseLoginCallback.enqueue(object : Callback<LoginResponse> {
                 override fun onResponse(
