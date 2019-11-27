@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.dubinostech.rideshareapp.R;
 import com.dubinostech.rideshareapp.data.ErrorCode;
 import com.dubinostech.rideshareapp.data.SignupResponse;
+import com.dubinostech.rideshareapp.data.User;
 import com.dubinostech.rideshareapp.data.Utils;
 import com.dubinostech.rideshareapp.model.SignModel.SignUpModel;
 import com.dubinostech.rideshareapp.presenter.SignupPresenter;
@@ -177,6 +178,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         String phoneStr = phone.getText().toString();
         String passwordStr = password.getText().toString();
         String confirmPasswordStr = confirmpassword.getText().toString();
+        User user = new User(firstnameStr,lastnameStr,emailStr,phoneStr,passwordStr,confirmPasswordStr);
         this.progressDialog = new ProgressDialog(this);
 
         if(firstnameStr.isEmpty())
@@ -206,7 +208,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         }
         else{
             SignupPresenter presenter = new SignupPresenter(this, new SignUpModel());
-            presenter.callSignUp(emailStr, passwordStr, confirmPasswordStr);
+            presenter.callSignUp(user);
         }
     }
 

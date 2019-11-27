@@ -1,5 +1,7 @@
 package com.dubinostech.rideshareapp.presenter.interfaces;
 
+import com.dubinostech.rideshareapp.data.User;
+
 public interface SignUpPresenterInterface {
-    void callSignUp(String email, String passWord, String confirmpassWord);
+    void callSignUp(User user);
 }

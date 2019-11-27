@@ -14,16 +14,14 @@ class SignUpModel : SignUpCallback {
 
 
     override fun signUp(
-        email: String,
-        passWord: String,
-        confirmedpassWord: String,
+        user: User,
         validationErrorListener: SignUpCallback.IValidationErrorListener,
         signUpFinishedListener: SignUpCallback.IOnSignUpFinishedListener
     ) {
-        if (isDataValid(email, passWord, confirmedpassWord, validationErrorListener)) {
+        if (isDataValid(user.getEmail(), user.getPassword(), user.getConfirmPassword(), validationErrorListener)) {
 
             gatewayAPI = GatewayAPI(null)
-            val signupRaw = SignupRaw(email, passWord, confirmedpassWord)
+            val signupRaw = SignupRaw(user.firstName, user.lastName, user.phone, user.email, user.password, user.confirmPassword)
 
             val responseSignUpCallback = gatewayAPI!!.signup(signupRaw)
 

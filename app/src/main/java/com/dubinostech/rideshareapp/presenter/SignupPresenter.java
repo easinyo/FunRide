@@ -2,6 +2,7 @@ package com.dubinostech.rideshareapp.presenter;
 
 import com.dubinostech.rideshareapp.data.ErrorCode;
 import com.dubinostech.rideshareapp.data.SignupResponse;
+import com.dubinostech.rideshareapp.data.User;
 import com.dubinostech.rideshareapp.model.signUpModel.SignUpCallback;
 import com.dubinostech.rideshareapp.presenter.interfaces.SignUpPresenterInterface;
 import com.dubinostech.rideshareapp.ui.view.SignUpView;
@@ -21,9 +22,8 @@ public class SignupPresenter implements SignUpPresenterInterface {
 
 
     @Override
-    public void callSignUp(String email, String password, String confirmedPassword) {
-        signupView.showLoading();
-        signupCallback.signUp(email, password, confirmedPassword, new SignUpCallback.IValidationErrorListener() {
+    public void callSignUp(User user) {
+        signupCallback.signUp(user, new SignUpCallback.IValidationErrorListener() {
             @Override
             public void emailError(ErrorCode code) {
                 signupView.hideLoading();

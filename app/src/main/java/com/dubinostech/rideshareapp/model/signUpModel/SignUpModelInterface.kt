@@ -2,15 +2,14 @@ package com.dubinostech.rideshareapp.model.signUpModel
 
 import com.dubinostech.rideshareapp.data.ErrorCode
 import com.dubinostech.rideshareapp.data.SignupResponse
+import com.dubinostech.rideshareapp.data.User
 
 
 interface SignUpCallback {
 
 
     fun signUp(
-        email: String,
-        passWord: String,
-        confirmedPassword: String,
+        user: User,
         validationErrorListener: IValidationErrorListener,
         signUpFinishedListener: SignUpCallback.IOnSignUpFinishedListener
     )
