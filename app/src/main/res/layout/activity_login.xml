@@ -5,7 +5,7 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@drawable/background_login"
     android:gravity="center"
     android:orientation="vertical">
 
@@ -76,6 +76,40 @@
         android:textColor="@android:color/white"
         android:background="@drawable/oval_button"
         />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true">
+
+        <TextView
+            android:id="@+id/tvText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:text="@string/action_sign_up_line"
+            android:textColor="@color/colorPrimary"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:layout_toLeftOf="@id/tvText"
+            android:background="#F7F6F6"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="16dp"
+            android:layout_toRightOf="@id/tvText"
+            android:background="#F7F6F6"
+            />
+
+    </RelativeLayout>
 
     <Button
         android:id="@+id/register"
@@ -86,6 +120,6 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/oval_button_register"
         android:textColor="@android:color/white"
-        android:text="@string/action_sign_up"
+        android:text="@string/action_register"
         />
 </LinearLayout>
