@@ -34,5 +34,8 @@ Please follow those instruction fto set up your local work environment for the f
 Learn more about Android studio and Android developement: https://developer.android.com/guide
 
 ## Database Schema
+Note: 
+* Since we are based on an Agile methodology, we might be doing changes regarding our Database Schedma.
+* The payment transaction might will be handled by a third party service (Example: Stripe or Square). 
 
 ![](DB.png)
