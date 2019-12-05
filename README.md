@@ -12,7 +12,7 @@
 | Jack Wu                | cwu087@uottawa.ca   |Back End Lead        |
 | Simon Fu               | sfu013@uottawa.ca   |Architect & QA       |
 
-# Capstone
+# Project - FunRide -
 FunRide is a project of Simon Fu, Jack Wu, Emmanuel Asinyo, and Brahim Kanouche for the SEG4910/4911 Capstone software engineering project course at the University of Ottawa. This project is under the supervision of Miguel Garzon and is presented to our client Dr.Stephane Some. FunRide is an 8-month project following the agile methodology where both the front-end and back-end will be built from scratch.
 
 FunRide is a mobile application that will be available in the Google Play that will serve as a rideshare platform for traveling between cities in Canada. Ridesharing is a more economical option to travel from Point A to Point B in comparison to trains, busses, or flying. As a result, many people especially students are looking for advertisements in platforms like Kijiji or Craigslist to find these services.
@@ -29,7 +29,7 @@ For more information, take a look at the list of sections on our wiki https://gi
 * Post your trip and get people to book available seats in your trip.
 * Win-Win financially, environmentally and socially.
 
-## Setup
+## FrontEnd Development Environment Setup Guide
 For the back-end setup, please visit: https://github.com/kanouche/CapstoneBackEnd/blob/master/README.md
 
 Please follow those instruction fto set up your local work environment for the front-end. 
