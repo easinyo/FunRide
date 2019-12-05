@@ -5,12 +5,12 @@
 [![license](https://img.shields.io/badge/Licence-1.0-9cf)](https://github.com/kanouche/CapstoneFrontEnd/blob/master/Licence.md)
 
 # Team (Contributors)
-| Name                   | Email               |
-|------------------------|---------------------|
-| Brahim Kanouche        | bkano020@uottawa.ca |
-| Emmanuel Asinyo        | wkenn072@uottawa.ca |
-| Jack Wu                | cwu087@uottawa.ca   |
-| Simon Fu               | sfu013@uottawa.ca   |
+| Name                   | Email               |Role                 |
+|------------------------|---------------------|---------------------|
+| Brahim Kanouche        | bkano020@uottawa.ca |Front End Lead       |
+| Emmanuel Asinyo        | wkenn072@uottawa.ca |Porject Manager      |
+| Jack Wu                | cwu087@uottawa.ca   |Back End Lead        |
+| Simon Fu               | sfu013@uottawa.ca   |Architect & QA       |
 
 # Capstone
 FunRide is a project of Simon Fu, Jack Wu, Emmanuel Asinyo, and Brahim Kanouche for the SEG4910/4911 Capstone software engineering project course at the University of Ottawa. This project is under the supervision of Miguel Garzon and is presented to our client Dr.Stephane Some. FunRide is an 8-month project following the agile methodology where both the front-end and back-end will be built from scratch.
