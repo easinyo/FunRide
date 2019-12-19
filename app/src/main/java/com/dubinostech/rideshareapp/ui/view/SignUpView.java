@@ -1,3 +1,7 @@
+/**
+Interface SignUpView
+To be implemented by SignUpActivity
+*/
 package com.dubinostech.rideshareapp.ui.view;
 
 import com.dubinostech.rideshareapp.data.ErrorCode;
