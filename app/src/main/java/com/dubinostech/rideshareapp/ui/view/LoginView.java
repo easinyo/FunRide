@@ -1,3 +1,7 @@
+/**
+Interface LoginView
+To be implemented by LoginActivity
+*/
 package com.dubinostech.rideshareapp.ui.view;
 
 import com.dubinostech.rideshareapp.data.ErrorCode;
