@@ -1,3 +1,9 @@
+/**
+ * The class SignupPresenter is the presenter of the signup feature. 
+ * It implements the interface SignUpPresenterInterface
+ * It has a method callSignup which is called by the view when a new user registers. 
+ * It then updates sign up model and view.
+ */
 package com.dubinostech.rideshareapp.presenter;
 
 import com.dubinostech.rideshareapp.data.ErrorCode;
@@ -20,7 +26,13 @@ public class SignupPresenter implements SignUpPresenterInterface {
         this.signupCallback = signupCallback;
     }
 
-
+    /**
+     * callSignup is a helper method registers a new user.
+     * @param user
+     *            Object user containing first name, last name, email, phone and password
+     * It verifies the constraints for registration and sets the errors if needed
+     * Then it notifies the signup view
+     */
     @Override
     public void callSignUp(User user) {
         signupCallback.signUp(user, new SignUpCallback.IValidationErrorListener() {
