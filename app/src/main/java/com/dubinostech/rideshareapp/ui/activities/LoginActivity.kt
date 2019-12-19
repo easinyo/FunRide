@@ -1,3 +1,7 @@
+/**
+ * The class LoginAcitivity sets the logic for acitivity_login.xml 
+ * Communicate with theLloginPresenter to handle the user login
+ */
 package com.dubinostech.rideshareapp.ui.activities
 
 
@@ -19,10 +23,6 @@ import com.dubinostech.rideshareapp.ui.BaseActivity
 import com.dubinostech.rideshareapp.ui.MainActivity
 import com.dubinostech.rideshareapp.ui.signup.SignUpActivity
 import com.dubinostech.rideshareapp.ui.view.LoginView
-
-
-
-
 
 @Suppress("DEPRECATION")
 class LoginActivity: BaseActivity() , LoginView {
@@ -91,6 +91,10 @@ class LoginActivity: BaseActivity() , LoginView {
 
         return !(TextUtils.isEmpty(passwordString) || TextUtils.isEmpty(usernameString))
     }
+    
+    /**
+     * register method to communicate the username and password to the presenter
+     */
     private fun register(username: String, password: String) {
         val bundle = Bundle()
         bundle.putString("username", username)
