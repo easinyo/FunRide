@@ -1,3 +1,9 @@
+/**
+ * The class LoginPresenter is the presenter of the login view. 
+ * It implements the interface LoginPresenterInterface
+ * It has a method callLogin which is called by the view when an existing user tries to login. 
+ * It then updates login model and view.
+ */
 package com.dubinostech.rideshareapp.presenter;
 
 import com.dubinostech.rideshareapp.data.ErrorCode;
@@ -17,7 +23,15 @@ public class LoginPresenter implements LoginPresenterInterface {
         this.logInCallback = logInCallback;
     }
 
-
+    /**
+     * callLogin is a helper method that handles the user login
+     * @param username
+     *            String representing the user's username or email
+     * @param password
+     *            String representing the user's password
+     * It verifies the constraints for loging in and sets the Errors if needed
+     * Then notifies the login view
+     */
     @Override
     public void callLogin(String username, String password) {
         loginView.showLoading();
