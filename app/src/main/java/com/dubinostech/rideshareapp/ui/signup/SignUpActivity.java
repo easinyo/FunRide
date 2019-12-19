@@ -1,3 +1,7 @@
+/**
+SignUpActivity class
+Sets Logic for acitivity_register.xml
+*/
 package com.dubinostech.rideshareapp.ui.signup;
 
 import android.app.AlertDialog;
@@ -170,7 +174,13 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             alert11.show();
         }
     }
-
+    
+     /**
+     * register method for a new user.
+     * 
+     * @precondition checks the info entred by the user
+     * @postcondition passes the object user to the presenter
+     */
     private void register(){
         String firstnameStr = firstname.getText().toString();
         String lastnameStr = lastname.getText().toString();
