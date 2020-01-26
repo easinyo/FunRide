@@ -27,7 +27,7 @@ public class User {
      *            the user's last phone
      * @param password
      *            the user's password
-     * @param confirmedPassword
+     * @param confirmPassword
      *            the user's confirmed password
      */
 

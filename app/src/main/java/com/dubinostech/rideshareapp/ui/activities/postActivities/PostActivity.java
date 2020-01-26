@@ -52,6 +52,9 @@ import java.io.InputStreamReader;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * An activity class that will enable google maps API.
+ */
 public class PostActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, OnMapReadyCallback {
 
 
@@ -120,6 +123,10 @@ public class PostActivity extends AppCompatActivity implements GoogleApiClient.C
 
     }
 
+    /**
+     * A function that  set a departure location
+     * @param v
+     */
     public void setDepartureLocation(View v){
         departureLatitude = location.getLatitude();
         departureLongitude = location.getLongitude();
@@ -130,6 +137,10 @@ public class PostActivity extends AppCompatActivity implements GoogleApiClient.C
         arrivalLocation.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * A function that  set a arrival location
+     * @param v
+     */
     public void setArrivalLocation(View v){
 
         arrivalLatitude = location.getLatitude();
@@ -165,7 +176,10 @@ public class PostActivity extends AppCompatActivity implements GoogleApiClient.C
             }
         });
     }
-
+    /**
+     * A function that  set a time
+     * @param v
+     */
     public void setTime(View v){
         departureHour = departureTime.getCurrentHour();
         departureMin = departureTime.getCurrentMinute();
@@ -194,6 +208,11 @@ public class PostActivity extends AppCompatActivity implements GoogleApiClient.C
         startActivity(intent);
 
     }
+
+    /**
+     * A function that enable the user to use search button
+     * @param view
+     */
     public void onSearchButtonClicked(View view){
         Geocoder departureAddress = new Geocoder(this);
         String address = mSearchEditText.getText().toString();
@@ -228,14 +247,20 @@ public class PostActivity extends AppCompatActivity implements GoogleApiClient.C
 
     }
 
+    /**
+     * A function that  will go the the location entered
+     * @param lat
+     * @param lng
+     * @param zoom
+     */
     private void gotoLocation(double lat,double lng,float zoom) {
         LatLng latLng=new LatLng(lat,lng);
         CameraUpdate update= CameraUpdateFactory.newLatLngZoom(latLng, zoom);
         mMap.moveCamera(update);
     }
 
-    /*
-  Checking the google play services is available
+    /**
+      Checking the google play services is available
    */
     private boolean checkServices() {
         //returns a integer value

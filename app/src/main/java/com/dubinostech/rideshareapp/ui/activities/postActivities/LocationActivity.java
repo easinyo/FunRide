@@ -41,6 +41,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.List;
 
+/**
+ * An activity class that will allow the user to enter specific adress and select it for Arrival or departure.
+ */
+
 public class LocationActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, OnMapReadyCallback {
 
     private GoogleApiClient mGoogleApiClient;
@@ -80,7 +84,10 @@ public class LocationActivity extends AppCompatActivity implements GoogleApiClie
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);*/
     }
-
+    /**
+     * a function that will set the location selected
+     * @param v
+     */
     public void setLocation(View v){
         if (location != null)
             locationLatitude = location.getLatitude();
@@ -99,7 +106,10 @@ public class LocationActivity extends AppCompatActivity implements GoogleApiClie
             setResult(RESULT_OK, resultIntent);
             finish();
     }
-
+    /**
+     * a function that will allow the user to search for adress
+     * @param view
+     */
     public void onSearchButtonClicked(View view){
         Geocoder departureAddress = new Geocoder(this);
         String address = mSearchEditText.getText().toString();
@@ -130,15 +140,21 @@ public class LocationActivity extends AppCompatActivity implements GoogleApiClie
         }
 
     }
+    /**
+     * a function that will give location option to the user to select
+     * @param lat
+     * @param lng
+     * @param zoom
+     */
     private void gotoLocation(double lat,double lng,float zoom) {
         LatLng latLng=new LatLng(lat,lng);
         CameraUpdate update= CameraUpdateFactory.newLatLngZoom(latLng, zoom);
         mMap.moveCamera(update);
     }
 
-    /*
-  Checking the google play services is available
-   */
+    /**
+     * a function that Checks the google play services is available
+    */
     private boolean checkServices() {
         //returns a integer value
         int isAvailable= GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
@@ -186,6 +202,9 @@ public class LocationActivity extends AppCompatActivity implements GoogleApiClie
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * a function that initiates the map services
+     */
     private boolean initMap() {
         if (mMap == null) {
             SupportMapFragment mapFragment= (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -193,7 +212,11 @@ public class LocationActivity extends AppCompatActivity implements GoogleApiClie
         }
         return (mMap!=null);
     }
-
+    /**
+     * a function that handles new  location
+     * @param latitudeValue
+     * @param longitudeValue
+     */
     private void handleNewLocation(double latitudeValue, double longitudeValue) {
         //getting the latitude value
         if (checkServices()) {

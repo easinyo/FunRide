@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 /**
  * Created by Emmanuel on January 25, 2020.
+ * A Class that will store the data of PostFragment
  */
 
 public class PostData implements Serializable{
@@ -22,7 +23,9 @@ public class PostData implements Serializable{
     private String departureCity;
     private String arrivalCity;
 
-
+    /**
+     * Post data contructor
+     */
     public  PostData(double dLong, double dLat, double aLong, double  aLat, String departureCity, String arrivalCity, double price, int passengers, String dDate){
 
         this.departureLongitude = dLong;

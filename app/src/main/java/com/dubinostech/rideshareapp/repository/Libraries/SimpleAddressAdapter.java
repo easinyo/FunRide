@@ -14,12 +14,15 @@ import com.dubinostech.rideshareapp.R;
 import java.util.List;
 
 /**
- * Created by Emmanuel January 25.
+ * A class that will generate the  Adresses to the caller classes
  */
 public class SimpleAddressAdapter extends ArrayAdapter<Address> {
     private List<Address> addresses;
     private Context context;
 
+    /**
+     * A SimpleAddressAdapter contructor
+     */
     public SimpleAddressAdapter(List<Address> addresses, Context context){
 
         super(context, android.R.layout.simple_list_item_1, addresses);
