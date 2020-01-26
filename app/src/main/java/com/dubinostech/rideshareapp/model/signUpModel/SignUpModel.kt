@@ -1,6 +1,12 @@
 package com.dubinostech.rideshareapp.model.SignModel
 
-import com.dubinostech.rideshareapp.data.*
+import com.dubinostech.rideshareapp.repository.Api.GatewayAPI
+import com.dubinostech.rideshareapp.repository.Api.Raws.SignupRaw
+import com.dubinostech.rideshareapp.repository.Api.Responses.SignupResponse
+import com.dubinostech.rideshareapp.repository.Data.User
+import com.dubinostech.rideshareapp.repository.ErrorHandler.ErrorCode
+import com.dubinostech.rideshareapp.repository.ErrorHandler.WebErrorUtils
+import com.dubinostech.rideshareapp.repository.Libraries.Utils
 import com.dubinostech.rideshareapp.model.signUpModel.SignUpCallback
 import retrofit2.Call
 import retrofit2.Callback
@@ -21,7 +27,14 @@ class SignUpModel : SignUpCallback {
         if (isDataValid(user.getEmail(), user.getPassword(), user.getConfirmPassword(), validationErrorListener)) {
 
             gatewayAPI = GatewayAPI(null)
-            val signupRaw = SignupRaw(user.firstName, user.lastName, user.phone, user.email, user.password, user.confirmPassword)
+            val signupRaw = SignupRaw(
+                user.firstName,
+                user.lastName,
+                user.phone,
+                user.email,
+                user.password,
+                user.confirmPassword
+            )
 
             val responseSignUpCallback = gatewayAPI!!.signup(signupRaw)
 

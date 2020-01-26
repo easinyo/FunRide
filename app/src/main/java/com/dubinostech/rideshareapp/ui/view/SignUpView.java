@@ -4,8 +4,8 @@ To be implemented by SignUpActivity
 */
 package com.dubinostech.rideshareapp.ui.view;
 
-import com.dubinostech.rideshareapp.data.ErrorCode;
-import com.dubinostech.rideshareapp.data.SignupResponse;
+import com.dubinostech.rideshareapp.repository.ErrorHandler.ErrorCode;
+import com.dubinostech.rideshareapp.repository.Api.Responses.SignupResponse;
 
 public interface SignUpView {
     void showLoading();

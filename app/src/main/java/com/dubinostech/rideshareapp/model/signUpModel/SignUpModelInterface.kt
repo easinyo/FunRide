@@ -1,8 +1,8 @@
 package com.dubinostech.rideshareapp.model.signUpModel
 
-import com.dubinostech.rideshareapp.data.ErrorCode
-import com.dubinostech.rideshareapp.data.SignupResponse
-import com.dubinostech.rideshareapp.data.User
+import com.dubinostech.rideshareapp.repository.ErrorHandler.ErrorCode
+import com.dubinostech.rideshareapp.repository.Api.Responses.SignupResponse
+import com.dubinostech.rideshareapp.repository.Data.User
 
 
 interface SignUpCallback {

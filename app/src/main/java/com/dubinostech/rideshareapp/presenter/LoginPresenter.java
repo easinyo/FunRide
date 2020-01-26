@@ -6,8 +6,8 @@
  */
 package com.dubinostech.rideshareapp.presenter;
 
-import com.dubinostech.rideshareapp.data.ErrorCode;
-import com.dubinostech.rideshareapp.data.LoginResponse;
+import com.dubinostech.rideshareapp.repository.ErrorHandler.ErrorCode;
+import com.dubinostech.rideshareapp.repository.Api.Responses.LoginResponse;
 import com.dubinostech.rideshareapp.model.loginModel.LogInCallback;
 import com.dubinostech.rideshareapp.presenter.interfaces.LoginPresenterInterface;
 import com.dubinostech.rideshareapp.ui.view.LoginView;

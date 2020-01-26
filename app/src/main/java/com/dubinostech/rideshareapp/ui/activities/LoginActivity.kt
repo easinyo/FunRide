@@ -14,14 +14,11 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import com.dubinostech.rideshareapp.R
-import com.dubinostech.rideshareapp.data.ErrorCode
-import com.dubinostech.rideshareapp.data.LoginResponse
-import com.dubinostech.rideshareapp.data.Utils
+import com.dubinostech.rideshareapp.repository.ErrorHandler.ErrorCode
+import com.dubinostech.rideshareapp.repository.Api.Responses.LoginResponse
+import com.dubinostech.rideshareapp.repository.Libraries.Utils
 import com.dubinostech.rideshareapp.model.loginModel.LoginModel
 import com.dubinostech.rideshareapp.presenter.LoginPresenter
-import com.dubinostech.rideshareapp.ui.BaseActivity
-import com.dubinostech.rideshareapp.ui.MainActivity
-import com.dubinostech.rideshareapp.ui.signup.SignUpActivity
 import com.dubinostech.rideshareapp.ui.view.LoginView
 
 @Suppress("DEPRECATION")
