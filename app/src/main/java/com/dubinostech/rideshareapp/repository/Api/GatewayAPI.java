@@ -17,6 +17,9 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * A gateway API that enables connection between front end and backend through the https request
+ */
 public class GatewayAPI {
 
     private static final String TAG = "GatewayAPI";
