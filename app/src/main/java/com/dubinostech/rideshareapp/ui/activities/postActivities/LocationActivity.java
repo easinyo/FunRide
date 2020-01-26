@@ -1,9 +1,5 @@
 package com.dubinostech.rideshareapp.ui.activities.postActivities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.NavUtils;
-
 import android.app.Dialog;
 import android.content.Intent;
 import android.location.Address;
@@ -24,6 +20,10 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NavUtils;
+
 import com.dubinostech.rideshareapp.R;
 import com.dubinostech.rideshareapp.repository.Libraries.SimpleAddressAdapter;
 import com.google.android.gms.common.ConnectionResult;
@@ -41,7 +41,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.List;
 
-public class DeparturePostActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, OnMapReadyCallback {
+public class LocationActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, OnMapReadyCallback {
 
     private GoogleApiClient mGoogleApiClient;
     private Toolbar toolbar;
@@ -64,9 +64,9 @@ public class DeparturePostActivity extends AppCompatActivity implements GoogleAp
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_departure_post);
+        setContentView(R.layout.activity_location);
 
-        toolbar = findViewById(R.id.options_toolbar);
+        //toolbar = findViewById(R.id.options_toolbar);
         setLocation = findViewById(R.id.set_location);
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -75,28 +75,29 @@ public class DeparturePostActivity extends AppCompatActivity implements GoogleAp
                 .addApi(LocationServices.API)
                 .build();
 
-        setSupportActionBar(toolbar);
+        /*setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);*/
     }
 
     public void setLocation(View v){
-        locationLatitude = location.getLatitude();
-        locationLongitude = location.getLongitude();
-        locationCity = location.getLocality();
-        Log.d("locationCity", locationCity);
-        locationAddress = location.getAddressLine(0);
+        if (location != null)
+            locationLatitude = location.getLatitude();
+            locationLongitude = location.getLongitude();
+            locationCity = location.getLocality();
+            Log.d("locationCity", locationCity);
+            locationAddress = location.getAddressLine(0);
 
 
-        Intent resultIntent = new Intent();
-        resultIntent.putExtra("locationLatitude", locationLatitude);
-        resultIntent.putExtra("locationLongitude", locationLongitude);
-        resultIntent.putExtra("locationCity", locationCity);
-        resultIntent.putExtra("locationAddress", locationAddress);
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra("locationLatitude", locationLatitude);
+            resultIntent.putExtra("locationLongitude", locationLongitude);
+            resultIntent.putExtra("locationCity", locationCity);
+            resultIntent.putExtra("locationAddress", locationAddress);
 
-        setResult(RESULT_OK, resultIntent);
-        finish();
+            setResult(RESULT_OK, resultIntent);
+            finish();
     }
 
     public void onSearchButtonClicked(View view){
@@ -159,18 +160,14 @@ public class DeparturePostActivity extends AppCompatActivity implements GoogleAp
         inflater.inflate(R.menu.post_menu, menu);
 
         View searchRef = menu.findItem(R.id.action_search).getActionView();
-        mSearchEditText = (EditText) searchRef.findViewById(R.id.searchText);
+        mSearchEditText = searchRef.findViewById(R.id.searchText);
 
-        mSearchEditText.setOnKeyListener(new View.OnKeyListener() {
-
-            @Override
-            public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
-                if (keyCode == KeyEvent.KEYCODE_ENTER) {
-                    onSearchButtonClicked(mSearchEditText);
-                    return true;
-                }
-                return false;
+        mSearchEditText.setOnKeyListener((view, keyCode, keyEvent) -> {
+            if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                onSearchButtonClicked(mSearchEditText);
+                return true;
             }
+            return false;
         });
 
         return true;

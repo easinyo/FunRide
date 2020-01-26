@@ -24,8 +24,7 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
-import com.dubinostech.rideshareapp.ui.activities.postActivities.ArrivalPostActivity;
-import com.dubinostech.rideshareapp.ui.activities.postActivities.DeparturePostActivity;
+import com.dubinostech.rideshareapp.ui.activities.postActivities.LocationActivity;
 import com.dubinostech.rideshareapp.R;
 
 import java.text.SimpleDateFormat;
@@ -45,29 +44,17 @@ public class PostFragment extends Fragment implements View.OnClickListener, Date
     private TextView departureTime;
     private TextView noPassengers;
     private TextView price;
-    private CalendarView departureDateView;
     private Calendar myCalendar;
 
-    private double locationLongitude;
-    private double locationLatitude;
-    private double arrivalLongitude;
-    private double arrivalLatitude;
-    private double departureLongitude;
-    private double departureLatitude;
     private double mPrice;
     private int mPassengers;
 
-    private String departureCity;
     private String arrivalCity;
     private String locationAddress;
-
-    private long mDate;
-    PopupWindow datePopup;
 
 
     private static final int REQUEST_CODE_GET_DEPARTURE_LOCATION= 1;
     private static final int REQUEST_CODE_GET_ARRIVAL_LOCATION= 2;
-    //private static final String SERVICE_URL = Types.AD_URL;
 
     public PostFragment() {
 
@@ -76,21 +63,21 @@ public class PostFragment extends Fragment implements View.OnClickListener, Date
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.fragment_post, container, false);
+        ViewGroup groupView = (ViewGroup)inflater.inflate(R.layout.fragment_post, container, false);
 
-        departureLocation = (Button) rootView.findViewById(R.id.departure_location);
-        arrivalLocation = (Button) rootView.findViewById(R.id.arrival_location);
-        postRide = (Button) rootView.findViewById(R.id.post_ride);
+        departureLocation = groupView.findViewById(R.id.departure_location);
+        arrivalLocation = groupView.findViewById(R.id.arrival_location);
+        postRide = groupView.findViewById(R.id.post_ride);
 
-        departureDateLabel = (TextView) rootView.findViewById(R.id.departure_date_label);
-        departureTimeLabel = (TextView) rootView.findViewById(R.id.departure_time_label);
-        noPassengersLabel = (TextView) rootView.findViewById(R.id.passengers_label);
-        priceLabel = (TextView) rootView.findViewById(R.id.price_label);
+        departureDateLabel = groupView.findViewById(R.id.departure_date_label);
+        departureTimeLabel = groupView.findViewById(R.id.departure_time_label);
+        noPassengersLabel = groupView.findViewById(R.id.passengers_label);
+        priceLabel = groupView.findViewById(R.id.price_label);
 
-        departureDate = (TextView) rootView.findViewById(R.id.departure_date);
-        departureTime = (TextView) rootView.findViewById(R.id.departure_time);
-        noPassengers = (TextView) rootView.findViewById(R.id.passengers);
-        price = (TextView) rootView.findViewById(R.id.price);
+        departureDate = groupView.findViewById(R.id.departure_date);
+        departureTime = groupView.findViewById(R.id.departure_time);
+        noPassengers = groupView.findViewById(R.id.passengers);
+        price = groupView.findViewById(R.id.price);
 
         myCalendar = Calendar.getInstance();
 
@@ -113,18 +100,18 @@ public class PostFragment extends Fragment implements View.OnClickListener, Date
 
         postRide.setEnabled(false);
 
-        return rootView;
+        return groupView;
     }
 
 
     @Override
     public void onClick(View v) {
         if(v == departureLocation){
-            Intent departIntent = new Intent(getActivity(), DeparturePostActivity.class);
+            Intent departIntent = new Intent(getActivity(), LocationActivity.class);
             startActivityForResult(departIntent, REQUEST_CODE_GET_DEPARTURE_LOCATION);
         }
         else if(v == arrivalLocation){
-            Intent arriveIntent = new Intent(getActivity(), ArrivalPostActivity.class);
+            Intent arriveIntent = new Intent(getActivity(), LocationActivity.class);
             startActivityForResult(arriveIntent, REQUEST_CODE_GET_ARRIVAL_LOCATION);
         }
         else if(v == departureDateLabel || v ==  departureDate){
@@ -144,18 +131,12 @@ public class PostFragment extends Fragment implements View.OnClickListener, Date
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setMessage("Passengers")
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            mPassengers = picker.getValue();
-                            noPassengers.setText(String.valueOf(picker.getValue()));
-                        }
+                    .setPositiveButton("OK", (dialog, which) -> {
+                        mPassengers = picker.getValue();
+                        noPassengers.setText(String.valueOf(picker.getValue()));
                     })
-                    .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
+                    .setNegativeButton("CANCEL", (dialog, which) -> {
 
-                        }
                     });
             builder.setView(picker);
             builder.create().show();
@@ -166,37 +147,19 @@ public class PostFragment extends Fragment implements View.OnClickListener, Date
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setMessage("Price $")
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            mPrice = picker.getValue();
-                            price.setText("$" + String.valueOf(picker.getValue()));
-                            postRide.setEnabled(true);
-                        }
+                    .setPositiveButton("OK", (dialog, which) -> {
+                        mPrice = picker.getValue();
+                        price.setText("$" + String.valueOf(picker.getValue()));
+                        postRide.setEnabled(true);
                     })
-                    .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
+                    .setNegativeButton("CANCEL", (dialog, which) -> {
 
-                        }
                     });
             builder.setView(picker);
             builder.create().show();
         }else if(v == postRide){
 /*
-            AdResource adResource = new AdResource();
-            adResource.addNameValuePair("departureLongitude", String.valueOf(departureLongitude));
-            adResource.addNameValuePair("departureLatitude", String.valueOf(departureLatitude));
-            adResource.addNameValuePair("arrivalLongitude", String.valueOf(arrivalLongitude));
-            adResource.addNameValuePair("arrivalLatitude", String.valueOf(arrivalLatitude));
-            adResource.addNameValuePair("passengers", String.valueOf(mPassengers));
-            adResource.addNameValuePair("departureDate", String.valueOf(myCalendar.getTime()));
-            adResource.addNameValuePair("departureCity", departureCity);
-            adResource.addNameValuePair("arrivalCity", arrivalCity);
-            adResource.addNameValuePair("userEmail", Types.aUser.getUserEmail());
-            adResource.addNameValuePair("price", String.valueOf(mPrice));
-
-            adResource.execute(new String[]{SERVICE_URL});
+            // Send Data as a PostData to the cloud through API
         */}
     }
 
@@ -206,17 +169,17 @@ public class PostFragment extends Fragment implements View.OnClickListener, Date
         if (REQUEST_CODE_GET_DEPARTURE_LOCATION == requestCode) {
             if (Activity.RESULT_OK == resultCode) {
                 Bundle locationInformation = data.getExtras();
-                departureLatitude = locationInformation.getDouble("locationLatitude");
-                departureLongitude = locationInformation.getDouble("locationLongitude");
-                departureCity = locationInformation.getString("locationCity");
+                double departureLatitude = locationInformation.getDouble("locationLatitude");
+                double departureLongitude = locationInformation.getDouble("locationLongitude");
+                String departureCity = locationInformation.getString("locationCity");
                 locationAddress = locationInformation.getString("locationAddress");
                 departureLocation.setText(locationAddress);
             }
         }else if(REQUEST_CODE_GET_ARRIVAL_LOCATION == requestCode){
             if (Activity.RESULT_OK == resultCode) {
                 Bundle locationInformation = data.getExtras();
-                arrivalLatitude = locationInformation.getDouble("locationLatitude");
-                arrivalLongitude = locationInformation.getDouble("locationLongitude");
+                double arrivalLatitude = locationInformation.getDouble("locationLatitude");
+                double arrivalLongitude = locationInformation.getDouble("locationLongitude");
                 arrivalCity = locationInformation.getString("locationCity");
                 Log.d("Arrival City", arrivalCity);
                 locationAddress = locationInformation.getString("locationAddress");
@@ -248,91 +211,6 @@ public class PostFragment extends Fragment implements View.OnClickListener, Date
         myCalendar.set(Calendar.MINUTE, minute);
         Log.d("Date", String.valueOf(myCalendar.getTime()));
         departureTime.setText(hourOfDay + ": " + minute);
-    }
-
-    private class AdResource extends AsyncTask<String, Integer, String> {
-
-        private static final int CONN_TIMEOUT = 3000;
-        private static final int SOCKET_TIMEOUT = 5000;
-
-        //private ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
-
-        private ProgressDialog pDlg = null;
-
-        private void showProgressDialog() {
-
-            pDlg = new ProgressDialog(getActivity());
-            pDlg.setMessage("Posting Ride");
-            pDlg.setProgressDrawable(getActivity().getWallpaper());
-            pDlg.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            pDlg.setCancelable(false);
-            pDlg.show();
-
-        }
-
-        public void addNameValuePair(String name, String value){
-            //params.add(new BasicNameValuePair(name, value));
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            showProgressDialog();
-        }
-
-        @Override
-        protected String doInBackground(String... urls) {
-            String url = urls[0];
-            String result = "";
-
-            //HttpResponse response = doResponse(url);
-            return result;
-        }
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            super.onProgressUpdate(values);
-            //userProgressBar.setProgress(values[0]);
-
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            Toast.makeText(getActivity(), "Ride Successfully Created", Toast.LENGTH_SHORT).show();
-            pDlg.dismiss();
-
-        }
-        /*
-        private HttpParams getHttpParams() {
-
-            HttpParams htpp; = new BasicHttpParams();
-
-            HttpConnectionParams.setConnectionTimeout(htpp, CONN_TIMEOUT);
-            HttpConnectionParams.setSoTimeout(htpp, SOCKET_TIMEOUT);
-
-            return http;
-        }
-
-        private HttpResponse doResponse(String url) {
-            HttpClient httpclient = new DefaultHttpClient(getHttpParams());
-
-            HttpResponse response = null;
-
-            try {
-
-                HttpPost httppost = new HttpPost(url);
-                httppost.setEntity(new UrlEncodedFormEntity(params));
-                response = httpclient.execute(httppost);
-
-            } catch (Exception e) {
-
-                Log.e("AD RESOURCE", e.getLocalizedMessage(), e);
-
-            }
-
-            return response;
-        }*/
-
     }
 
 }

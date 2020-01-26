@@ -3,11 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activities.postActivities.DeparturePostActivity">
-
-    <include
-        android:id="@+id/options_toolbar"
-        layout="@layout/tool_bar"></include>
+    tools:context=".ui.activities.postActivities.LocationActivity">
 
     <fragment
         android:layout_width="match_parent"
