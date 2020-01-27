@@ -1,5 +1,14 @@
 package com.dubinostech.rideshareapp.repository.Api;
 
+/* *
+* Class GatewayAPI
+*
+*This class is our Gateway where we communicate with our API
+*
+* Gateway constructor takes Interceptor
+*
+* */
+
 import com.dubinostech.rideshareapp.BuildConfig;
 import com.dubinostech.rideshareapp.repository.Api.Raws.LoginRaw;
 import com.dubinostech.rideshareapp.repository.Api.Responses.LoginResponse;
