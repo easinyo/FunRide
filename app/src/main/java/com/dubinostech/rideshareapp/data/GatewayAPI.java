@@ -1,3 +1,11 @@
+/* *
+* Class GatewayAPI
+*
+*This class is our Gateway where we communicate with our API
+*
+* Gateway constructor takes Interceptor
+*
+* */
 package com.dubinostech.rideshareapp.data;
 
 import com.dubinostech.rideshareapp.BuildConfig;
