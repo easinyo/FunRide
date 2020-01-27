@@ -1,7 +1,12 @@
 package com.dubinostech.rideshareapp.model.loginModel
 
 import android.text.TextUtils
-import com.dubinostech.rideshareapp.data.*
+import com.dubinostech.rideshareapp.repository.Api.GatewayAPI
+import com.dubinostech.rideshareapp.repository.Api.Raws.LoginRaw
+import com.dubinostech.rideshareapp.repository.Api.Responses.LoginResponse
+import com.dubinostech.rideshareapp.repository.ErrorHandler.ErrorCode
+import com.dubinostech.rideshareapp.repository.ErrorHandler.WebErrorUtils
+import com.dubinostech.rideshareapp.repository.Libraries.Utils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -21,7 +26,8 @@ class LoginModel: LogInCallback {
         if (isDataValid(userName, passWord, validationErrorListener)) {
 
             gatewayAPI = GatewayAPI(null)
-            val loginRaw = LoginRaw(userName, passWord)
+            val loginRaw =
+                LoginRaw(userName, passWord)
 
             val responseLoginCallback = gatewayAPI!!.login(loginRaw)
 

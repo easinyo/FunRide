@@ -5,7 +5,7 @@
 */
 package com.dubinostech.rideshareapp.presenter.interfaces;
 
-import com.dubinostech.rideshareapp.data.User;
+import com.dubinostech.rideshareapp.repository.Data.User;
 
 public interface SignUpPresenterInterface {
     void callSignUp(User user);

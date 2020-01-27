@@ -1,6 +1,9 @@
 package com.dubinostech.rideshareapp
 
-import com.dubinostech.rideshareapp.data.*
+import com.dubinostech.rideshareapp.repository.Api.GatewayAPI
+import com.dubinostech.rideshareapp.repository.Api.Raws.LoginRaw
+import com.dubinostech.rideshareapp.repository.Api.Responses.LoginResponse
+import com.dubinostech.rideshareapp.repository.Api.Responses.SignupResponse
 import org.hamcrest.CoreMatchers.any
 import org.junit.Before
 import org.junit.Test

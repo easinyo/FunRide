@@ -1,7 +1,7 @@
 package com.dubinostech.rideshareapp.model.loginModel
 
-import com.dubinostech.rideshareapp.data.ErrorCode
-import com.dubinostech.rideshareapp.data.LoginResponse
+import com.dubinostech.rideshareapp.repository.ErrorHandler.ErrorCode
+import com.dubinostech.rideshareapp.repository.Api.Responses.LoginResponse
 
 
 interface LogInCallback {

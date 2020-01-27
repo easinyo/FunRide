@@ -9,7 +9,7 @@ android {
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.dubinostech.rideshareapp"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -48,25 +48,25 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 
     //RETROFIT https://github.com/square/retrofit
-    compile 'com.squareup.retrofit:retrofit:1.9.0'
+    implementation 'com.squareup.retrofit:retrofit:1.9.0'
 
     //GSON https://github.com/google/gson
-    compile 'com.google.code.gson:gson:2.6.2'
+    implementation 'com.google.code.gson:gson:2.6.2'
 
     //GLIDE https://github.com/bumptech/glide
-    compile 'com.github.bumptech.glide:glide:3.7.0'
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
 
     //OKHTTP
-    compile 'com.squareup.okhttp:okhttp:2.5.0'
+    implementation 'com.squareup.okhttp:okhttp:2.5.0'
 
     //BUTTERKNIFE https://github.com/JakeWharton/butterknife
     implementation 'com.jakewharton:butterknife:10.0.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
 
 
-    compile 'com.squareup.retrofit2:retrofit:2.0.0-beta4'
-    compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.1.2'
+    implementation 'com.squareup.retrofit2:retrofit:2.0.0-beta4'
+    implementation 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.1.2'
 
 
     // Required -- JUnit 4 framework
@@ -75,7 +75,8 @@ dependencies {
     testImplementation 'androidx.test:core:1.0.0'
     // Optional -- Mockito framework
     testImplementation 'org.mockito:mockito-core:1.10.19'
-
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation 'com.google.android.gms:play-services-location:17.0.0'
 
 
 }
