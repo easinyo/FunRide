@@ -4,11 +4,85 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.gms.maps.MapView
-        android:id="@+id/mapView"
-        android:layout_width="347dp"
-        android:layout_height="280dp"
-        tools:layout_editor_absoluteX="34dp"
-        tools:layout_editor_absoluteY="346dp"
-        tools:ignore="MissingConstraints" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/backghroundcolor"
+        tools:context=".ui.fragment.SearchtFragment">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ic_departure"
+            android:background="@drawable/ic_depart"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="20dp"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/departure_city"
+            android:layout_toRightOf="@+id/ic_departure"
+            android:layout_marginTop="25dp"
+            android:textColor="@color/textColorPrimary"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:hint="Departure city"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ic_marker"
+            android:background="@drawable/ic_marker"
+            android:layout_below="@+id/departure_city"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="20dp"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/arrival_city"
+            android:layout_toRightOf="@+id/ic_marker"
+            android:layout_marginTop="25dp"
+            android:layout_below="@+id/departure_city"
+            android:textColor="@color/textColorPrimary"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:hint="Arrival city"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ic_calendar"
+            android:background="@drawable/ic_calendar"
+            android:layout_below="@+id/arrival_city"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/departure_date"
+            android:text="DATE"
+            android:layout_toRightOf="@+id/ic_calendar"
+            android:layout_marginTop="25dp"
+            android:layout_below="@+id/arrival_city"
+            android:textColor="@color/textColorPrimary"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="70dp"
+            android:layout_marginRight="70dp"
+            android:layout_marginBottom="80dp"
+            android:maxLines="1"
+            android:id="@+id/search_ride"
+            android:text="@string/search_ride"
+            android:textColor="@color/textColorPrimary"
+            android:layout_alignRight="@+id/price"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/oval_button"/>
+    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

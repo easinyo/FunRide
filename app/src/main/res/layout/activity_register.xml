@@ -9,9 +9,18 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    android:background="@drawable/background_login"
+    android:background="@color/backghroundcolor"
     tools:context=".ui.activities.SignUpActivity">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="75dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/rideshare_icon" />
 
     <Button
         android:id="@+id/signup"
@@ -152,8 +161,8 @@
         android:layout_weight="0.18"
         android:padding="20dp"
         android:text="@string/app_name"
-        android:textColor="@android:color/white"
-        android:textSize="30sp"
+        android:textColor="@color/colorPrimary"
+        android:textSize="50sp"
         tools:layout_editor_absoluteX="69dp"
         tools:layout_editor_absoluteY="5dp"
         app:layout_constraintEnd_toEndOf="parent"

@@ -49,9 +49,9 @@
 
     #--------------------------------------Post Activity
     Strings------------------------------------------#
-    <string name="from"> From </string>
+    <string name="from"> Departure </string>
 
-    <string name="to"> To </string>
+    <string name="to"> Destination </string>
 
     <string name="date"> Date </string>
 
@@ -65,7 +65,10 @@
 
     <string name="post_ride">Post Ride</string>
 
+    <string name="search_ride">Search</string>
+
     #--------------#
+
     <string name="action_search"><b>Search</b></string>
 
 
