@@ -11,7 +11,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/windowBackground"
+        android:background="@color/backghroundcolor"
         tools:context=".ui.fragment.PostFragment">
 
         <TextView
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/departure_location"
             android:textColor="@color/textColorPrimary"
-            android:background="#111"
+            android:background="@color/colorPrimary"
             android:hint="Enter Departure Location"
             android:textColorHint="#ABABAB"
             android:layout_below="@+id/departure_location_label"
@@ -68,7 +68,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/arrival_location"
             android:textColor="@color/textColorPrimary"
-            android:background="#111"
+            android:background="@color/colorPrimary"
             android:hint="Enter Arrival Location"
             android:textColorHint="#ABABAB"
             android:layout_below="@+id/arrival_location_label"
@@ -217,13 +217,16 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/post_ride"
-            android:background="#111"
-            android:textColor="@color/textColorPrimary"
-            android:text="Post Ride"
-            android:layout_alignRight="@+id/price"
+            android:layout_marginLeft="70dp"
+            android:layout_marginRight="70dp"
             android:layout_marginBottom="40dp"
-            android:layout_alignParentBottom="true"/>
+            android:maxLines="1"
+            android:id="@+id/post_ride"
+            android:text="@string/post_ride"
+            android:textColor="@color/textColorPrimary"
+            android:layout_alignRight="@+id/price"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/oval_button"/>
 
     </RelativeLayout>
 

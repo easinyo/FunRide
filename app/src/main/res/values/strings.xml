@@ -63,6 +63,8 @@
 
     <string name="cost"> Cost </string>
 
+    <string name="post_ride">Post Ride</string>
+
     #--------------#
     <string name="action_search"><b>Search</b></string>
 
