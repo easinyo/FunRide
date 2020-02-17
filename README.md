@@ -43,6 +43,5 @@ Learn more about Android studio and Android developement: https://developer.andr
 ## Database Schema
 Note: 
 * Since we are based on an Agile methodology, we might be doing changes regarding our Database Schedma.
-* The payment transaction might will be handled by a third party service (Example: Stripe or Square). 
 
 ![](DB.png)
