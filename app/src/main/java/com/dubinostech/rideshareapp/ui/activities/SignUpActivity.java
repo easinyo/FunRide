@@ -223,7 +223,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     public void showLoading() {
         if (progressDialog != null)
             progressDialog.setTitle("Sign up");
-        progressDialog.setMessage(String.valueOf(R.string.activity_login_loading_msg));
+        progressDialog.setMessage(String.valueOf(R.string.activity_loading_msg));
         progressDialog.show();
     }
 

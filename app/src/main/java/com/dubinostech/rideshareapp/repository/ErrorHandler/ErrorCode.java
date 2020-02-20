@@ -7,6 +7,7 @@ public enum ErrorCode {
     PASSWORD_INVALID(3),
     LOGIN_FAILED(4),
     SIGNUP_FAILED(5),
+    POST_FAILED(7),
     PASSWORD_DONT_MATCH(6);
 
     private final int id;

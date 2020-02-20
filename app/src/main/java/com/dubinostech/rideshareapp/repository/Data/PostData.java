@@ -9,115 +9,81 @@ import java.io.Serializable;
 
 public class PostData implements Serializable{
 
-    private int id;
-    private double departureLongitude;
-    private double departueLatitude;
-    private double arrivalLongitude;
-    private double arrivalLatitude;
-    private double price;
+    private String departure_city;
+    private String departure_address;
+    private String arrival_city;
+    private String arrival_address;
 
-    private int passengers;
-
-    private String departureDate;
-
-    private String departureCity;
-    private String arrivalCity;
+    private float fare;
+    private int available_spot;
+    private String departure_datetime;
 
     /**
      * Post data contructor
      */
-    public  PostData(double dLong, double dLat, double aLong, double  aLat, String departureCity, String arrivalCity, double price, int passengers, String dDate){
-
-        this.departureLongitude = dLong;
-        this.departueLatitude = dLat;
-        this.arrivalLongitude = aLong;
-        this.arrivalLatitude = aLat;
-        this.departureCity = departureCity;
-        this.arrivalCity = arrivalCity;
-        this.passengers = passengers;
-        this.departureDate = dDate;
-        this.price = price;
-
+    public PostData(String departure_city, String departure_address, String arrival_city, String arrival_address, float fare, int available_spot, String departure_datetime) {
+        this.departure_city = departure_city;
+        this.departure_address = departure_address;
+        this.arrival_city = arrival_city;
+        this.arrival_address = arrival_address;
+        this.fare = fare;
+        this.available_spot = available_spot;
+        this.departure_datetime = departure_datetime;
     }
 
-    public double getPrice() {
-        return price;
+    public String getDeparture_city() {
+        return departure_city;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setDeparture_city(String departure_city) {
+        this.departure_city = departure_city;
     }
 
-    public String getDepartureCity() {
-        return departureCity;
+    public String getDeparture_address() {
+        return departure_address;
     }
 
-    public void setDepartureCity(String departureCity) {
-        this.departureCity = departureCity;
+    public void setDeparture_address(String departure_address) {
+        this.departure_address = departure_address;
     }
 
-    public String getArrivalCity() {
-        return arrivalCity;
+    public String getArrival_city() {
+        return arrival_city;
     }
 
-    public void setArrivalCity(String arrivalCity) {
-        this.arrivalCity = arrivalCity;
+    public void setArrival_city(String arrival_city) {
+        this.arrival_city = arrival_city;
     }
 
-    public int getId() {
-        return id;
+    public String getArrival_address() {
+        return arrival_address;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setArrival_address(String arrival_address) {
+        this.arrival_address = arrival_address;
     }
 
-    public double getDepartureLongitude() {
-        return departureLongitude;
+    public float getFare() {
+        return fare;
     }
 
-    public void setDepartureLongitude(double departureLongitude) {
-        this.departureLongitude = departureLongitude;
+    public void setFare(float fare) {
+        this.fare = fare;
     }
 
-    public double getDepartueLatitude() {
-        return departueLatitude;
+    public int getAvailable_spot() {
+        return available_spot;
     }
 
-    public void setDepartueLatitude(double departueLatitude) {
-        this.departueLatitude = departueLatitude;
+    public void setAvailable_spot(int available_spot) {
+        this.available_spot = available_spot;
     }
 
-    public double getArrivalLongitude() {
-        return arrivalLongitude;
+    public String getDeparture_datetime() {
+        return departure_datetime;
     }
 
-    public void setArrivalLongitude(double arrivalLongitude) {
-        this.arrivalLongitude = arrivalLongitude;
+    public void setDeparture_datetime(String departure_datetime) {
+        this.departure_datetime = departure_datetime;
     }
-
-    public double getArrivalLatitude() {
-        return arrivalLatitude;
-    }
-
-    public void setArrivalLatitude(double arrivalLatitude) {
-        this.arrivalLatitude = arrivalLatitude;
-    }
-
-    public int getPassengers() {
-        return passengers;
-    }
-
-    public void setPassengers(int passengers) {
-        this.passengers = passengers;
-    }
-
-    public String getDepartureDate() {
-        return departureDate;
-    }
-
-    public void setDepartureDate(String departureDate) {
-        this.departureDate = departureDate;
-    }
-
 }
