@@ -44,4 +44,4 @@ Learn more about Android studio and Android developement: https://developer.andr
 Note: 
 * Since we are based on an Agile methodology, we might be doing changes regarding our Database Schedma.
 
-![](DB.png)
+![](funride.png)
