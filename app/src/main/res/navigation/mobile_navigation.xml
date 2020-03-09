@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.dubinostech.rideshareapp.ui.fragment.NotificationsFragment"
+        android:name="com.dubinostech.rideshareapp.ui.fragment.ProfileFragment"
         android:label="@string/title_profile"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_profile" />
 </navigation>

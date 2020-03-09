@@ -12,9 +12,11 @@ package com.dubinostech.rideshareapp.repository.Api;
 import com.dubinostech.rideshareapp.BuildConfig;
 import com.dubinostech.rideshareapp.repository.Api.Raws.LoginRaw;
 import com.dubinostech.rideshareapp.repository.Api.Raws.PostRaw;
-import com.dubinostech.rideshareapp.repository.Api.Responses.LoginResponse;
+import com.dubinostech.rideshareapp.repository.Api.Raws.SearchRaw;
 import com.dubinostech.rideshareapp.repository.Api.Raws.SignupRaw;
+import com.dubinostech.rideshareapp.repository.Api.Responses.LoginResponse;
 import com.dubinostech.rideshareapp.repository.Api.Responses.PostResponse;
+import com.dubinostech.rideshareapp.repository.Api.Responses.SearchResponse;
 import com.dubinostech.rideshareapp.repository.Api.Responses.SignupResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -93,6 +95,10 @@ public class GatewayAPI {
 
     public Call<PostResponse> postRide(PostRaw raw) {
         return service.postRide(raw);
+    }
+
+    public Call<SearchResponse> search(SearchRaw raw) {
+        return service.search(raw);
     }
 
 }

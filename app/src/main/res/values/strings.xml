@@ -31,6 +31,8 @@
 
     <string name="activity_signup_loading_msg">Please wait, We are creating your account...</string>
 
+    <string name="activity_search_loading_msg">Please wait, We are searching for your ride...</string>
+
     <string name="activity_login_fail_msg">Login Failed !! Try again later.</string>
 
     <string name="activity_login_enter_email">Please enter EmailID.</string>
@@ -51,27 +53,23 @@
 
     <string name="username_password_empty">Username and/or password empty, Please Try again..</string>
 
-    #--------------------------------------Post Activity
-    Strings------------------------------------------#
+    #------Post Activity Strings------------------------------------#
     <string name="from"> Departure </string>
-
     <string name="to"> Destination </string>
-
     <string name="date"> Date </string>
-
     <string name="time"> Time </string>
-
     <string name="seats"> Seats </string>
-
     <string name="lagguage"> Bag Allowed </string>
-
     <string name="cost"> Cost </string>
-
     <string name="post_ride">Post Ride</string>
-
     <string name="search_ride">Search</string>
+    <string name="logout">Logout</string>
 
-    #--------------#
+    #-------Profile-------#
+    <string name="trip_done">Trips Done</string>
+    <string name="contact">Contact Us</string>
+    <string name="ratings">Star Ratings</string>
+
 
     <string name="action_search"><b>Search</b></string>
 

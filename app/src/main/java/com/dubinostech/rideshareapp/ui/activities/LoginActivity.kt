@@ -19,6 +19,7 @@ import com.dubinostech.rideshareapp.repository.Api.Responses.LoginResponse
 import com.dubinostech.rideshareapp.repository.Libraries.Utils
 import com.dubinostech.rideshareapp.model.loginModel.LoginModel
 import com.dubinostech.rideshareapp.presenter.LoginPresenter
+import com.dubinostech.rideshareapp.repository.Data.LoggedUser
 import com.dubinostech.rideshareapp.ui.view.LoginView
 
 @Suppress("DEPRECATION")
@@ -124,6 +125,10 @@ class LoginActivity: BaseActivity() , LoginView {
         }    }
 
     override fun loginSuccess(user: LoginResponse?) {
+        LoggedUser.token = user?.auth_token
+        LoggedUser.name = user?.full_name
+        LoggedUser.email = user?.email
+
         val intent = Intent(this@LoginActivity, MainActivity::class.java)
         intent.putExtra("home_msg", "This is HOME")
         startActivity(intent)
