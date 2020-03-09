@@ -24,9 +24,21 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-
             />
-        <Button
+        <fragment
+            android:layout_marginTop="10dp"
+            android:id="@+id/autocomplete_fragment_departure_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textColorPrimary"
+            android:background="@color/colorPrimary"
+            android:hint="Enter Arrival Location"
+            android:textColorHint="#ABABAB"
+            android:layout_below="@+id/departure_location_label"
+            android:paddingLeft="15dp"
+            android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+            />
+        <!--<Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/departure_location"
@@ -37,14 +49,14 @@
             android:layout_below="@+id/departure_location_label"
             android:drawableLeft="@drawable/ic_depart"
             android:paddingLeft="15dp"
-            />
+            />-->
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/ic_travel"
             android:background="@drawable/ic_travel"
-            android:layout_below="@+id/departure_location"
+            android:layout_below="@+id/autocomplete_fragment_departure_location"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="20dp"/>
@@ -62,8 +74,20 @@
             android:layout_marginBottom="20dp"
 
             />
-
-        <Button
+        <fragment
+            android:layout_marginTop="10dp"
+            android:id="@+id/autocomplete_fragment_arrival_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textColorPrimary"
+            android:background="@color/colorPrimary"
+            android:hint="Enter Arrival Location"
+            android:textColorHint="#ABABAB"
+            android:layout_below="@+id/arrival_location_label"
+            android:paddingLeft="15dp"
+            android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+            />
+        <!--<Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/arrival_location"
@@ -74,14 +98,14 @@
             android:layout_below="@+id/arrival_location_label"
             android:drawableLeft="@drawable/ic_marker"
             android:paddingLeft="15dp"
-            />
+            />-->
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/ic_calendar"
             android:background="@drawable/ic_calendar"
-            android:layout_below="@+id/arrival_location"
+            android:layout_below="@+id/autocomplete_fragment_arrival_location"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="20dp"/>
@@ -92,7 +116,7 @@
             android:id="@+id/departure_date_label"
             android:layout_toRightOf="@+id/ic_calendar"
             android:layout_marginTop="25dp"
-            android:layout_below="@+id/arrival_location"
+            android:layout_below="@+id/autocomplete_fragment_arrival_location"
             android:textColor="@color/textColorPrimary"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Departure Date"/>
@@ -105,7 +129,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginTop="25dp"
             android:layout_marginRight="10dp"
-            android:layout_below="@+id/arrival_location"
+            android:layout_below="@+id/autocomplete_fragment_arrival_location"
             android:textColor="@color/textColorPrimary"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Mon 07.12"/>
