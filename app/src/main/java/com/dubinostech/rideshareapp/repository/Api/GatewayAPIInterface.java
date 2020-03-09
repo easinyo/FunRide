@@ -1,9 +1,11 @@
 package com.dubinostech.rideshareapp.repository.Api;
 
 import com.dubinostech.rideshareapp.repository.Api.Raws.LoginRaw;
+import com.dubinostech.rideshareapp.repository.Api.Raws.PostRaw;
 import com.dubinostech.rideshareapp.repository.Api.Raws.SearchRaw;
 import com.dubinostech.rideshareapp.repository.Api.Raws.SignupRaw;
 import com.dubinostech.rideshareapp.repository.Api.Responses.LoginResponse;
+import com.dubinostech.rideshareapp.repository.Api.Responses.PostResponse;
 import com.dubinostech.rideshareapp.repository.Api.Responses.SearchResponse;
 import com.dubinostech.rideshareapp.repository.Api.Responses.SignupResponse;
 
@@ -18,6 +20,7 @@ public interface GatewayAPIInterface {
 
     String LOGIN = "signin";
     String SIGNUP = "signup";
+    String POST_TRIP = "post_trip";
     String SEARCH = "search_trips";
 
 
@@ -26,6 +29,9 @@ public interface GatewayAPIInterface {
 
     @POST(SIGNUP)
     Call<SignupResponse> signup(@Body SignupRaw signUpCall);
+   //Add Headers
+    @POST(POST_TRIP)
+    Call<PostResponse> postRide(@Body PostRaw postCall);
 
     @POST(SEARCH)
     Call<SearchResponse> search(@Body SearchRaw searchCall);

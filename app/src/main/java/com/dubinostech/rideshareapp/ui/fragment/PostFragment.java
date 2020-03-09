@@ -1,43 +1,56 @@
 package com.dubinostech.rideshareapp.ui.fragment;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.AsyncTask;
+import android.location.Address;
+import android.location.Geocoder;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CalendarView;
 import android.widget.DatePicker;
 import android.widget.NumberPicker;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
-import com.dubinostech.rideshareapp.ui.activities.postActivities.LocationActivity;
 import com.dubinostech.rideshareapp.R;
+import com.dubinostech.rideshareapp.model.PostFragmentModel.PostModel;
+import com.dubinostech.rideshareapp.presenter.PostPresenter;
+import com.dubinostech.rideshareapp.repository.Api.Responses.PostResponse;
+import com.dubinostech.rideshareapp.repository.Data.PostData;
+import com.dubinostech.rideshareapp.repository.ErrorHandler.ErrorCode;
+import com.dubinostech.rideshareapp.ui.view.PostView;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 /**
  * A fragment that display the post page
  */
-public class PostFragment extends Fragment implements View.OnClickListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+public class PostFragment extends Fragment implements View.OnClickListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener, PostView {
 
-    private Button departureLocation;
-    private Button arrivalLocation;
+    private final String TAG = "TAG_PostFragment";
+
     private Button postRide;
     private TextView departureDateLabel;
     private TextView departureTimeLabel;
@@ -49,18 +62,23 @@ public class PostFragment extends Fragment implements View.OnClickListener, Date
     private TextView price;
     private Calendar myCalendar;
 
+    private ProgressDialog progressDialog;
+
+
     private double mPrice;
     private int mPassengers;
 
-    private String arrivalCity;
-    private String locationAddress;
+    private int uiPrice;
+    private int uiPassengers;
 
+    PlacesClient placesClient;
 
-    private static final int REQUEST_CODE_GET_DEPARTURE_LOCATION= 1;
-    private static final int REQUEST_CODE_GET_ARRIVAL_LOCATION= 2;
+    String departure_city;
+    String departure_address;
+    String arrival_city;
+    String arrival_address;
 
     public PostFragment() {
-
     }
 
     @Override
@@ -68,8 +86,6 @@ public class PostFragment extends Fragment implements View.OnClickListener, Date
         // Inflate the layout for this fragment
         ViewGroup groupView = (ViewGroup)inflater.inflate(R.layout.fragment_post, container, false);
 
-        departureLocation = groupView.findViewById(R.id.departure_location);
-        arrivalLocation = groupView.findViewById(R.id.arrival_location);
         postRide = groupView.findViewById(R.id.post_ride);
 
         departureDateLabel = groupView.findViewById(R.id.departure_date_label);
@@ -89,8 +105,57 @@ public class PostFragment extends Fragment implements View.OnClickListener, Date
         departureDate.setText(sdf.format(myCalendar.getTime()));
         departureTime.setText(Calendar.HOUR + ":" + Calendar.MINUTE);
 
-        departureLocation.setOnClickListener(this);
-        arrivalLocation.setOnClickListener(this);
+        // Setup Places Client
+        if (!Places.isInitialized()) {
+            Places.initialize(getActivity(), "AIzaSyByniyl8kvVAZ0eGBbPxyUVzVg9jgV5XfA");
+        }
+        // Retrieve a PlacesClient (previously initialized - see MainActivity)
+        placesClient = Places.createClient(getActivity());
+
+        final AutocompleteSupportFragment autocompleteSupportFragmentArrival =
+                (AutocompleteSupportFragment)
+                        getChildFragmentManager().findFragmentById(R.id.autocomplete_fragment_arrival_location);
+
+        autocompleteSupportFragmentArrival.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME,Place.Field.LAT_LNG,Place.Field.ADDRESS));
+
+        autocompleteSupportFragmentArrival.setOnPlaceSelectedListener(
+                new PlaceSelectionListener() {
+                    @Override
+                    public void onPlaceSelected(Place place) {
+                        arrival_address = place.getName();
+                        arrival_city = place.getAddress().replace(arrival_address + ",", "");
+                        Log.d(TAG, ""+place.toString() + "arrival_address: "+ arrival_address + "arrival_city: "+ arrival_city);
+                    }
+
+                    @Override
+                    public void onError(Status status) {
+                        Log.d(TAG, ""+status.getStatusMessage());
+                    }
+                });
+
+        final AutocompleteSupportFragment autocompleteSupportFragmentDeparture =
+                (AutocompleteSupportFragment)
+                        getChildFragmentManager().findFragmentById(R.id.autocomplete_fragment_departure_location);
+
+        autocompleteSupportFragmentDeparture.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME,Place.Field.LAT_LNG,Place.Field.ADDRESS));
+
+        autocompleteSupportFragmentDeparture.setOnPlaceSelectedListener(
+                new PlaceSelectionListener() {
+                    @Override
+                    public void onPlaceSelected(Place place) {
+                        final LatLng latLng = place.getLatLng();
+                        departure_address = place.getName();
+                        departure_city = place.getAddress().replace(departure_address + ",", "");
+
+                        Log.d(TAG, "departure_address:  "+ departure_address + " arrival_city: "+ departure_city);
+                    }
+
+                    @Override
+                    public void onError(Status status) {
+                        Log.d(TAG, ""+status.getStatusMessage());
+                    }
+                });
+
         departureDateLabel.setOnClickListener(this);
         departureDate.setOnClickListener(this);
         departureTimeLabel.setOnClickListener(this);
@@ -100,24 +165,26 @@ public class PostFragment extends Fragment implements View.OnClickListener, Date
         priceLabel.setOnClickListener(this);
         price.setOnClickListener(this);
         postRide.setOnClickListener(this);
-
-        postRide.setEnabled(false);
+        // Set to False and enable it when nothing is False
+        postRide.setEnabled(true);
 
         return groupView;
     }
 
+    private String getCityNameByCoordinates(double lat, double lon) throws IOException {
+        Geocoder mGeocoder = new Geocoder(getActivity(), Locale.getDefault());
+        List<Address> addresses = mGeocoder.getFromLocation(lat, lon, 1);
 
+        if (addresses != null && addresses.size() > 0) {
+            return addresses.get(0).getLocality();
+        }
+        return null;
+    }
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onClick(View v) {
-        if(v == departureLocation){
-            Intent departIntent = new Intent(getActivity(), LocationActivity.class);
-            startActivityForResult(departIntent, REQUEST_CODE_GET_DEPARTURE_LOCATION);
-        }
-        else if(v == arrivalLocation){
-            Intent arriveIntent = new Intent(getActivity(), LocationActivity.class);
-            startActivityForResult(arriveIntent, REQUEST_CODE_GET_ARRIVAL_LOCATION);
-        }
-        else if(v == departureDateLabel || v ==  departureDate){
+        //Potential Call from Presenter
+       if(v == departureDateLabel || v ==  departureDate){
             DatePickerDialog dialog =  new DatePickerDialog(getContext(), this, myCalendar.get(Calendar.YEAR),
                     myCalendar.get(Calendar.MONTH),
                     myCalendar.get(Calendar.DAY_OF_MONTH));
@@ -137,9 +204,9 @@ public class PostFragment extends Fragment implements View.OnClickListener, Date
                     .setPositiveButton("OK", (dialog, which) -> {
                         mPassengers = picker.getValue();
                         noPassengers.setText(String.valueOf(picker.getValue()));
+                        uiPassengers = picker.getValue();
                     })
                     .setNegativeButton("CANCEL", (dialog, which) -> {
-
                     });
             builder.setView(picker);
             builder.create().show();
@@ -154,6 +221,7 @@ public class PostFragment extends Fragment implements View.OnClickListener, Date
                         mPrice = picker.getValue();
                         price.setText("$" + String.valueOf(picker.getValue()));
                         postRide.setEnabled(true);
+                        uiPrice = picker.getValue();
                     })
                     .setNegativeButton("CANCEL", (dialog, which) -> {
 
@@ -161,37 +229,33 @@ public class PostFragment extends Fragment implements View.OnClickListener, Date
             builder.setView(picker);
             builder.create().show();
         }else if(v == postRide){
-/*
-            // Send Data as a PostData to the cloud through API
-        */}
+
+             float fare = uiPrice;
+             int available_spot = uiPassengers;
+
+             String departure_datetime = getLocalDateTime();
+
+
+            PostData postData=new PostData(departure_city, departure_address, arrival_city, arrival_address,
+            fare, available_spot, departure_datetime);
+
+            //Show Dialog
+
+            this.progressDialog = new ProgressDialog(getActivity());
+
+            //Sending data to Gateway from here
+            PostPresenter presenter = new PostPresenter(this, new PostModel());
+            presenter.callPostRide(postData);
+        }
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    private String getLocalDateTime(){
+        SimpleDateFormat parser = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss",  Locale.US);
+        String output = parser.format(myCalendar.getTime());
 
-        if (REQUEST_CODE_GET_DEPARTURE_LOCATION == requestCode) {
-            if (Activity.RESULT_OK == resultCode) {
-                Bundle locationInformation = data.getExtras();
-                double departureLatitude = locationInformation.getDouble("locationLatitude");
-                double departureLongitude = locationInformation.getDouble("locationLongitude");
-                String departureCity = locationInformation.getString("locationCity");
-                locationAddress = locationInformation.getString("locationAddress");
-                departureLocation.setText(locationAddress);
-            }
-        }else if(REQUEST_CODE_GET_ARRIVAL_LOCATION == requestCode){
-            if (Activity.RESULT_OK == resultCode) {
-                Bundle locationInformation = data.getExtras();
-                double arrivalLatitude = locationInformation.getDouble("locationLatitude");
-                double arrivalLongitude = locationInformation.getDouble("locationLongitude");
-                arrivalCity = locationInformation.getString("locationCity");
-                Log.d("Arrival City", arrivalCity);
-                locationAddress = locationInformation.getString("locationAddress");
-                arrivalLocation.setText(locationAddress);
-            }
-        }
-        else {
-            super.onActivityResult(requestCode, resultCode, data);
-        }
+        Log.d("Date" + " LocalDateTime" , output);
+
+        return output;
     }
 
     @Override
@@ -200,20 +264,55 @@ public class PostFragment extends Fragment implements View.OnClickListener, Date
         myCalendar.set(Calendar.YEAR, year);
         myCalendar.set(Calendar.MONTH, monthOfYear);
         myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-        Log.d("Date", String.valueOf(myCalendar.getTime()));
+        Log.d(TAG + "Date", String.valueOf(myCalendar.getTime()));
         String myFormat = "MM/dd/yy";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         departureDate.setText(sdf.format(myCalendar.getTime()));
-
-
     }
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         myCalendar.set(Calendar.HOUR, hourOfDay);
         myCalendar.set(Calendar.MINUTE, minute);
-        Log.d("Date", String.valueOf(myCalendar.getTime()));
+        Log.d(TAG + "Date", String.valueOf(myCalendar.getTime()));
         departureTime.setText(hourOfDay + ": " + minute);
     }
 
+    @Override
+    public void showLoading() {
+        if (progressDialog != null)
+            progressDialog.setTitle(null);
+        progressDialog.setMessage(String.valueOf(R.string.activity_loading_msg));
+        progressDialog.show();
+    }
+    @Override
+    public void hideLoading() {
+        if (progressDialog != null && !progressDialog.isShowing())
+            progressDialog.dismiss();
+    }
+
+    @Override
+    public void postSuccess(PostResponse post) {
+        Toast.makeText(
+                getActivity(),
+                String.valueOf(R.string.activity_success),
+                Toast.LENGTH_LONG
+        ).show();
+    }
+
+    @Override
+    public void postFailure(ErrorCode code) {
+        if (code.getId() == 7) {
+            Toast.makeText(
+                    getActivity(),
+                    String.valueOf(R.string.activity_post_error),
+                    Toast.LENGTH_LONG
+            ).show();
+        }
+    }
+
+    @Override
+    public void postFailure(String errMsg) {
+        Toast.makeText(getActivity(), errMsg, Toast.LENGTH_LONG).show();
+    }
 }

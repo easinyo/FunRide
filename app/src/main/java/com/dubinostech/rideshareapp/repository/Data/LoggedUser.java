@@ -2,8 +2,8 @@ package com.dubinostech.rideshareapp.repository.Data;
 
 public class LoggedUser {
     public static String token = "";
-    public static String name = "";
-    public static String email = "";
+    public static String name = "Emmanuel Asinyo";
+    public static String email = "easin081@uottawa.ca";
 
     public LoggedUser(String token, String name, String email) {
         this.token = token;

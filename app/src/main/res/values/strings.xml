@@ -27,7 +27,7 @@
 
     <string name="activity_login_alert_ok">OK</string>
 
-    <string name="activity_login_loading_msg">Please wait, Loading ...</string>
+    <string name="activity_loading_msg">Please wait, Loading ...</string>
 
     <string name="activity_signup_loading_msg">Please wait, We are creating your account...</string>
 
@@ -46,6 +46,10 @@
     <string name="activity_login_password_wrong">Password is wrong.</string>
 
     <string name="activity_signup_email_existing">Email already existing. Try to login.</string>
+
+    <string name="activity_post_error">Something went wrong, Please verify your data.</string>
+    <string name = "activity_success"> You have Posted your trip successfully</string>>
+
 
     <string name="username_password_empty">Username and/or password empty, Please Try again..</string>
 
@@ -69,6 +73,6 @@
 
     <string name="action_search"><b>Search</b></string>
 
-
+    <string name="api_key">AIzaSyByniyl8kvVAZ0eGBbPxyUVzVg9jgV5XfA</string>>
 
 </resources>

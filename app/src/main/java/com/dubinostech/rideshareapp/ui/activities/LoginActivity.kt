@@ -150,7 +150,7 @@ class LoginActivity: BaseActivity() , LoginView {
     override fun showLoading() {
         progressDialog?.setTitle(null)
         progressDialog?.setTitle(null)
-        progressDialog?.setMessage(resources.getString(R.string.activity_login_loading_msg))
+        progressDialog?.setMessage(resources.getString(R.string.activity_loading_msg))
         progressDialog?.show()
     }
 
