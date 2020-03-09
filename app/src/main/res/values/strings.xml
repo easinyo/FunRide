@@ -31,6 +31,8 @@
 
     <string name="activity_signup_loading_msg">Please wait, We are creating your account...</string>
 
+    <string name="activity_search_loading_msg">Please wait, We are searching for your ride...</string>
+
     <string name="activity_login_fail_msg">Login Failed !! Try again later.</string>
 
     <string name="activity_login_enter_email">Please enter EmailID.</string>
