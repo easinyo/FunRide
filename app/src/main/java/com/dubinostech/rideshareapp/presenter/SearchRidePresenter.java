@@ -6,20 +6,26 @@
  */
 package com.dubinostech.rideshareapp.presenter;
 
-/*
+import com.dubinostech.rideshareapp.model.loginModel.SearchCallBack;
+import com.dubinostech.rideshareapp.presenter.interfaces.SearchRideInterface;
+import com.dubinostech.rideshareapp.repository.Api.Responses.SearchResponse;
+import com.dubinostech.rideshareapp.repository.ErrorHandler.ErrorCode;
+import com.dubinostech.rideshareapp.ui.view.SearchView;
+
+import org.jetbrains.annotations.NotNull;
+
 public class SearchRidePresenter implements SearchRideInterface {
 
 
-
     SearchView searchView;
-    LogInCallback logInCallback;
+    SearchCallBack searchCallback;
 
-    public SearchRidePresenter(SearchView searchView, LogInCallback logInCallback) {
+    public SearchRidePresenter(SearchView searchView, SearchCallBack searchCallback) {
         this.searchView = searchView;
-        this.logInCallback = logInCallback;
+        this.searchCallback = searchCallback;
     }
 
-    /**
+    /*
      * callLogin is a helper method that handles the user login
      * @param departure
      *            String representing the user's username or email
@@ -29,32 +35,28 @@ public class SearchRidePresenter implements SearchRideInterface {
      * Then notifies the login view
      */
 
-    /*
     @Override
     public void callSearch(String departure, String arrival, String date) {
-        SearchView.showLoading();
-        logInCallback.login(departure, arrival, new LoginInCallback.IValidationErrorListener() {
-            @Override public void searchError(ErrorCode code) {
-                SearchView.hideLoading();
-                SearchView.setSearchError(code);
-            }
-
-        }, new LogInCallback.IOnLoginFinishedListener() {
-            @Override public void getUserData(LoginResponse user) {
-                SearchView.hideLoading();
-                if (user != null) {
-                    SearchView.searchSuccess(user);
+        searchView.showLoading();
+        searchCallback.search(departure, arrival, date, new SearchCallBack.IOnSearchFinishedListener() {
+            @Override
+            public void getTripData(@NotNull SearchResponse trips) {
+                searchView.hideLoading();
+                if (trips != null) {
+                    searchView.searchSuccess(trips);
                 } else {
-                    SearchView.searchFailure(ErrorCode.LOGIN_FAILED);
+                    searchView.searchFailure(ErrorCode.SEARCH_FAILED);
                 }
             }
 
-            @Override public void errorMsg(String errorMsg) {
-                SearchView.hideLoading();
-                SearchView.loginFailure(errorMsg);
+            @Override
+            public void errorMsg(String errorMsg) {
+                searchView.hideLoading();
+                searchView.searchFailure(errorMsg);
             }
 
         });
 
     }
-*/
+}
+

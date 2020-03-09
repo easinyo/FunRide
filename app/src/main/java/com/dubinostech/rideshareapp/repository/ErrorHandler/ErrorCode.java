@@ -7,7 +7,8 @@ public enum ErrorCode {
     PASSWORD_INVALID(3),
     LOGIN_FAILED(4),
     SIGNUP_FAILED(5),
-    PASSWORD_DONT_MATCH(6);
+    PASSWORD_DONT_MATCH(6),
+    SEARCH_FAILED(8);
 
     private final int id;
 
