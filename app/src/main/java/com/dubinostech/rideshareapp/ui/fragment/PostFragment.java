@@ -79,7 +79,6 @@ public class PostFragment extends Fragment implements View.OnClickListener, Date
     String arrival_address;
 
     public PostFragment() {
-
     }
 
     @Override
@@ -208,7 +207,6 @@ public class PostFragment extends Fragment implements View.OnClickListener, Date
                         uiPassengers = picker.getValue();
                     })
                     .setNegativeButton("CANCEL", (dialog, which) -> {
-
                     });
             builder.setView(picker);
             builder.create().show();
@@ -271,7 +269,6 @@ public class PostFragment extends Fragment implements View.OnClickListener, Date
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         departureDate.setText(sdf.format(myCalendar.getTime()));
     }
-
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {

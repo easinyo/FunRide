@@ -24,6 +24,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
+            android:drawableLeft="@drawable/ic_depart"
             />
         <fragment
             android:layout_marginTop="10dp"
@@ -38,18 +39,6 @@
             android:paddingLeft="15dp"
             android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
             />
-        <!--<Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/departure_location"
-            android:textColor="@color/textColorPrimary"
-            android:background="@color/colorPrimary"
-            android:hint="Enter Departure Location"
-            android:textColorHint="#ABABAB"
-            android:layout_below="@+id/departure_location_label"
-            android:drawableLeft="@drawable/ic_depart"
-            android:paddingLeft="15dp"
-            />-->
 
         <ImageView
             android:layout_width="wrap_content"
@@ -72,7 +61,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
-
+            android:drawableLeft="@drawable/ic_marker"
             />
         <fragment
             android:layout_marginTop="10dp"
@@ -87,18 +76,6 @@
             android:paddingLeft="15dp"
             android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
             />
-        <!--<Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/arrival_location"
-            android:textColor="@color/textColorPrimary"
-            android:background="@color/colorPrimary"
-            android:hint="Enter Arrival Location"
-            android:textColorHint="#ABABAB"
-            android:layout_below="@+id/arrival_location_label"
-            android:drawableLeft="@drawable/ic_marker"
-            android:paddingLeft="15dp"
-            />-->
 
         <ImageView
             android:layout_width="wrap_content"
