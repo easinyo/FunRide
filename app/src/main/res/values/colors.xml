@@ -19,5 +19,8 @@
     <color name="bg_msg_input">#e8e8e8</color>
     <color name="text_msg_input">#626262</color>
     <color name="lblFromName">#777777</color>
+    <color name="goodgrey">#535353</color>
+    <color name="grey">#E9EAEE</color>
+    <color name="lightgrey">#EEEEEE</color>
 
 </resources>

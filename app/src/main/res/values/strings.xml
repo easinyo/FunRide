@@ -49,27 +49,23 @@
 
     <string name="username_password_empty">Username and/or password empty, Please Try again..</string>
 
-    #--------------------------------------Post Activity
-    Strings------------------------------------------#
+    #------Post Activity Strings------------------------------------#
     <string name="from"> Departure </string>
-
     <string name="to"> Destination </string>
-
     <string name="date"> Date </string>
-
     <string name="time"> Time </string>
-
     <string name="seats"> Seats </string>
-
     <string name="lagguage"> Bag Allowed </string>
-
     <string name="cost"> Cost </string>
-
     <string name="post_ride">Post Ride</string>
-
     <string name="search_ride">Search</string>
+    <string name="logout">Logout</string>
 
-    #--------------#
+    #-------Profile-------#
+    <string name="trip_done">Trips Done</string>
+    <string name="contact">Contact Us</string>
+    <string name="ratings">Star Ratings</string>
+
 
     <string name="action_search"><b>Search</b></string>
 

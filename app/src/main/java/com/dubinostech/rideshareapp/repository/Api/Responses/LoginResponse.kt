@@ -5,70 +5,16 @@ import com.google.gson.annotations.SerializedName
 
 class LoginResponse{
 
-    @SerializedName("id")
+    @SerializedName("auth_token")
     @Expose
-    private var id: String? = null
+    var auth_token: String? = null
 
-    @SerializedName("nickname")
+    @SerializedName("full_name")
     @Expose
-    private var nickname: String? = null
+    var full_name: String? = null
 
     @SerializedName("email")
     @Expose
-    private var email: String? = null
-
-    /**
-     *
-     * @return
-     * The id
-     */
-    fun getId(): String? {
-        return id
-    }
-
-    /**
-     *
-     * @param id
-     * The id
-     */
-    fun setId(id: String) {
-        this.id = id
-    }
-
-    /**
-     *
-     * @return
-     * The nickname
-     */
-    fun getNickname(): String? {
-        return nickname
-    }
-
-    /**
-     *
-     * @param nickname
-     * The nickname
-     */
-    fun setNickname(nickname: String) {
-        this.nickname = nickname
-    }
-
-    /**
-     *
-     * @return
-     * The email
-     */
-    fun getEmail(): String? {
-        return email
-    }
-
-    /**
-     *
-     * @param email
-     * The email
-     */
-    fun setEmail(email: String) {
-        this.email = email
-    }
+    var email: String? = null
 
 }
