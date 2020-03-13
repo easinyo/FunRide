@@ -22,24 +22,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/rideshare_icon" />
 
+
     <Button
         android:id="@+id/signup"
-        android:layout_width="141dp"
-        android:layout_height="49dp"
-        android:layout_gravity="start"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="48dp"
-        android:layout_marginBottom="64dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="70dp"
+        android:layout_marginRight="70dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/oval_button"
-        android:enabled="true"
-        android:text="@string/action_register"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.385"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password"
-        app:layout_constraintVertical_bias="1.0" />
+        android:textColor="@android:color/white"
+        app:layout_constraintTop_toBottomOf="@+id/confirmpassword"
+        android:text="@string/action_register" />
 
     <EditText
         android:id="@+id/confirmpassword"

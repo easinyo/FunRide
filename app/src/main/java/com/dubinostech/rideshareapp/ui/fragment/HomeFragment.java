@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,11 +21,12 @@ import com.dubinostech.rideshareapp.model.loginModel.SearchModel;
 import com.dubinostech.rideshareapp.presenter.SearchRidePresenter;
 import com.dubinostech.rideshareapp.repository.Api.Responses.SearchResponse;
 import com.dubinostech.rideshareapp.repository.ErrorHandler.ErrorCode;
+import com.dubinostech.rideshareapp.ui.view.SearchListAdapter;
 import com.dubinostech.rideshareapp.ui.view.SearchView;
-import com.google.gson.JsonArray;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 import static android.widget.Toast.LENGTH_SHORT;
@@ -39,7 +41,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Date
     private EditText departure;
     private EditText arrival;
     private TextView date;
+    private TextView error;
     private Calendar myCalendar;
+    private ListView listview;
+    private SearchListAdapter searchListAdapter;
+
 
 
     private static final int REQUEST_CODE_GET_DEPARTURE_LOCATION= 1;
@@ -51,11 +57,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Date
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup groupView = (ViewGroup)inflater.inflate(R.layout.fragment_home, container, false);
 
-        departure = groupView.findViewById(R.id.departure_city);
-        arrival = groupView.findViewById(R.id.arrival_city);
-        searchRide = groupView.findViewById(R.id.search_ride);
-        date = groupView.findViewById(R.id.departure_date);
+        departure = groupView.findViewById(R.id.departure);
+        arrival = groupView.findViewById(R.id.arrival);
+        searchRide = groupView.findViewById(R.id.search);
+        date = groupView.findViewById(R.id.date);
+        error = groupView.findViewById(R.id.error);
         myCalendar = Calendar.getInstance();
+
+        listview = groupView.findViewById(R.id.search_list);
 
         String myFormat = "MM/dd/yy";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
@@ -119,8 +128,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Date
     @Override
     public void showLoading() {
         if (progressDialog != null)
-            progressDialog.setTitle("Searching for rides");
-        progressDialog.setMessage(String.valueOf(R.string.activity_search_loading_msg));
+            progressDialog.setMessage("Please wait, We are searching for your ride...");
         progressDialog.show();
     }
 
@@ -131,8 +139,30 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Date
     }
 
     @Override
-    public void searchSuccess(SearchResponse trip) {
+    public void searchSuccess(List<SearchResponse> rides) {
+        progressDialog.dismiss();
+        //        if(rides.size() > 0) {
+//            final Intent intent = new Intent(getContext(), SearchResultActivity.class);
+//            ArrayList<Integer> ridesList = new ArrayList<Integer>();
+//            Object[] array = rides.toArray();
+//            if (array == null) {
+//                //error = "No trips found.";
+//            } else {
+//                for (int i = 0; i < array.length ; i++) {
+//                    //For each integer, adds it to list
+//                    ridesList.add((Integer) array[i]);
+//                }
+//                Bundle extras = new Bundle();
+//                //extras.putString("EXTRA_USERNAME", eusername);
+//                extras.putIntegerArrayList("rides", ridesList);
+//                intent.putExtras(extras);
+//                startActivity(intent);
+//            }
+//        }
 
+        SearchListAdapter adapter = new SearchListAdapter(getContext(), 0, rides);
+
+        listview.setAdapter(adapter);
     }
 
     @Override
@@ -149,10 +179,5 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Date
                     Toast.LENGTH_LONG
             ).show();
         }
-    }
-
-    @Override
-    public void searchResponse(JsonArray rides) {
-
     }
 }

@@ -21,6 +21,7 @@ import com.dubinostech.rideshareapp.repository.Api.Responses.SignupResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
@@ -97,7 +98,7 @@ public class GatewayAPI {
         return service.postRide(raw);
     }
 
-    public Call<SearchResponse> search(SearchRaw raw) {
+    public Call<List<SearchResponse>> search(SearchRaw raw) {
         return service.search(raw);
     }
 

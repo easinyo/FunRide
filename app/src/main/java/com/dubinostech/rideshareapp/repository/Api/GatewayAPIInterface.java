@@ -9,6 +9,8 @@ import com.dubinostech.rideshareapp.repository.Api.Responses.PostResponse;
 import com.dubinostech.rideshareapp.repository.Api.Responses.SearchResponse;
 import com.dubinostech.rideshareapp.repository.Api.Responses.SignupResponse;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
@@ -34,6 +36,6 @@ public interface GatewayAPIInterface {
     Call<PostResponse> postRide(@Body PostRaw postCall);
 
     @POST(SEARCH)
-    Call<SearchResponse> search(@Body SearchRaw searchCall);
+    Call<List<SearchResponse>> search(@Body SearchRaw searchCall);
 }
 

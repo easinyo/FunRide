@@ -15,7 +15,7 @@ interface SearchCallBack {
 
     interface IOnSearchFinishedListener {
 
-        fun getTripData(trip: SearchResponse)
+        fun getTripData(trips: List<SearchResponse>)
 
         fun errorMsg(errorMsg: String)
     }

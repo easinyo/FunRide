@@ -7,12 +7,15 @@
 package com.dubinostech.rideshareapp.presenter;
 
 import com.dubinostech.rideshareapp.model.loginModel.SearchCallBack;
+import com.dubinostech.rideshareapp.model.loginModel.SearchCallBack.IOnSearchFinishedListener;
 import com.dubinostech.rideshareapp.presenter.interfaces.SearchRideInterface;
 import com.dubinostech.rideshareapp.repository.Api.Responses.SearchResponse;
 import com.dubinostech.rideshareapp.repository.ErrorHandler.ErrorCode;
 import com.dubinostech.rideshareapp.ui.view.SearchView;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 public class SearchRidePresenter implements SearchRideInterface {
 
@@ -38,9 +41,9 @@ public class SearchRidePresenter implements SearchRideInterface {
     @Override
     public void callSearch(String departure, String arrival, String date) {
         searchView.showLoading();
-        searchCallback.search(departure, arrival, date, new SearchCallBack.IOnSearchFinishedListener() {
+        searchCallback.search(departure, arrival, date, new IOnSearchFinishedListener() {
             @Override
-            public void getTripData(@NotNull SearchResponse trips) {
+            public void getTripData(@NotNull List<SearchResponse> trips) {
                 searchView.hideLoading();
                 if (trips != null) {
                     searchView.searchSuccess(trips);

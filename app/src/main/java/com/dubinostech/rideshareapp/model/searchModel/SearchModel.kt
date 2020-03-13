@@ -1,6 +1,5 @@
 package com.dubinostech.rideshareapp.model.loginModel
 
-import android.util.Log
 import com.dubinostech.rideshareapp.repository.Api.GatewayAPI
 import com.dubinostech.rideshareapp.repository.Api.Raws.SearchRaw
 import com.dubinostech.rideshareapp.repository.Api.Responses.SearchResponse
@@ -29,12 +28,11 @@ class SearchModel : SearchCallBack {
 
         val responseSearchCallback = gatewayAPI!!.search(searchRaw)
 
-        responseSearchCallback.enqueue(object : Callback<SearchResponse> {
+        responseSearchCallback.enqueue(object : Callback<List<SearchResponse>> {
             override fun onResponse(
-                call: Call<SearchResponse>,
-                response: Response<SearchResponse>
+                call: Call<List<SearchResponse>>,
+                response: Response<List<SearchResponse>>
             ) {
-                Log.d("print: ", "hhh" + response.body().rides?.get(0)?.toString())
                 if (response.body() != null && response.isSuccess) {
                     if (response.code() == 202)
                         searchFinishedListener.errorMsg("Something went  wrong !! Please try again later.")
@@ -50,7 +48,7 @@ class SearchModel : SearchCallBack {
                 }
             }
 
-            override fun onFailure(call: Call<SearchResponse>, t: Throwable) {
+            override fun onFailure(call: Call<List<SearchResponse>>, t: Throwable) {
                 searchFinishedListener.errorMsg("Problem getting rides !! Try again later.")
             }
         })

@@ -8,6 +8,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -219,7 +220,7 @@ public class PostFragment extends Fragment implements View.OnClickListener, Date
             builder.setMessage("Price $")
                     .setPositiveButton("OK", (dialog, which) -> {
                         mPrice = picker.getValue();
-                        price.setText("$" + String.valueOf(picker.getValue()));
+                        price.setText("$" + picker.getValue());
                         postRide.setEnabled(true);
                         uiPrice = picker.getValue();
                     })
@@ -241,7 +242,7 @@ public class PostFragment extends Fragment implements View.OnClickListener, Date
 
             //Show Dialog
 
-            this.progressDialog = new ProgressDialog(getActivity());
+           this.progressDialog = new ProgressDialog(getContext());
 
             //Sending data to Gateway from here
             PostPresenter presenter = new PostPresenter(this, new PostModel());
@@ -287,17 +288,32 @@ public class PostFragment extends Fragment implements View.OnClickListener, Date
     }
     @Override
     public void hideLoading() {
-        if (progressDialog != null && !progressDialog.isShowing())
+        if (progressDialog != null && progressDialog.isShowing())
             progressDialog.dismiss();
     }
 
     @Override
     public void postSuccess(PostResponse post) {
-        Toast.makeText(
-                getActivity(),
-                String.valueOf(R.string.activity_success),
-                Toast.LENGTH_LONG
-        ).show();
+        hideLoading();
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(getContext())
+                .setMessage(
+                        "Your Trip has been posted successfully");
+
+        final AlertDialog alert = dialog.create();
+        alert.show();
+
+        new CountDownTimer(3000, 1000) {
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                alert.dismiss();
+            }
+        }.start();
     }
 
     @Override
