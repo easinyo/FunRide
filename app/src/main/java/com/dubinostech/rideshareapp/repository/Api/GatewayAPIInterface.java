@@ -2,10 +2,12 @@ package com.dubinostech.rideshareapp.repository.Api;
 
 import com.dubinostech.rideshareapp.repository.Api.Raws.LoginRaw;
 import com.dubinostech.rideshareapp.repository.Api.Raws.PostRaw;
+import com.dubinostech.rideshareapp.repository.Api.Raws.ReservationRaw;
 import com.dubinostech.rideshareapp.repository.Api.Raws.SearchRaw;
 import com.dubinostech.rideshareapp.repository.Api.Raws.SignupRaw;
 import com.dubinostech.rideshareapp.repository.Api.Responses.LoginResponse;
 import com.dubinostech.rideshareapp.repository.Api.Responses.PostResponse;
+import com.dubinostech.rideshareapp.repository.Api.Responses.ReservationResponse;
 import com.dubinostech.rideshareapp.repository.Api.Responses.SearchResponse;
 import com.dubinostech.rideshareapp.repository.Api.Responses.SignupResponse;
 
@@ -37,5 +39,8 @@ public interface GatewayAPIInterface {
 
     @POST(SEARCH)
     Call<List<SearchResponse>> search(@Body SearchRaw searchCall);
+
+    @POST(SEARCH)
+    Call<ReservationResponse> reserve(@Body ReservationRaw reservationCall);
 }
 
