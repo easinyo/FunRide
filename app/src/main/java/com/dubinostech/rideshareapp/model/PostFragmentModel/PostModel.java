@@ -3,6 +3,7 @@ package com.dubinostech.rideshareapp.model.PostFragmentModel;
 import com.dubinostech.rideshareapp.repository.Api.GatewayAPI;
 import com.dubinostech.rideshareapp.repository.Api.Raws.PostRaw;
 import com.dubinostech.rideshareapp.repository.Api.Responses.PostResponse;
+import com.dubinostech.rideshareapp.repository.Data.LoggedUser;
 import com.dubinostech.rideshareapp.repository.Data.PostData;
 import com.dubinostech.rideshareapp.repository.ErrorHandler.ApIError;
 import com.dubinostech.rideshareapp.repository.ErrorHandler.WebErrorUtils;
@@ -35,7 +36,9 @@ public class PostModel implements PostModelInterface {
                     postData.getDeparture_datetime()
             );
 
-            Call<PostResponse> responsePostCallback = gatewayAPI.postRide(postRaw);
+            String token = (LoggedUser.getToken()!=null)?("Bearer " + LoggedUser.getToken()): "Bearer ";
+
+            Call<PostResponse> responsePostCallback = gatewayAPI.postRide(token, postRaw);
 
 
             responsePostCallback.enqueue(new Callback<PostResponse>(){

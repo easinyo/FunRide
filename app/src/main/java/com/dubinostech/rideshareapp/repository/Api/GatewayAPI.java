@@ -96,8 +96,8 @@ public class GatewayAPI {
         return service.signup(raw);
     }
 
-    public Call<PostResponse> postRide(PostRaw raw) {
-        return service.postRide(raw);
+    public Call<PostResponse> postRide(String token,PostRaw raw) {
+        return service.postRide(token, raw);
     }
 
     public Call<List<SearchResponse>> search(SearchRaw raw) {

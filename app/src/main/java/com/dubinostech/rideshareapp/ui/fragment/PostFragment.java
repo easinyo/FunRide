@@ -18,7 +18,6 @@ import android.widget.DatePicker;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
@@ -285,6 +284,9 @@ public class PostFragment extends Fragment implements View.OnClickListener, Date
             progressDialog.setTitle(null);
         progressDialog.setMessage(String.valueOf(R.string.activity_loading_msg));
         progressDialog.show();
+
+        ProgressDialog dialog = ProgressDialog.show(getContext(), "Heyyy Loading...", "Please wait...", true);
+        dialog.show();
     }
     @Override
     public void hideLoading() {
@@ -305,9 +307,7 @@ public class PostFragment extends Fragment implements View.OnClickListener, Date
         new CountDownTimer(3000, 1000) {
 
             @Override
-            public void onTick(long millisUntilFinished) {
-
-            }
+            public void onTick(long millisUntilFinished) { }
 
             @Override
             public void onFinish() {
@@ -319,16 +319,42 @@ public class PostFragment extends Fragment implements View.OnClickListener, Date
     @Override
     public void postFailure(ErrorCode code) {
         if (code.getId() == 7) {
-            Toast.makeText(
-                    getActivity(),
-                    String.valueOf(R.string.activity_post_error),
-                    Toast.LENGTH_LONG
-            ).show();
+            final AlertDialog.Builder dialog = new AlertDialog.Builder(getContext())
+                    .setMessage( String.valueOf(R.string.activity_post_error));
+
+            final AlertDialog alert = dialog.create();
+            alert.show();
+
+            new CountDownTimer(3000, 1000) {
+
+                @Override
+                public void onTick(long millisUntilFinished) { }
+
+                @Override
+                public void onFinish() {
+                    alert.dismiss();
+                }
+            }.start();
         }
     }
 
     @Override
     public void postFailure(String errMsg) {
-        Toast.makeText(getActivity(), errMsg, Toast.LENGTH_LONG).show();
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(getContext())
+                .setMessage( errMsg );
+
+        final AlertDialog alert = dialog.create();
+        alert.show();
+
+        new CountDownTimer(3000, 1000) {
+
+            @Override
+            public void onTick(long millisUntilFinished) { }
+
+            @Override
+            public void onFinish() {
+                alert.dismiss();
+            }
+        }.start();
     }
 }

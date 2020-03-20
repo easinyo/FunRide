@@ -17,4 +17,8 @@ class LoginResponse{
     @Expose
     var email: String? = null
 
+    @SerializedName("phone_number")
+    @Expose
+    var phone_number: String? = null
+
 }

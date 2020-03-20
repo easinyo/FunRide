@@ -128,6 +128,7 @@ class LoginActivity: BaseActivity() , LoginView {
         LoggedUser.token = user?.auth_token
         LoggedUser.name = user?.full_name
         LoggedUser.email = user?.email
+        LoggedUser.phone_number = user?.phone_number
 
         val intent = Intent(this@LoginActivity, MainActivity::class.java)
         intent.putExtra("home_msg", "This is HOME")
