@@ -12,10 +12,12 @@ package com.dubinostech.rideshareapp.repository.Api;
 import com.dubinostech.rideshareapp.BuildConfig;
 import com.dubinostech.rideshareapp.repository.Api.Raws.LoginRaw;
 import com.dubinostech.rideshareapp.repository.Api.Raws.PostRaw;
+import com.dubinostech.rideshareapp.repository.Api.Raws.ReservationRaw;
 import com.dubinostech.rideshareapp.repository.Api.Raws.SearchRaw;
 import com.dubinostech.rideshareapp.repository.Api.Raws.SignupRaw;
 import com.dubinostech.rideshareapp.repository.Api.Responses.LoginResponse;
 import com.dubinostech.rideshareapp.repository.Api.Responses.PostResponse;
+import com.dubinostech.rideshareapp.repository.Api.Responses.ReservationResponse;
 import com.dubinostech.rideshareapp.repository.Api.Responses.SearchResponse;
 import com.dubinostech.rideshareapp.repository.Api.Responses.SignupResponse;
 import com.google.gson.Gson;
@@ -100,6 +102,10 @@ public class GatewayAPI {
 
     public Call<List<SearchResponse>> search(SearchRaw raw) {
         return service.search(raw);
+    }
+
+    public Call<ReservationResponse> makeReservation(ReservationRaw raw) {
+        return service.reserve(raw);
     }
 
 }
