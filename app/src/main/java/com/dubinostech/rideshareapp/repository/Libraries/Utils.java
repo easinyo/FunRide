@@ -1,11 +1,26 @@
 package com.dubinostech.rideshareapp.repository.Libraries;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.CountDownTimer;
+import android.util.Log;
+import android.widget.NumberPicker;
+import android.widget.TextView;
 
 import com.dubinostech.rideshareapp.R;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.libraries.places.api.model.Place;
+
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Locale;
 
 public class Utils {
 
@@ -90,6 +105,84 @@ public class Utils {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     *
+     * @param context
+     * @param alertMessage
+     * display AlertDialog with Counter
+     */
+    public static void displayAlertDialogWithCounter(final Context context, final String alertMessage){
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(context)
+                .setMessage(alertMessage);
+
+        final AlertDialog alert = dialog.create();
+        alert.show();
+
+        new CountDownTimer(3000, 1000) {
+
+            @Override
+            public void onTick(long millisUntilFinished) { }
+
+            @Override
+            public void onFinish() {
+                alert.dismiss();
+            }
+        }.start();
+    }
+
+    /**
+     *
+     * @param addressObj must be not null
+     * @return the full adress id not null, else, the city Adress
+     */
+    public static String getAddressString(Address addressObj) {
+        String address = addressObj.getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+        String city = addressObj.getLocality();
+        String state = addressObj.getAdminArea();
+        String country = addressObj.getCountryName();
+        String postalCode = addressObj.getPostalCode();
+
+        return (address!=null)? address : city + ", " + state + ", " + country + ", " + postalCode;
+    }
+
+    /**
+     *
+     * @param place
+     * @param context
+     * @return the address from place, example: Mirage hotel and casino, Las Vegas, NV 89101, US
+     */
+    public static Address placeToAddress(Place place, Context context){
+        final LatLng latLng = place.getLatLng();
+
+        Geocoder geocoder;
+        List<Address> addresses;
+        Address address = new Address(new Locale("en"));
+        geocoder = new Geocoder(context, Locale.getDefault());
+
+        try {
+            addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
+
+            address = (addresses.size() > 0)? addresses.get(0): address;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return address;
+    }
+
+    /**
+     * @param myCalendar
+     * @return the localDateTime
+     */
+    public static String getLocalDateTime(Calendar myCalendar){
+        SimpleDateFormat parser = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss",  Locale.US);
+        String output = parser.format(myCalendar.getTime());
+
+        Log.d("Date" + " LocalDateTime" , output);
+
+        return output;
     }
 }
 
