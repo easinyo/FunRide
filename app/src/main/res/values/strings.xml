@@ -48,7 +48,8 @@
     <string name="activity_signup_email_existing">Email already existing. Try to login.</string>
 
     <string name="activity_post_error">Something went wrong, Please verify your data.</string>
-    <string name = "activity_success"> You have Posted your trip successfully</string>>
+
+    <string name = "activity_post_success"> Your trip is posted successfully</string>>
 
 
     <string name="username_password_empty">Username and/or password empty, Please Try again..</string>
