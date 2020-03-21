@@ -1,6 +1,5 @@
 package com.dubinostech.rideshareapp.repository.Libraries;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.location.Address;
@@ -9,8 +8,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.CountDownTimer;
 import android.util.Log;
-import android.widget.NumberPicker;
-import android.widget.TextView;
 
 import com.dubinostech.rideshareapp.R;
 import com.google.android.gms.maps.model.LatLng;
@@ -137,14 +134,24 @@ public class Utils {
      * @param addressObj must be not null
      * @return the full adress id not null, else, the city Adress
      */
-    public static String getAddressString(Address addressObj) {
+    public static String getFullAddressToString(Address addressObj) {
         String address = addressObj.getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+        String postalCode = addressObj.getPostalCode();
+
+        return (address!=null)? address : getCityAddressToString(addressObj) + ", " + postalCode;
+    }
+
+    /**
+     *
+     * @param addressObj must be not null
+     * @return the full city, province or state, country, example: Ottawa, Ontario, Canada
+     */
+    public static String getCityAddressToString(Address addressObj) {
         String city = addressObj.getLocality();
         String state = addressObj.getAdminArea();
         String country = addressObj.getCountryName();
-        String postalCode = addressObj.getPostalCode();
 
-        return (address!=null)? address : city + ", " + state + ", " + country + ", " + postalCode;
+        return (addressObj==null)? null : city + ", " + state + ", " + country;
     }
 
     /**
