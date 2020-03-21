@@ -303,6 +303,6 @@ public class PostFragment extends Fragment implements View.OnClickListener, Date
     }
 
     private Boolean isNotEmpty(){
-        return arrival_address.equals(departure_address) && arrival_address != null && departure_address !=null;
+        return !arrival_address.equals(departure_address) && arrival_address != null && departure_address !=null;
     }
 }

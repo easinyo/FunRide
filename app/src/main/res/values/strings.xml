@@ -35,7 +35,6 @@
 
     <string name="activity_login_fail_msg">Login Failed !! Try again later.</string>
 
-
     <string name="activity_login_enter_email">Please enter EmailID.</string>
 
     <string name="activity_login_enter_password">Please enter Password.</string>

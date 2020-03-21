@@ -144,7 +144,7 @@ public class Utils {
         String country = addressObj.getCountryName();
         String postalCode = addressObj.getPostalCode();
 
-        return (address!=null)? address:city + ", " + state + ", " + country + ", " + postalCode;
+        return (address!=null)? address : city + ", " + state + ", " + country + ", " + postalCode;
     }
 
     /**
