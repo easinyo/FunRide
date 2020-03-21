@@ -120,10 +120,10 @@ public class PostFragment extends Fragment implements View.OnClickListener, Date
                     public void onPlaceSelected(Place place) {
                         Address address = Utils.placeToAddress(place, getContext());
 
-                        arrival_address = Utils.getAddressString(address);
-                        arrival_city = address.getLocality()+ ", " + address.getAdminArea() + ", " + address.getCountryName();
+                        arrival_address = Utils.getFullAddressToString(address);
+                        arrival_city = Utils.getCityAddressToString(address);
 
-                        Log.d(TAG, "arrival_address: "+ arrival_address + "arrival_city: "+ arrival_city);
+                        Log.d(TAG, "arrival_address: "+ arrival_address + " arrival_city: "+ arrival_city);
                     }
 
                     @Override
@@ -145,10 +145,10 @@ public class PostFragment extends Fragment implements View.OnClickListener, Date
                     public void onPlaceSelected(Place place) {
                         Address address = Utils.placeToAddress(place, getContext());
 
-                        departure_address = Utils.getAddressString(address);
-                        departure_city = address.getLocality()+ ", " + address.getAdminArea() + ", " + address.getCountryName();
+                        departure_address = Utils.getFullAddressToString(address);
+                        departure_city = Utils.getCityAddressToString(address);
 
-                        Log.d(TAG, "departure_address:  getAddressString--->"+ departure_address + " arrival_city: "+ departure_city);
+                        Log.d(TAG, "departure_address:  getFullAddressToString---> "+ departure_address + " departure_city: "+ departure_city);
                     }
 
                         @Override
@@ -302,7 +302,11 @@ public class PostFragment extends Fragment implements View.OnClickListener, Date
         Utils.displayAlertDialogWithCounter(getContext(), errMsg);
     }
 
+    /**
+     *
+     * @return true if the arrival and departure city are different and not null
+     */
     private Boolean isNotEmpty(){
-        return !arrival_address.equals(departure_address) && arrival_address != null && departure_address !=null;
+        return !arrival_city.equals(departure_city) && arrival_address != null && departure_address !=null;
     }
 }
