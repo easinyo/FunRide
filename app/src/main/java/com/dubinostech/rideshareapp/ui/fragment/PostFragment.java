@@ -5,10 +5,8 @@ import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.location.Address;
-import android.location.Geocoder;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,20 +26,18 @@ import com.dubinostech.rideshareapp.presenter.PostPresenter;
 import com.dubinostech.rideshareapp.repository.Api.Responses.PostResponse;
 import com.dubinostech.rideshareapp.repository.Data.PostData;
 import com.dubinostech.rideshareapp.repository.ErrorHandler.ErrorCode;
+import com.dubinostech.rideshareapp.repository.Libraries.Utils;
 import com.dubinostech.rideshareapp.ui.view.PostView;
 import com.google.android.gms.common.api.Status;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
 
 /**
@@ -64,10 +60,6 @@ public class PostFragment extends Fragment implements View.OnClickListener, Date
 
     private ProgressDialog progressDialog;
 
-
-    private double mPrice;
-    private int mPassengers;
-
     private int uiPrice;
     private int uiPassengers;
 
@@ -77,6 +69,8 @@ public class PostFragment extends Fragment implements View.OnClickListener, Date
     String departure_address;
     String arrival_city;
     String arrival_address;
+
+    final String API_KEY = "AIzaSyByniyl8kvVAZ0eGBbPxyUVzVg9jgV5XfA";
 
     public PostFragment() {
     }
@@ -107,7 +101,7 @@ public class PostFragment extends Fragment implements View.OnClickListener, Date
 
         // Setup Places Client
         if (!Places.isInitialized()) {
-            Places.initialize(getActivity(), "AIzaSyByniyl8kvVAZ0eGBbPxyUVzVg9jgV5XfA");
+            Places.initialize(getActivity(), API_KEY);
         }
         // Retrieve a PlacesClient (previously initialized - see MainActivity)
         placesClient = Places.createClient(getActivity());
@@ -115,6 +109,8 @@ public class PostFragment extends Fragment implements View.OnClickListener, Date
         final AutocompleteSupportFragment autocompleteSupportFragmentArrival =
                 (AutocompleteSupportFragment)
                         getChildFragmentManager().findFragmentById(R.id.autocomplete_fragment_arrival_location);
+        autocompleteSupportFragmentArrival.getView().setBackgroundColor(getContext().getColor(R.color.colorPrimary));
+
 
         autocompleteSupportFragmentArrival.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME,Place.Field.LAT_LNG,Place.Field.ADDRESS));
 
@@ -122,9 +118,12 @@ public class PostFragment extends Fragment implements View.OnClickListener, Date
                 new PlaceSelectionListener() {
                     @Override
                     public void onPlaceSelected(Place place) {
-                        arrival_address = place.getName();
-                        arrival_city = place.getAddress().replace(arrival_address + ",", "");
-                        Log.d(TAG, ""+place.toString() + "arrival_address: "+ arrival_address + "arrival_city: "+ arrival_city);
+                        Address address = Utils.placeToAddress(place, getContext());
+
+                        arrival_address = Utils.getAddressString(address);
+                        arrival_city = address.getLocality()+ ", " + address.getAdminArea() + ", " + address.getCountryName();
+
+                        Log.d(TAG, "arrival_address: "+ arrival_address + "arrival_city: "+ arrival_city);
                     }
 
                     @Override
@@ -136,6 +135,7 @@ public class PostFragment extends Fragment implements View.OnClickListener, Date
         final AutocompleteSupportFragment autocompleteSupportFragmentDeparture =
                 (AutocompleteSupportFragment)
                         getChildFragmentManager().findFragmentById(R.id.autocomplete_fragment_departure_location);
+        autocompleteSupportFragmentDeparture.getView().setBackgroundColor(getContext().getColor(R.color.colorPrimary));
 
         autocompleteSupportFragmentDeparture.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME,Place.Field.LAT_LNG,Place.Field.ADDRESS));
 
@@ -143,14 +143,15 @@ public class PostFragment extends Fragment implements View.OnClickListener, Date
                 new PlaceSelectionListener() {
                     @Override
                     public void onPlaceSelected(Place place) {
-                        final LatLng latLng = place.getLatLng();
-                        departure_address = place.getName();
-                        departure_city = place.getAddress().replace(departure_address + ",", "");
+                        Address address = Utils.placeToAddress(place, getContext());
 
-                        Log.d(TAG, "departure_address:  "+ departure_address + " arrival_city: "+ departure_city);
+                        departure_address = Utils.getAddressString(address);
+                        departure_city = address.getLocality()+ ", " + address.getAdminArea() + ", " + address.getCountryName();
+
+                        Log.d(TAG, "departure_address:  getAddressString--->"+ departure_address + " arrival_city: "+ departure_city);
                     }
 
-                    @Override
+                        @Override
                     public void onError(Status status) {
                         Log.d(TAG, ""+status.getStatusMessage());
                     }
@@ -165,36 +166,28 @@ public class PostFragment extends Fragment implements View.OnClickListener, Date
         priceLabel.setOnClickListener(this);
         price.setOnClickListener(this);
         postRide.setOnClickListener(this);
+
         // Set to False and enable it when nothing is False
         postRide.setEnabled(true);
 
         return groupView;
     }
 
-    private String getCityNameByCoordinates(double lat, double lon) throws IOException {
-        Geocoder mGeocoder = new Geocoder(getActivity(), Locale.getDefault());
-        List<Address> addresses = mGeocoder.getFromLocation(lat, lon, 1);
-
-        if (addresses != null && addresses.size() > 0) {
-            return addresses.get(0).getLocality();
-        }
-        return null;
-    }
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onClick(View v) {
         //Potential Call from Presenter
-       if(v == departureDateLabel || v ==  departureDate){
-            DatePickerDialog dialog =  new DatePickerDialog(getContext(), this, myCalendar.get(Calendar.YEAR),
+        if (v == departureDateLabel || v == departureDate) {
+            DatePickerDialog dialog = new DatePickerDialog(getContext(), this, myCalendar.get(Calendar.YEAR),
                     myCalendar.get(Calendar.MONTH),
                     myCalendar.get(Calendar.DAY_OF_MONTH));
             dialog.show();
 
-        }else if(v == departureTimeLabel || v == departureTime){
+        } else if (v == departureTimeLabel || v == departureTime) {
             TimePickerDialog dialog = new TimePickerDialog(getContext(), this, myCalendar.get(Calendar.HOUR),
                     myCalendar.get(Calendar.MINUTE), false);
             dialog.show();
-        }else if(v == noPassengersLabel || v == noPassengers){
+        } else if (v == noPassengersLabel || v == noPassengers) {
             final NumberPicker picker = new NumberPicker(getActivity());
             picker.setMinValue(1);
             picker.setMaxValue(10);
@@ -202,7 +195,6 @@ public class PostFragment extends Fragment implements View.OnClickListener, Date
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setMessage("Passengers")
                     .setPositiveButton("OK", (dialog, which) -> {
-                        mPassengers = picker.getValue();
                         noPassengers.setText(String.valueOf(picker.getValue()));
                         uiPassengers = picker.getValue();
                     })
@@ -210,7 +202,7 @@ public class PostFragment extends Fragment implements View.OnClickListener, Date
                     });
             builder.setView(picker);
             builder.create().show();
-        }else if(v == priceLabel || v == price){
+        } else if (v == priceLabel || v == price) {
             final NumberPicker picker = new NumberPicker(getActivity());
             picker.setMinValue(1);
             picker.setMaxValue(1000);
@@ -218,7 +210,6 @@ public class PostFragment extends Fragment implements View.OnClickListener, Date
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setMessage("Price $")
                     .setPositiveButton("OK", (dialog, which) -> {
-                        mPrice = picker.getValue();
                         price.setText("$" + picker.getValue());
                         postRide.setEnabled(true);
                         uiPrice = picker.getValue();
@@ -228,34 +219,36 @@ public class PostFragment extends Fragment implements View.OnClickListener, Date
                     });
             builder.setView(picker);
             builder.create().show();
-        }else if(v == postRide){
+        } else if (v == postRide) {
+            if (isNotEmpty()) {
+                if (Utils.isNetworkAvailable(getContext())) {
 
-             float fare = uiPrice;
-             int available_spot = uiPassengers;
+                    float fare = uiPrice;
+                    int available_spot = uiPassengers;
+                    String departure_datetime = Utils.getLocalDateTime(myCalendar);
 
-             String departure_datetime = getLocalDateTime();
+                    PostData postData = new PostData(departure_city, departure_address, arrival_city, arrival_address,
+                            fare, available_spot, departure_datetime);
 
+                    //Show Dialog
+                    this.progressDialog = new ProgressDialog(getContext());
 
-            PostData postData=new PostData(departure_city, departure_address, arrival_city, arrival_address,
-            fare, available_spot, departure_datetime);
-
-            //Show Dialog
-
-           this.progressDialog = new ProgressDialog(getContext());
-
-            //Sending data to Gateway from here
-            PostPresenter presenter = new PostPresenter(this, new PostModel());
-            presenter.callPostRide(postData);
+                    //Sending data to Gateway
+                    PostPresenter presenter = new PostPresenter(this, new PostModel());
+                    presenter.callPostRide(postData);
+                } else {
+                    Utils.displayCommonAlertDialog(
+                            getContext(),
+                            getContext().getString(R.string.connection_issue_msg)
+                    );
+                }
+            } else {
+                Utils.displayAlertDialogWithCounter(
+                        getContext(),
+                        getContext().getString(R.string.activity_post_arrival_and_departure_error)
+                );
+            }
         }
-    }
-
-    private String getLocalDateTime(){
-        SimpleDateFormat parser = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss",  Locale.US);
-        String output = parser.format(myCalendar.getTime());
-
-        Log.d("Date" + " LocalDateTime" , output);
-
-        return output;
     }
 
     @Override
@@ -282,11 +275,8 @@ public class PostFragment extends Fragment implements View.OnClickListener, Date
     public void showLoading() {
         if (progressDialog != null)
             progressDialog.setTitle(null);
-        progressDialog.setMessage(String.valueOf(R.string.activity_loading_msg));
+        progressDialog.setMessage(getContext().getString(R.string.activity_loading_msg));
         progressDialog.show();
-
-        ProgressDialog dialog = ProgressDialog.show(getContext(), "Heyyy Loading...", "Please wait...", true);
-        dialog.show();
     }
     @Override
     public void hideLoading() {
@@ -297,64 +287,22 @@ public class PostFragment extends Fragment implements View.OnClickListener, Date
     @Override
     public void postSuccess(PostResponse post) {
         hideLoading();
-        final AlertDialog.Builder dialog = new AlertDialog.Builder(getContext())
-                .setMessage(
-                        "Your Trip has been posted successfully");
-
-        final AlertDialog alert = dialog.create();
-        alert.show();
-
-        new CountDownTimer(3000, 1000) {
-
-            @Override
-            public void onTick(long millisUntilFinished) { }
-
-            @Override
-            public void onFinish() {
-                alert.dismiss();
-            }
-        }.start();
+        Utils.displayAlertDialogWithCounter(getContext(), getContext().getString(R.string.activity_post_success));
     }
 
     @Override
     public void postFailure(ErrorCode code) {
         if (code.getId() == 7) {
-            final AlertDialog.Builder dialog = new AlertDialog.Builder(getContext())
-                    .setMessage( String.valueOf(R.string.activity_post_error));
-
-            final AlertDialog alert = dialog.create();
-            alert.show();
-
-            new CountDownTimer(3000, 1000) {
-
-                @Override
-                public void onTick(long millisUntilFinished) { }
-
-                @Override
-                public void onFinish() {
-                    alert.dismiss();
-                }
-            }.start();
+            Utils.displayAlertDialogWithCounter(getContext(), getContext().getString(R.string.activity_post_error));
         }
     }
 
     @Override
     public void postFailure(String errMsg) {
-        final AlertDialog.Builder dialog = new AlertDialog.Builder(getContext())
-                .setMessage( errMsg );
+        Utils.displayAlertDialogWithCounter(getContext(), errMsg);
+    }
 
-        final AlertDialog alert = dialog.create();
-        alert.show();
-
-        new CountDownTimer(3000, 1000) {
-
-            @Override
-            public void onTick(long millisUntilFinished) { }
-
-            @Override
-            public void onFinish() {
-                alert.dismiss();
-            }
-        }.start();
+    private Boolean isNotEmpty(){
+        return !arrival_address.equals(departure_address) && arrival_address != null && departure_address !=null;
     }
 }

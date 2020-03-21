@@ -17,8 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/notice"
-            android:text="Reservations are FREE. Once your seat is reserved,
-            your driver will immediately be informed."
+            android:text="Reservations are FREE. \n Once your seat is reserved, your driver will immediately be informed."
             android:textColor="@color/colorPrimary"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:layout_marginLeft="10dp"
@@ -138,12 +137,24 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Price" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/info"
+            android:text="Confirm number of seats to reserve."
+            android:textColor="@color/colorPrimary"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_below="@+id/price_label"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp" />
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/ic_passengers"
             android:background="@drawable/ic_passengers"
-            android:layout_below="@+id/price_label"
+            android:layout_below="@+id/info"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="20dp"/>
@@ -154,7 +165,7 @@
             android:id="@+id/passengers_label"
             android:layout_toRightOf="@+id/ic_passengers"
             android:layout_marginTop="25dp"
-            android:layout_below="@+id/price_label"
+            android:layout_below="@+id/info"
             android:textColor="@color/textColorPrimary"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Passengers"/>
@@ -167,7 +178,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginTop="25dp"
             android:layout_marginRight="10dp"
-            android:layout_below="@+id/price_label"
+            android:layout_below="@+id/info"
             android:textColor="@color/textColorPrimary"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="1"/>
