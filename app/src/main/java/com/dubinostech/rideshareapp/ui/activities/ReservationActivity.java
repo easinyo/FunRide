@@ -1,10 +1,12 @@
 package com.dubinostech.rideshareapp.ui.activities;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,9 +22,10 @@ import com.dubinostech.rideshareapp.ui.view.ReservationView;
 
 public class ReservationActivity extends AppCompatActivity implements View.OnClickListener, ReservationView {
     private Button makeReservation;
-    private TextView departure_city, arrival_city, departure_date, departure_time, price;
+    private TextView departure_city, arrival_city, departure_date, departure_time, price, noPassengers;
     private ProgressDialog progressDialog;
     private String tripID;
+    private int passengers, availableSpots;
 
 
     @Override
@@ -35,18 +38,43 @@ public class ReservationActivity extends AppCompatActivity implements View.OnCli
         arrival_city = findViewById(R.id.arrival_city);
         departure_date = findViewById(R.id.departure_date);
         departure_time = findViewById(R.id.departure_time_label);
+        noPassengers = findViewById(R.id.passengers);
         price = findViewById(R.id.price_label);
+
+        departure_city.setText(getIntent().getExtras().getString("departure_city") + "\n" + getIntent().getExtras().getString("departure_address"));
+        arrival_city.setText(getIntent().getExtras().getString("arrival_city") + "\n" + getIntent().getExtras().getString("arrival_address"));
+        departure_date.setText(getIntent().getExtras().getString("departure_date"));
+        departure_time.setText(getIntent().getExtras().getString("departure_date"));
+        price.setText(getIntent().getExtras().getString("cost"));
+        tripID = getIntent().getExtras().getString("tripID");
+        availableSpots = Integer.parseInt(getIntent().getExtras().getString("available_spots"));
+
         makeReservation.setOnClickListener(this);
+        noPassengers.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.reservationBtn) {
-            makeReservation();
+            makeReservation(tripID);
+        } else if (v.getId() == R.id.passengers) {
+            final NumberPicker picker = new NumberPicker(this);
+            picker.setMinValue(1);
+            picker.setMaxValue(availableSpots);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Passengers")
+                    .setPositiveButton("OK", (dialog, which) -> {
+                        noPassengers.setText(String.valueOf(picker.getValue()));
+                        passengers = picker.getValue();
+                    })
+                    .setNegativeButton("CANCEL", (dialog, which) -> {
+                    });
+            builder.setView(picker);
+            builder.create().show();
         }
     }
 
-    private void makeReservation() {
+    private void makeReservation(String tripID) {
         ReservationPresenter presenter = new ReservationPresenter(this, new ReservationModel());
         presenter.callReservation(tripID);
     }
