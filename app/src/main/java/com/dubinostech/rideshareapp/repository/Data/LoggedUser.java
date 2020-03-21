@@ -4,6 +4,7 @@ public class LoggedUser {
     public static String token = "";
     public static String name = "Emmanuel Asinyo";
     public static String email = "easin081@uottawa.ca";
+    public static String phone_number = "+1(613)805-7454";
 
     public LoggedUser(String token, String name, String email) {
         this.token = token;

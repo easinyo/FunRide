@@ -672,6 +672,8 @@
                     android:id="@+id/logout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="70dp"
+                    android:layout_marginRight="70dp"
                     android:background="@drawable/oval_button"
                     android:maxLines="1"
                     android:text="@string/logout"

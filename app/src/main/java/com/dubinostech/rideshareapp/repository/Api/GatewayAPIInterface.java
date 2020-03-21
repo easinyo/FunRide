@@ -10,11 +10,16 @@ import com.dubinostech.rideshareapp.repository.Api.Responses.PostResponse;
 import com.dubinostech.rideshareapp.repository.Api.Responses.ReservationResponse;
 import com.dubinostech.rideshareapp.repository.Api.Responses.SearchResponse;
 import com.dubinostech.rideshareapp.repository.Api.Responses.SignupResponse;
+import com.dubinostech.rideshareapp.repository.Data.LoggedUser;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
 /**
@@ -27,15 +32,14 @@ public interface GatewayAPIInterface {
     String POST_TRIP = "post_trip";
     String SEARCH = "search_trips";
 
-
     @POST(LOGIN)
     Call<LoginResponse> login(@Body LoginRaw loginCall);
 
     @POST(SIGNUP)
     Call<SignupResponse> signup(@Body SignupRaw signUpCall);
-   //Add Headers
+
     @POST(POST_TRIP)
-    Call<PostResponse> postRide(@Body PostRaw postCall);
+    Call<PostResponse> postRide(@Header("Authorization") String token,@Body PostRaw postCall);
 
     @POST(SEARCH)
     Call<List<SearchResponse>> search(@Body SearchRaw searchCall);

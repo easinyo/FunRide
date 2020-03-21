@@ -132,7 +132,6 @@ public class ProfileFragment extends Fragment {
                 personalinfobtn.setTextColor(getResources().getColor(R.color.grey));
                 experiencebtn.setTextColor(getResources().getColor(R.color.grey));
                 reviewbtn.setTextColor(getResources().getColor(R.color.colorPrimary));
-
             }
         });
         setHasOptionsMenu(true);
@@ -145,5 +144,6 @@ public class ProfileFragment extends Fragment {
 
         name.setText(LoggedUser.name);
         email.setText(LoggedUser.email);
+        phoneNumber.setText(LoggedUser.phone_number);
     }
 }
