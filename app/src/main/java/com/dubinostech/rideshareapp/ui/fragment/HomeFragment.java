@@ -2,11 +2,13 @@ package com.dubinostech.rideshareapp.ui.fragment;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -21,6 +23,7 @@ import com.dubinostech.rideshareapp.model.loginModel.SearchModel;
 import com.dubinostech.rideshareapp.presenter.SearchRidePresenter;
 import com.dubinostech.rideshareapp.repository.Api.Responses.SearchResponse;
 import com.dubinostech.rideshareapp.repository.ErrorHandler.ErrorCode;
+import com.dubinostech.rideshareapp.ui.activities.ReservationActivity;
 import com.dubinostech.rideshareapp.ui.view.SearchListAdapter;
 import com.dubinostech.rideshareapp.ui.view.SearchView;
 
@@ -163,6 +166,25 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Date
         SearchListAdapter adapter = new SearchListAdapter(getContext(), 0, rides);
 
         listview.setAdapter(adapter);
+        listview.setClickable(true);
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), ReservationActivity.class);
+                Bundle mBundle = new Bundle();
+
+                mBundle.putString("tripID", rides.get(position).getId());
+                mBundle.putString("departure_city", rides.get(position).getDepartureCity());
+                mBundle.putString("arrival_city", rides.get(position).getArrivalCity());
+                mBundle.putString("departure_address", rides.get(position).getDepartureAddress());
+                mBundle.putString("arrival_address", rides.get(position).getArrivalAddress());
+                mBundle.putString("departure_date", rides.get(position).getDepartureDateTime());
+                mBundle.putString("cost", rides.get(position).getFare());
+                mBundle.putString("available_spots", rides.get(position).getDavailableSpot());
+                intent.putExtras(mBundle);
+                getActivity().startActivity(intent);
+            }
+        });
     }
 
     @Override

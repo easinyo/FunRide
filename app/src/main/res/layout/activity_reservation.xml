@@ -138,6 +138,40 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Price" />
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ic_passengers"
+            android:background="@drawable/ic_passengers"
+            android:layout_below="@+id/price_label"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/passengers_label"
+            android:layout_toRightOf="@+id/ic_passengers"
+            android:layout_marginTop="25dp"
+            android:layout_below="@+id/price_label"
+            android:textColor="@color/textColorPrimary"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Passengers"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/passengers"
+            android:layout_alignRight="@+id/passengers_label"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="25dp"
+            android:layout_marginRight="10dp"
+            android:layout_below="@+id/price_label"
+            android:textColor="@color/textColorPrimary"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="1"/>
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
