@@ -174,17 +174,17 @@ public class PostFragment extends Fragment implements View.OnClickListener, Date
     @Override
     public void onClick(View v) {
         //Potential Call from Presenter
-       if(v == departureDateLabel || v ==  departureDate){
-            DatePickerDialog dialog =  new DatePickerDialog(getContext(), this, myCalendar.get(Calendar.YEAR),
+        if (v == departureDateLabel || v == departureDate) {
+            DatePickerDialog dialog = new DatePickerDialog(getContext(), this, myCalendar.get(Calendar.YEAR),
                     myCalendar.get(Calendar.MONTH),
                     myCalendar.get(Calendar.DAY_OF_MONTH));
             dialog.show();
 
-        }else if(v == departureTimeLabel || v == departureTime){
+        } else if (v == departureTimeLabel || v == departureTime) {
             TimePickerDialog dialog = new TimePickerDialog(getContext(), this, myCalendar.get(Calendar.HOUR),
                     myCalendar.get(Calendar.MINUTE), false);
             dialog.show();
-        }else if(v == noPassengersLabel || v == noPassengers){
+        } else if (v == noPassengersLabel || v == noPassengers) {
             final NumberPicker picker = new NumberPicker(getActivity());
             picker.setMinValue(1);
             picker.setMaxValue(10);
@@ -199,7 +199,7 @@ public class PostFragment extends Fragment implements View.OnClickListener, Date
                     });
             builder.setView(picker);
             builder.create().show();
-        }else if(v == priceLabel || v == price){
+        } else if (v == priceLabel || v == price) {
             final NumberPicker picker = new NumberPicker(getActivity());
             picker.setMinValue(1);
             picker.setMaxValue(1000);
@@ -216,28 +216,35 @@ public class PostFragment extends Fragment implements View.OnClickListener, Date
                     });
             builder.setView(picker);
             builder.create().show();
-        }else if(v == postRide){
-           if (Utils.isNetworkAvailable(getContext())) {
+        } else if (v == postRide) {
+            if (isNotEmpty()) {
+                if (Utils.isNetworkAvailable(getContext())) {
 
-               float fare = uiPrice;
-               int available_spot = uiPassengers;
-               String departure_datetime = Utils.getLocalDateTime(myCalendar);
+                    float fare = uiPrice;
+                    int available_spot = uiPassengers;
+                    String departure_datetime = Utils.getLocalDateTime(myCalendar);
 
-               PostData postData=new PostData(departure_city, departure_address, arrival_city, arrival_address,
-                       fare, available_spot, departure_datetime);
+                    PostData postData = new PostData(departure_city, departure_address, arrival_city, arrival_address,
+                            fare, available_spot, departure_datetime);
 
-               //Show Dialog
-               this.progressDialog = new ProgressDialog(getContext());
+                    //Show Dialog
+                    this.progressDialog = new ProgressDialog(getContext());
 
-               //Sending data to Gateway
-               PostPresenter presenter = new PostPresenter(this, new PostModel());
-               presenter.callPostRide(postData);
-           } else {
-               Utils.displayCommonAlertDialog(
-                       getContext(),
-               String.valueOf(R.string.connection_issue_msg)
-               );
-           }
+                    //Sending data to Gateway
+                    PostPresenter presenter = new PostPresenter(this, new PostModel());
+                    presenter.callPostRide(postData);
+                } else {
+                    Utils.displayCommonAlertDialog(
+                            getContext(),
+                            getContext().getString(R.string.connection_issue_msg)
+                    );
+                }
+            } else {
+                Utils.displayAlertDialogWithCounter(
+                        getContext(),
+                        getContext().getString(R.string.activity_post_arrival_and_departure_error)
+                );
+            }
         }
     }
 
@@ -265,7 +272,7 @@ public class PostFragment extends Fragment implements View.OnClickListener, Date
     public void showLoading() {
         if (progressDialog != null)
             progressDialog.setTitle(null);
-        progressDialog.setMessage(String.valueOf(R.string.activity_loading_msg));
+        progressDialog.setMessage(getContext().getString(R.string.activity_loading_msg));
         progressDialog.show();
     }
     @Override
@@ -277,18 +284,22 @@ public class PostFragment extends Fragment implements View.OnClickListener, Date
     @Override
     public void postSuccess(PostResponse post) {
         hideLoading();
-        Utils.displayAlertDialogWithCounter(getContext(), String.valueOf(R.string.activity_post_success));
+        Utils.displayAlertDialogWithCounter(getContext(), getContext().getString(R.string.activity_post_success));
     }
 
     @Override
     public void postFailure(ErrorCode code) {
         if (code.getId() == 7) {
-            Utils.displayAlertDialogWithCounter(getContext(), String.valueOf(R.string.activity_post_error));
+            Utils.displayAlertDialogWithCounter(getContext(), getContext().getString(R.string.activity_post_error));
         }
     }
 
     @Override
     public void postFailure(String errMsg) {
         Utils.displayAlertDialogWithCounter(getContext(), errMsg);
+    }
+
+    private Boolean isNotEmpty(){
+        return arrival_address.equals(departure_address) && arrival_address != null && departure_address !=null;
     }
 }

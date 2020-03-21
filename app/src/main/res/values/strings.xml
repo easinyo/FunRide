@@ -35,6 +35,7 @@
 
     <string name="activity_login_fail_msg">Login Failed !! Try again later.</string>
 
+
     <string name="activity_login_enter_email">Please enter EmailID.</string>
 
     <string name="activity_login_enter_password">Please enter Password.</string>
@@ -51,8 +52,11 @@
 
     <string name = "activity_post_success"> Your trip is posted successfully</string>>
 
+    #-------------Error Handlers Strings-----------------------#
+    <string name="username_password_empty">Username and/or password empty, Please Try Again..</string>
 
-    <string name="username_password_empty">Username and/or password empty, Please Try again..</string>
+    <string name="activity_post_arrival_and_departure_error">Arrival and/or Departure must not be empty or the same, Please Try Again...</string>
+
 
     #------Post Activity Strings------------------------------------#
     <string name="from"> Departure </string>
