@@ -109,6 +109,8 @@ public class PostFragment extends Fragment implements View.OnClickListener, Date
         final AutocompleteSupportFragment autocompleteSupportFragmentArrival =
                 (AutocompleteSupportFragment)
                         getChildFragmentManager().findFragmentById(R.id.autocomplete_fragment_arrival_location);
+        autocompleteSupportFragmentArrival.getView().setBackgroundColor(getContext().getColor(R.color.colorPrimary));
+
 
         autocompleteSupportFragmentArrival.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME,Place.Field.LAT_LNG,Place.Field.ADDRESS));
 
@@ -133,6 +135,7 @@ public class PostFragment extends Fragment implements View.OnClickListener, Date
         final AutocompleteSupportFragment autocompleteSupportFragmentDeparture =
                 (AutocompleteSupportFragment)
                         getChildFragmentManager().findFragmentById(R.id.autocomplete_fragment_departure_location);
+        autocompleteSupportFragmentDeparture.getView().setBackgroundColor(getContext().getColor(R.color.colorPrimary));
 
         autocompleteSupportFragmentDeparture.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME,Place.Field.LAT_LNG,Place.Field.ADDRESS));
 
