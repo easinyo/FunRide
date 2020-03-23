@@ -6,6 +6,8 @@
  */
 package com.dubinostech.rideshareapp.presenter;
 
+import android.util.Log;
+
 import com.dubinostech.rideshareapp.model.loginModel.ReservationCallback;
 import com.dubinostech.rideshareapp.presenter.interfaces.ReservationPresenterInterface;
 import com.dubinostech.rideshareapp.repository.Api.Responses.ReservationResponse;
@@ -33,9 +35,10 @@ public class ReservationPresenter implements ReservationPresenterInterface {
      *               Then notifies the reservation view
      */
     @Override
-    public void callReservation(@NotNull String tripID) {
+    public void callReservation(@NotNull String tripID, @NotNull Integer passengers) {
         reservationView.showLoading();
-        reservationCallback.makeReservation(tripID, new ReservationCallback.IOnReservationFinishedListener() {
+        Log.d("presenterBooking", "id: "+tripID +" spots: "+passengers);
+        reservationCallback.makeReservation(tripID,passengers, new ReservationCallback.IOnReservationFinishedListener() {
             @Override
             public void errorMsg(@NotNull String errorMsg) {
                 reservationView.hideLoading();

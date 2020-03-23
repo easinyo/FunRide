@@ -10,5 +10,6 @@ class SearchRaw(departure: String, destination: String, date: String) {
 
     private var departure_city: String? = departure
     private var arrival_city: String? = destination
+    private var date: String? = date
 
 }

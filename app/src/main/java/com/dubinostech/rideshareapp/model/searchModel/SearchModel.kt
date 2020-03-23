@@ -49,7 +49,7 @@ class SearchModel : SearchCallBack {
             }
 
             override fun onFailure(call: Call<List<SearchResponse>>, t: Throwable) {
-                searchFinishedListener.errorMsg("Problem getting rides !! Try again later.")
+                searchFinishedListener.errorMsg("Failed getting your ride !! Try again later.")
             }
         })
         }

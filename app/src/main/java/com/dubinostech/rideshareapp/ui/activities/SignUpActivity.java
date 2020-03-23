@@ -224,7 +224,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     public void showLoading() {
         if (progressDialog != null)
             progressDialog.setTitle("Sign up");
-        progressDialog.setMessage(String.valueOf(R.string.activity_loading_msg));
+        progressDialog.setMessage(this.getString(R.string.activity_loading_msg));
         progressDialog.show();
     }
 
@@ -251,7 +251,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void signUpSuccess(SignupResponse user) {
         Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("home_msg", "This is HOME");
         startActivity(intent);
         finish();
     }

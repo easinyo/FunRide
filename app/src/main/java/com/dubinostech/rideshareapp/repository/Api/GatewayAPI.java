@@ -104,8 +104,8 @@ public class GatewayAPI {
         return service.search(raw);
     }
 
-    public Call<ReservationResponse> makeReservation(ReservationRaw raw) {
-        return service.reserve(raw);
+    public Call<ReservationResponse> makeReservation(String token, ReservationRaw raw) {
+        return service.reserve(token, raw);
     }
 
 }

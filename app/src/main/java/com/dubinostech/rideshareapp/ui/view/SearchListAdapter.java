@@ -74,7 +74,7 @@ public class SearchListAdapter extends ArrayAdapter<SearchResponse> {
                 holder = (ViewHolder) vi.getTag();
             }
 
-            holder.departure_date.setText(rides.get(position).getDepartureDateTime());
+            holder.departure_date.setText(rides.get(position).getDepartureTime());
             holder.departure_city.setText(rides.get(position).getDepartureCity());
             holder.departure_address.setText(rides.get(position).getDepartureAddress());
             holder.arrival_city.setText(rides.get(position).getArrivalCity());
