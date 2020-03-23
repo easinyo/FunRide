@@ -40,7 +40,7 @@ class ReservationModel : ReservationCallback {
 
                 if (response.body() != null && response.isSuccess) {
                     if (response.code() == 202)
-                        reservationFinishedListener.errorMsg("Invalid Entry !! Try again later.")
+                        reservationFinishedListener.errorMsg("Sold out !!.")
                     else reservationFinishedListener.getReservationData(response.body())
                 } else {
 

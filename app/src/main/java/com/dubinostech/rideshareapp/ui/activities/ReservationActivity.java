@@ -2,7 +2,9 @@ package com.dubinostech.rideshareapp.ui.activities;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.NumberPicker;
@@ -20,7 +22,9 @@ import com.dubinostech.rideshareapp.repository.Libraries.Utils;
 import com.dubinostech.rideshareapp.ui.view.ReservationView;
 
 
-public class ReservationActivity extends AppCompatActivity implements View.OnClickListener, ReservationView {
+public class ReservationActivity extends AppCompatActivity implements ReservationView {
+    private final String TAG = "TAG_ReservationActivity";
+
     private Button makeReservation;
     private TextView departure_city, arrival_city, departure_date, departure_time, price, noPassengers;
     private ProgressDialog progressDialog;
@@ -42,6 +46,8 @@ public class ReservationActivity extends AppCompatActivity implements View.OnCli
         noPassengers = findViewById(R.id.passengers);
         price = findViewById(R.id.price_label);
 
+        this.progressDialog = new ProgressDialog(this);
+
         departure_city.setText(getIntent().getExtras().getString("departure_city") + "\n" + getIntent().getExtras().getString("departure_address"));
         arrival_city.setText(getIntent().getExtras().getString("arrival_city") + "\n" + getIntent().getExtras().getString("arrival_address"));
         departure_date.setText(getIntent().getExtras().getString("departure_date"));
@@ -50,18 +56,11 @@ public class ReservationActivity extends AppCompatActivity implements View.OnCli
         tripID = getIntent().getExtras().getString("tripID");
         availableSpots = Integer.parseInt(getIntent().getExtras().getString("available_spots"));
 
-        makeReservation.setOnClickListener(this);
-        noPassengers.setOnClickListener(this);
-    }
-
-    @Override
-    public void onClick(View v) {
-        if (v.getId() == R.id.reservationBtn) {
-            makeReservation(tripID, spots);
-        } else if (v.getId() == R.id.passengers) {
+        noPassengers.setOnClickListener(v ->{
             final NumberPicker picker = new NumberPicker(this);
-            picker.setMinValue(1);
+            picker.setMinValue(0);
             picker.setMaxValue(availableSpots);
+
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Passengers")
                     .setPositiveButton("OK", (dialog, which) -> {
@@ -72,24 +71,19 @@ public class ReservationActivity extends AppCompatActivity implements View.OnCli
                     });
             builder.setView(picker);
             builder.create().show();
-        }
-    }
-
-    private void makeReservation(String tripID, Integer spots) {
-        ReservationPresenter presenter = new ReservationPresenter(this, new ReservationModel());
-        presenter.callReservation(tripID, spots);
-    }
-
-
-    private void displayToast(String message) {
-        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+        });
+        makeReservation.setOnClickListener(v->{
+            Log.d(TAG, "Booking made");
+            ReservationPresenter presenter = new ReservationPresenter(this, new ReservationModel());
+            presenter.callReservation(tripID, new Integer(spots));
+        });
     }
 
     @Override
     public void showLoading() {
         if (progressDialog != null)
             progressDialog.setTitle("Reservation");
-        progressDialog.setMessage(String.valueOf(R.string.activity_loading_msg));
+        progressDialog.setMessage(this.getString(R.string.activity_loading_msg));
         progressDialog.show();
     }
 
@@ -103,15 +97,17 @@ public class ReservationActivity extends AppCompatActivity implements View.OnCli
     public void reservationSuccess(ReservationResponse reservationResponse) {
         hideLoading();
         Utils.displayAlertDialogWithCounter(this, this.getString(R.string.activity_reservation_success));
-//        Intent intent = new Intent(this, MainActivity.class);
-//        startActivity(intent);
-//        finish();
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @Override
     public void reservationFailure(ErrorCode code) {
         // to determine code error
         if (code.getId() == 0) {
+            Utils.displayAlertDialogWithCounter(this, code.toString());
+
             Toast.makeText(
                     this,
                     "",
@@ -122,6 +118,6 @@ public class ReservationActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void reservationFailure(String errorMsg) {
-        Toast.makeText(this, errorMsg, Toast.LENGTH_LONG).show();
+        Utils.displayAlertDialogWithCounter(this, errorMsg);
     }
 }

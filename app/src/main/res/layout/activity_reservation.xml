@@ -7,22 +7,22 @@
     android:fillViewport="true"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/backghroundcolor"
         tools:context=".ui.fragment.PostFragment">
 
         <TextView
+            android:id="@+id/notice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/notice"
-            android:text="Reservations are FREE. \n Once your seat is reserved, your driver will immediately be informed."
-            android:textColor="@color/colorPrimary"
-            android:textAppearance="?android:attr/textAppearanceMedium"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp" />
+            android:layout_marginBottom="10dp"
+            android:text="Reservations are FREE. \n Once your seat is reserved, your driver will immediately be informed."
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#FCF6F6" />
 
         <ImageView
             android:layout_width="wrap_content"

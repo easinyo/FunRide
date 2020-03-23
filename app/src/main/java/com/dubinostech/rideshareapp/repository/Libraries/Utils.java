@@ -114,7 +114,7 @@ public class Utils {
      * display AlertDialog with Counter
      */
     public static void displayAlertDialogWithCounter(final Context context, final String alertMessage){
-        final AlertDialog.Builder dialog = new AlertDialog.Builder(context)
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(context, R.style.StyleAppCompatAlertDialog)
                 .setMessage(alertMessage);
 
         final AlertDialog alert = dialog.create();

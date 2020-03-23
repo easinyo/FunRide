@@ -30,6 +30,7 @@ public class PostPresenter implements PostPresenterInterface {
      */
     @Override
     public void callPostRide(PostData postData) {
+        postView.showLoading();
         postModelInterface.postRide(postData, new PostModelInterface.IOnPostFinishedListener() {
             @Override
             public void getPostData(@NotNull PostResponse post) {

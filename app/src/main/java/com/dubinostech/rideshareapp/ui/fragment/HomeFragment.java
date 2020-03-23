@@ -231,9 +231,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Date
                 mBundle.putString("cost", rides.get(position).getFare());
                 mBundle.putString("available_spots", rides.get(position).getDavailableSpot());
                 intent.putExtras(mBundle);
-                getActivity().startActivity(intent);
-            }
-        });
+
+                if (Integer.parseInt(rides.get(position).getDavailableSpot()) > 0)
+                    getActivity().startActivity(intent);
+                else
+                    Utils.displayAlertDialogWithCounter(getContext(), " All Booked, please try another trip ");
+
+        }});
     }
 
     @Override
