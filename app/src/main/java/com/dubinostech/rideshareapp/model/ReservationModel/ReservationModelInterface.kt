@@ -8,6 +8,7 @@ interface ReservationCallback {
 
     fun makeReservation(
         tripID: String,
+        passengers: Integer,
         reservationFinishedListener: IOnReservationFinishedListener
     )
 

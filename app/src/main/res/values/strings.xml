@@ -52,6 +52,9 @@
 
     <string name = "activity_post_success"> Your trip is posted successfully</string>>
 
+    <string name = "activity_reservation_success"> Your trip has been booked successfully</string>>
+
+
     #-------------Error Handlers Strings-----------------------#
     <string name="username_password_empty">Username and/or password empty, Please Try Again..</string>
 

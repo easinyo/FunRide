@@ -156,6 +156,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Date
 
     private void searchRide() {
 
+        listview.setAdapter(null);
+        error.setVisibility(View.INVISIBLE);
+
         String dateStr = date.getText().toString();
 
         this.progressDialog = new ProgressDialog(getActivity());
@@ -183,7 +186,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Date
         myCalendar.set(Calendar.MONTH, monthOfYear);
         myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
         Log.d("Date", String.valueOf(myCalendar.getTime()));
-        String myFormat = "MM/dd/yy";
+        String myFormat = "yyyy-MM-dd";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         date.setText(sdf.format(myCalendar.getTime()));
     }
@@ -197,13 +200,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Date
 
     @Override
     public void hideLoading() {
-        if (progressDialog != null && !progressDialog.isShowing())
+        if (progressDialog != null && progressDialog.isShowing())
             progressDialog.dismiss();
     }
 
     @Override
     public void searchSuccess(List<SearchResponse> rides) {
-        hideLoading();
+         hideLoading();
          if(rides==null || rides.size()==0){
             error.setText("Sorry, no rides found!");
             error.setVisibility(View.VISIBLE);
@@ -223,7 +226,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Date
                 mBundle.putString("arrival_city", rides.get(position).getArrivalCity());
                 mBundle.putString("departure_address", rides.get(position).getDepartureAddress());
                 mBundle.putString("arrival_address", rides.get(position).getArrivalAddress());
-                mBundle.putString("departure_date", rides.get(position).getDepartureDateTime());
+                mBundle.putString("departure_date", rides.get(position).getDepartureDate());
+                mBundle.putString("departure_time", rides.get(position).getDepartureTime());
                 mBundle.putString("cost", rides.get(position).getFare());
                 mBundle.putString("available_spots", rides.get(position).getDavailableSpot());
                 intent.putExtras(mBundle);

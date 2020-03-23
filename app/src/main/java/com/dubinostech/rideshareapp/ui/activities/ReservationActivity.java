@@ -2,7 +2,6 @@ package com.dubinostech.rideshareapp.ui.activities;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +16,7 @@ import com.dubinostech.rideshareapp.model.loginModel.ReservationModel;
 import com.dubinostech.rideshareapp.presenter.ReservationPresenter;
 import com.dubinostech.rideshareapp.repository.Api.Responses.ReservationResponse;
 import com.dubinostech.rideshareapp.repository.ErrorHandler.ErrorCode;
+import com.dubinostech.rideshareapp.repository.Libraries.Utils;
 import com.dubinostech.rideshareapp.ui.view.ReservationView;
 
 
@@ -25,7 +25,8 @@ public class ReservationActivity extends AppCompatActivity implements View.OnCli
     private TextView departure_city, arrival_city, departure_date, departure_time, price, noPassengers;
     private ProgressDialog progressDialog;
     private String tripID;
-    private int passengers, availableSpots;
+    private int spots = 0;
+    private int availableSpots;
 
 
     @Override
@@ -44,7 +45,7 @@ public class ReservationActivity extends AppCompatActivity implements View.OnCli
         departure_city.setText(getIntent().getExtras().getString("departure_city") + "\n" + getIntent().getExtras().getString("departure_address"));
         arrival_city.setText(getIntent().getExtras().getString("arrival_city") + "\n" + getIntent().getExtras().getString("arrival_address"));
         departure_date.setText(getIntent().getExtras().getString("departure_date"));
-        departure_time.setText(getIntent().getExtras().getString("departure_date"));
+        departure_time.setText(getIntent().getExtras().getString("departure_time"));
         price.setText(getIntent().getExtras().getString("cost"));
         tripID = getIntent().getExtras().getString("tripID");
         availableSpots = Integer.parseInt(getIntent().getExtras().getString("available_spots"));
@@ -56,7 +57,7 @@ public class ReservationActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.reservationBtn) {
-            makeReservation(tripID);
+            makeReservation(tripID, spots);
         } else if (v.getId() == R.id.passengers) {
             final NumberPicker picker = new NumberPicker(this);
             picker.setMinValue(1);
@@ -65,7 +66,7 @@ public class ReservationActivity extends AppCompatActivity implements View.OnCli
             builder.setMessage("Passengers")
                     .setPositiveButton("OK", (dialog, which) -> {
                         noPassengers.setText(String.valueOf(picker.getValue()));
-                        passengers = picker.getValue();
+                        spots = Integer.parseInt(String.valueOf((picker.getValue())));
                     })
                     .setNegativeButton("CANCEL", (dialog, which) -> {
                     });
@@ -74,9 +75,9 @@ public class ReservationActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
-    private void makeReservation(String tripID) {
+    private void makeReservation(String tripID, Integer spots) {
         ReservationPresenter presenter = new ReservationPresenter(this, new ReservationModel());
-        presenter.callReservation(tripID);
+        presenter.callReservation(tripID, spots);
     }
 
 
@@ -94,15 +95,17 @@ public class ReservationActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void hideLoading() {
-        if (progressDialog != null && !progressDialog.isShowing())
+        if (progressDialog != null && progressDialog.isShowing())
             progressDialog.dismiss();
     }
 
     @Override
     public void reservationSuccess(ReservationResponse reservationResponse) {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        finish();
+        hideLoading();
+        Utils.displayAlertDialogWithCounter(this, this.getString(R.string.activity_reservation_success));
+//        Intent intent = new Intent(this, MainActivity.class);
+//        startActivity(intent);
+//        finish();
     }
 
     @Override

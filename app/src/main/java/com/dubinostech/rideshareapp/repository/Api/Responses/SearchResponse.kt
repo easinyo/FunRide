@@ -41,9 +41,14 @@ class SearchResponse {
     @Expose
     private var arrival_province: String? = null
 
+    @SerializedName("departure_date")
+    @Expose
+    private var departure_date: String? = null
+
     @SerializedName("departure_datetime")
     @Expose
     private var departure_datetime: String? = null
+
 
     /**
      *
@@ -192,10 +197,28 @@ class SearchResponse {
     /**
      *
      * @return
+     * The departure_date
+     */
+    fun getDepartureDate(): String? {
+        return departure_date
+    }
+
+    /**
+     *
+     * @param departure_date
+     * The departure_date
+     */
+    fun setDepartureDateTime(departure_date: String) {
+        this.departure_date = departure_date
+    }
+
+    /**
+     *
+     * @return
      * The departure_datetime
      */
-    fun getDepartureDateTime(): String? {
-        return departure_address
+    fun getDepartureTime(): String? {
+        return departure_datetime
     }
 
     /**
@@ -203,7 +226,7 @@ class SearchResponse {
      * @param departure_datetime
      * The departure_datetime
      */
-    fun setDepartureDateTime(departure_datetime: String) {
+    fun setDepartureTime(departure_datetime: String) {
         this.departure_datetime = departure_datetime
     }
 

@@ -7,6 +7,6 @@ package com.dubinostech.rideshareapp.presenter.interfaces
 
 interface ReservationPresenterInterface {
 
-    fun callReservation(tripID: String)
+    fun callReservation(tripID: String, passengers: Integer)
 
 }
