@@ -13,7 +13,6 @@
     <string name="action_sign_in"> Login </string>
     <string name="action_sign_up_line"> OR </string>
     <string name="action_register"> Register </string>
-    <string name="action_saves"> Saves Changes </string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="welcome">"Welcome !"</string>
     <string name="invalid_username">Not a valid username</string>
@@ -53,9 +52,9 @@
 
     <string name="activity_post_error">Something went wrong, Please verify your data.</string>
 
-    <string name="activity_post_success"> Your trip is posted successfully</string>>
+    <string name = "activity_post_success"> Your trip is posted successfully</string>>
 
-    <string name="activity_reservation_success"> Your trip has been booked successfully</string>>
+    <string name = "activity_reservation_success"> Your trip has been booked successfully</string>>
 
 
     #-------------Error Handlers Strings-----------------------#
@@ -84,8 +83,7 @@
 
     <string name="action_search"><b>Search</b></string>
 
-    <string name="api_key">AIzaSyByniyl8kvVAZ0eGBbPxyUVzVg9jgV5XfA</string>
-    <string name="title_activity_edit_user_profile">EditUserProfile</string>>
+    <string name="api_key">AIzaSyByniyl8kvVAZ0eGBbPxyUVzVg9jgV5XfA</string>>
 
     <string name="contact_form">Contact Us</string>
     <string name="contact_form_name">Your Name</string>

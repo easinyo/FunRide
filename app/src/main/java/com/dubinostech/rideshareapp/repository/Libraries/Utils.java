@@ -21,8 +21,6 @@ import java.util.Locale;
 
 public class Utils {
 
-    public static final int  SIGNUP = 0; // This will be used to call sign up endpoint
-    public static final int EDITPROFILE = 1; // this will be used to call update endpoint
     /**
      * check email validations.
      *

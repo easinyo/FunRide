@@ -1,23 +1,22 @@
-package com.dubinostech.rideshareapp.model.userModel
+package com.dubinostech.rideshareapp.model.signUpModel
 
 import com.dubinostech.rideshareapp.repository.ErrorHandler.ErrorCode
-import com.dubinostech.rideshareapp.repository.Api.Responses.UserInfoResponse
+import com.dubinostech.rideshareapp.repository.Api.Responses.SignupResponse
 import com.dubinostech.rideshareapp.repository.Data.User
 
 
-interface UserInfoCallback {
+interface SignUpCallback {
 
 
-    fun signUpOrUpdate(
+    fun signUp(
         user: User,
-        code: Integer,
         validationErrorListener: IValidationErrorListener,
-        signUpFinishedListener: UserInfoCallback.IOnSignUpFinishedListener
+        signUpFinishedListener: SignUpCallback.IOnSignUpFinishedListener
     )
 
     interface IOnSignUpFinishedListener {
 
-        fun getUserData(user: UserInfoResponse)
+        fun getUserData(user: SignupResponse)
         fun errorMsg(errorMsg: String)
     }
 
