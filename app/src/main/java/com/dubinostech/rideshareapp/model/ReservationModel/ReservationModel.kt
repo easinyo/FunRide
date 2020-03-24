@@ -28,7 +28,7 @@ class ReservationModel : ReservationCallback {
         val reservationRaw =
             ReservationRaw(tripID, passengers)
         val token =
-            if (LoggedUser.getToken() != null) "Bearer " + LoggedUser.getToken() else "Bearer "
+            if (LoggedUser.token != null) "Bearer " + LoggedUser.token else "Bearer "
 
         val responseLoginCallback = gatewayAPI!!.makeReservation(token, reservationRaw)
 

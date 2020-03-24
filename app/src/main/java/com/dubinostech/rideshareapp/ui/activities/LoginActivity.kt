@@ -46,10 +46,10 @@ class LoginActivity: BaseActivity() , LoginView {
     }
 
     override fun init() {
-        username = findViewById<EditText>(R.id.username)
-        password = findViewById<EditText>(R.id.password)
-        login = findViewById<Button>(R.id.login)
-        register = findViewById<Button>(R.id.register)
+        username = findViewById(R.id.username)
+        password = findViewById(R.id.password)
+        login = findViewById(R.id.login)
+        register = findViewById(R.id.register)
 
         val permissions = arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION)
         ActivityCompat.requestPermissions(this, permissions, 0)
@@ -126,9 +126,10 @@ class LoginActivity: BaseActivity() , LoginView {
 
     override fun loginSuccess(user: LoginResponse?) {
         LoggedUser.token = user?.auth_token
-        LoggedUser.name = user?.full_name
+        LoggedUser.firstname = user?.firstname
+        LoggedUser.lastname = user?.lastname
         LoggedUser.email = user?.email
-        LoggedUser.phone_number = user?.phone_number
+        LoggedUser.phone_number = user?.phone
 
         val intent = Intent(this@LoginActivity, MainActivity::class.java)
         intent.putExtra("home_msg", "This is HOME")

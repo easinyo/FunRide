@@ -4,12 +4,12 @@ import com.dubinostech.rideshareapp.repository.Api.Raws.LoginRaw;
 import com.dubinostech.rideshareapp.repository.Api.Raws.PostRaw;
 import com.dubinostech.rideshareapp.repository.Api.Raws.ReservationRaw;
 import com.dubinostech.rideshareapp.repository.Api.Raws.SearchRaw;
-import com.dubinostech.rideshareapp.repository.Api.Raws.SignupRaw;
+import com.dubinostech.rideshareapp.repository.Api.Raws.UserInfoRaw;
 import com.dubinostech.rideshareapp.repository.Api.Responses.LoginResponse;
 import com.dubinostech.rideshareapp.repository.Api.Responses.PostResponse;
 import com.dubinostech.rideshareapp.repository.Api.Responses.ReservationResponse;
 import com.dubinostech.rideshareapp.repository.Api.Responses.SearchResponse;
-import com.dubinostech.rideshareapp.repository.Api.Responses.SignupResponse;
+import com.dubinostech.rideshareapp.repository.Api.Responses.UserInfoResponse;
 
 import java.util.List;
 
@@ -28,12 +28,16 @@ public interface GatewayAPIInterface {
     String POST_TRIP = "post_trip";
     String SEARCH = "search_trips";
     String BOOK_TRIP = "book_trips";
+    String EDIT_PROFILE = "user";
 
     @POST(LOGIN)
     Call<LoginResponse> login(@Body LoginRaw loginCall);
 
     @POST(SIGNUP)
-    Call<SignupResponse> signup(@Body SignupRaw signUpCall);
+    Call<UserInfoResponse> signup(@Body UserInfoRaw signUpCall);
+
+    @POST(EDIT_PROFILE)
+    Call<UserInfoResponse> editProfile(@Header("Authorization") String token, @Body UserInfoRaw signUpCall);
 
     @POST(POST_TRIP)
     Call<PostResponse> postRide(@Header("Authorization") String token,@Body PostRaw postCall);
