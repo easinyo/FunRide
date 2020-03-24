@@ -1,27 +1,27 @@
 /**
- * The class SignupPresenter is the presenter of the signup feature. 
- * It implements the interface SignUpPresenterInterface
+ * The class UserPresenter is the presenter of the signup feature.
+ * It implements the interface UserPresenterInterface
  * It has a method callSignup which is called by the view when a new user registers. 
  * It then updates sign up model and view.
  */
 package com.dubinostech.rideshareapp.presenter;
 
 import com.dubinostech.rideshareapp.repository.ErrorHandler.ErrorCode;
-import com.dubinostech.rideshareapp.repository.Api.Responses.SignupResponse;
+import com.dubinostech.rideshareapp.repository.Api.Responses.UserInfoResponse;
 import com.dubinostech.rideshareapp.repository.Data.User;
-import com.dubinostech.rideshareapp.model.signUpModel.SignUpCallback;
-import com.dubinostech.rideshareapp.presenter.interfaces.SignUpPresenterInterface;
-import com.dubinostech.rideshareapp.ui.view.SignUpView;
+import com.dubinostech.rideshareapp.model.userModel.UserInfoCallback;
+import com.dubinostech.rideshareapp.presenter.interfaces.UserPresenterInterface;
+import com.dubinostech.rideshareapp.ui.view.UserInfoView;
 
 import org.jetbrains.annotations.NotNull;
 
 
-public class SignupPresenter implements SignUpPresenterInterface {
+public class UserPresenter implements UserPresenterInterface {
 
-    SignUpView signupView;
-    SignUpCallback signupCallback;
+    UserInfoView signupView;
+    UserInfoCallback signupCallback;
 
-    public SignupPresenter(SignUpView signupView, SignUpCallback signupCallback) {
+    public UserPresenter(UserInfoView signupView, UserInfoCallback signupCallback) {
         this.signupView = signupView;
         this.signupCallback = signupCallback;
     }
@@ -34,8 +34,8 @@ public class SignupPresenter implements SignUpPresenterInterface {
      * Then it notifies the signup view
      */
     @Override
-    public void callSignUp(User user) {
-        signupCallback.signUp(user, new SignUpCallback.IValidationErrorListener() {
+    public void callUserSignUpOrUpdate(User user, int code) {
+        signupCallback.signUpOrUpdate(user, new Integer(code), new UserInfoCallback.IValidationErrorListener() {
             @Override
             public void emailError(ErrorCode code) {
                 signupView.hideLoading();
@@ -48,21 +48,21 @@ public class SignupPresenter implements SignUpPresenterInterface {
                 signupView.setPasswordError(code);
             }
 
-        }, new SignUpCallback.IOnSignUpFinishedListener() {
+        }, new UserInfoCallback.IOnSignUpFinishedListener() {
             @Override
-            public void getUserData(@NotNull SignupResponse user) {
+            public void getUserData(@NotNull UserInfoResponse user) {
                 signupView.hideLoading();
                 if (user != null) {
-                    signupView.signUpSuccess(user);
+                    signupView.onSuccess(user);
                 } else {
-                    signupView.signUpFailure(ErrorCode.SIGNUP_FAILED);
+                    signupView.onFailure(ErrorCode.SIGNUP_FAILED);
                 }
             }
 
             @Override
             public void errorMsg(String errorMsg) {
                 signupView.hideLoading();
-                signupView.signUpFailure(errorMsg);
+                signupView.onFailure(errorMsg);
             }
 
         });

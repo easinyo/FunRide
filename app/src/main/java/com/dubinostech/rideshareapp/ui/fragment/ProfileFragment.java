@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 
 import com.dubinostech.rideshareapp.R;
 import com.dubinostech.rideshareapp.repository.Data.LoggedUser;
+import com.dubinostech.rideshareapp.ui.activities.EditUserProfileActivity;
 import com.dubinostech.rideshareapp.ui.activities.ContactActivity;
 import com.dubinostech.rideshareapp.ui.activities.LoginActivity;
 import com.dubinostech.rideshareapp.ui.view.Terms;
@@ -22,7 +23,7 @@ import com.dubinostech.rideshareapp.ui.view.Terms;
 public class ProfileFragment extends Fragment {
 
     LinearLayout personalinfo, experience, review, completedTrips, cancelledtrips, postedTrips, terms, contactUs, rate;
-    TextView personalinfobtn, experiencebtn, reviewbtn, tripsDone, name, email, phoneNumber, location;
+    TextView personalinfobtn, experiencebtn, reviewbtn, tripsDone, name, email, phoneNumber, location, edit;
     Button logout;
 
     @Override
@@ -35,6 +36,7 @@ public class ProfileFragment extends Fragment {
         email = rootView.findViewById(R.id.email);
         phoneNumber = rootView.findViewById(R.id.phoneNumber);
         location = rootView.findViewById(R.id.location);
+        edit = rootView.findViewById(R.id.edit);
         tripsDone = rootView.findViewById(R.id.tripsDone);
 
         /*Trips Layouts*/
@@ -50,6 +52,9 @@ public class ProfileFragment extends Fragment {
         /*buttons*/
         logout = rootView.findViewById(R.id.logout);
 
+
+
+
         /*Layouts*/
         personalinfo = rootView.findViewById(R.id.personalinfo);
         experience = rootView.findViewById(R.id.experience);
@@ -64,6 +69,12 @@ public class ProfileFragment extends Fragment {
         review.setVisibility(View.GONE);
 
         /*Setup onclick*/
+        edit.setOnClickListener(v -> {
+            //TODO
+            Intent intent = new Intent(getActivity(), EditUserProfileActivity.class);
+
+            getActivity().startActivity(intent);
+        });
         completedTrips.setOnClickListener(v -> {
             new AlertDialog.Builder(getContext())
                     .setTitle("My completed Trips")
@@ -185,7 +196,7 @@ public class ProfileFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
 
-        name.setText(LoggedUser.name);
+        name.setText(LoggedUser.firstname + " " + LoggedUser.lastname);
         email.setText(LoggedUser.email);
         phoneNumber.setText(LoggedUser.phone_number);
     }
