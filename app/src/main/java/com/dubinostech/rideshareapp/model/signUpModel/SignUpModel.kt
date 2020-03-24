@@ -1,42 +1,33 @@
 package com.dubinostech.rideshareapp.model.SignModel
 
 import com.dubinostech.rideshareapp.repository.Api.GatewayAPI
-import com.dubinostech.rideshareapp.repository.Api.Raws.UserInfoRaw
-import com.dubinostech.rideshareapp.repository.Api.Responses.UserInfoResponse
+import com.dubinostech.rideshareapp.repository.Api.Raws.SignupRaw
+import com.dubinostech.rideshareapp.repository.Api.Responses.SignupResponse
 import com.dubinostech.rideshareapp.repository.Data.User
 import com.dubinostech.rideshareapp.repository.ErrorHandler.ErrorCode
 import com.dubinostech.rideshareapp.repository.ErrorHandler.WebErrorUtils
 import com.dubinostech.rideshareapp.repository.Libraries.Utils
-import com.dubinostech.rideshareapp.model.userModel.UserInfoCallback
-import com.dubinostech.rideshareapp.repository.Data.LoggedUser
+import com.dubinostech.rideshareapp.model.signUpModel.SignUpCallback
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 
-class userModel : UserInfoCallback {
+class SignUpModel : SignUpCallback {
     private val TAG = "SignupModel"
 
     private var gatewayAPI: GatewayAPI? = null
 
 
-    override fun signUpOrUpdate(
+    override fun signUp(
         user: User,
-        code: Integer,
-        validationErrorListener: UserInfoCallback.IValidationErrorListener,
-        signUpFinishedListener: UserInfoCallback.IOnSignUpFinishedListener
+        validationErrorListener: SignUpCallback.IValidationErrorListener,
+        signUpFinishedListener: SignUpCallback.IOnSignUpFinishedListener
     ) {
-        if (isDataValid(
-                user.getEmail(),
-                user.getPassword(),
-                user.getConfirmPassword(),
-                code,
-                validationErrorListener
-            )
-        ) {
+        if (isDataValid(user.getEmail(), user.getPassword(), user.getConfirmPassword(), validationErrorListener)) {
 
             gatewayAPI = GatewayAPI(null)
-            val userInfoRaw = UserInfoRaw(
+            val signupRaw = SignupRaw(
                 user.firstName,
                 user.lastName,
                 user.phone,
@@ -45,18 +36,13 @@ class userModel : UserInfoCallback {
                 user.confirmPassword
             )
 
-            val token =
-                if (LoggedUser.token != null) "Bearer " + LoggedUser.token else "Bearer "
+            val responseSignUpCallback = gatewayAPI!!.signup(signupRaw)
 
-            val responseUserInfoCallback =
-                if (code.equals(Integer(Utils.SIGNUP)))
-                    gatewayAPI!!.signup(userInfoRaw)
-                else gatewayAPI!!.editProfile(token, userInfoRaw)
 
-            responseUserInfoCallback.enqueue(object : Callback<UserInfoResponse> {
+            responseSignUpCallback.enqueue(object : Callback<SignupResponse> {
                 override fun onResponse(
-                    call: Call<UserInfoResponse>,
-                    response: Response<UserInfoResponse>
+                    call: Call<SignupResponse>,
+                    response: Response<SignupResponse>
                 ) {
 
                     if (response.body() != null && response.isSuccess) {
@@ -74,7 +60,7 @@ class userModel : UserInfoCallback {
                     }
                 }
 
-                override fun onFailure(call: Call<UserInfoResponse>, t: Throwable) {
+                override fun onFailure(call: Call<SignupResponse>, t: Throwable) {
                     signUpFinishedListener.errorMsg("Problem getting user !! Try again later.")
                 }
             })
@@ -86,8 +72,7 @@ class userModel : UserInfoCallback {
         email: String,
         password: String,
         confirmedpassWord: String,
-        code: Integer,
-        validationErrorListener: UserInfoCallback.IValidationErrorListener
+        validationErrorListener: SignUpCallback.IValidationErrorListener
     ): Boolean {
 
         if (!Utils.isValidEmail(email)) {
@@ -95,24 +80,15 @@ class userModel : UserInfoCallback {
             validationErrorListener.emailError(ErrorCode.EMAIL_INVALID)
             return false
 
-        }
-        if (!Utils.isValidEmail(email)) {
+        } else if (password.length < 6) {
 
-            validationErrorListener.emailError(ErrorCode.EMAIL_INVALID)
+            validationErrorListener.passwordError(ErrorCode.PASSWORD_INVALID)
             return false
 
-        } else if (code.equals(Integer(Utils.SIGNUP))) {
-            if (password.length < 6) {
-                validationErrorListener.passwordError(ErrorCode.PASSWORD_INVALID)
-                return false
+        } else if (confirmedpassWord != password) {
+            validationErrorListener.passwordError(ErrorCode.PASSWORD_DONT_MATCH)
+            return false
 
-            } else if (confirmedpassWord != password) {
-                validationErrorListener.passwordError(ErrorCode.PASSWORD_DONT_MATCH)
-                return false
-
-            } else {
-                return true
-            }
         } else {
             return true
         }

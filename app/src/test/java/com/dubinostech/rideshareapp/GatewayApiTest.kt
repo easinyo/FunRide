@@ -3,7 +3,7 @@ package com.dubinostech.rideshareapp
 import com.dubinostech.rideshareapp.repository.Api.GatewayAPI
 import com.dubinostech.rideshareapp.repository.Api.Raws.LoginRaw
 import com.dubinostech.rideshareapp.repository.Api.Responses.LoginResponse
-import com.dubinostech.rideshareapp.repository.Api.Responses.UserInfoResponse
+import com.dubinostech.rideshareapp.repository.Api.Responses.SignupResponse
 import org.hamcrest.CoreMatchers.any
 import org.junit.Before
 import org.junit.Test
@@ -76,7 +76,7 @@ class GatewayApiTest{
         Mockito.doAnswer(object : Answer() {
             @Throws(Throwable::class)
             fun answer(invocation: InvocationOnMock): Void? {
-                val callback = invocation.getArgumentAt(0, Call<UserInfoResponse>)
+                val callback = invocation.getArgumentAt(0, Call<SignupResponse>)
 
                 callback.onResponse(
                     mockedCall,

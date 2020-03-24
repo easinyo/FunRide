@@ -9,20 +9,16 @@ class LoginResponse{
     @Expose
     var auth_token: String? = null
 
+    @SerializedName("full_name")
+    @Expose
+    var full_name: String? = null
+
     @SerializedName("email")
     @Expose
     var email: String? = null
 
-    @SerializedName("firstname")
+    @SerializedName("phone_number")
     @Expose
-    var firstname: String? = null
-
-    @SerializedName("lastname")
-    @Expose
-    var lastname: String? = null
-
-    @SerializedName("phone")
-    @Expose
-    var phone: String? = null
+    var phone_number: String? = null
 
 }
