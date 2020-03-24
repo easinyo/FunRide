@@ -40,6 +40,12 @@
             android:name=".ui.activities.ReservationActivity"
             android:label="@string/title_activity_reservation" />
 
+        <activity
+            android:name=".ui.view.Terms"
+            android:label="@string/title_activity_terms" />
+        <activity
+            android:name=".ui.activities.ContactActivity"
+            android:label="@string/title_activity_contact" />
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyCIN5KN7FLOqKxhgG-73FDHFfd_rHZU2WQ" />

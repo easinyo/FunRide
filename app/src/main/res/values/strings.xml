@@ -6,6 +6,8 @@
     <string name="title_activity_login">Sign in</string>
     <string name="title_activity_signup">Sign up</string>
     <string name="title_activity_reservation">Reservation</string>
+    <string name="title_activity_terms">Terms</string>
+    <string name="title_activity_contact">Contact us</string>
     <string name="prompt_email">   Email</string>
     <string name="prompt_password">  Password</string>
     <string name="action_sign_in"> Login </string>
@@ -84,5 +86,14 @@
 
     <string name="api_key">AIzaSyByniyl8kvVAZ0eGBbPxyUVzVg9jgV5XfA</string>
     <string name="title_activity_edit_user_profile">EditUserProfile</string>>
+
+    <string name="contact_form">Contact Us</string>
+    <string name="contact_form_name">Your Name</string>
+    <string name="contact_form_email">Your Email</string>
+    <string name="contact_form_subject">Subject</string>
+    <string name="contact_form_message">Message</string>
+    <string name="contact_form_button">Send Message</string>
+    <string name="contact_form_post_message">Please wait! We are sending your message to Fun-Ride support...</string>
+    <string name="contact_posted">Your message has been successfully sent.</string>
 
 </resources>
