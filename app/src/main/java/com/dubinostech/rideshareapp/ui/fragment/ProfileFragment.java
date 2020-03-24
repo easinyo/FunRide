@@ -13,7 +13,10 @@ import androidx.fragment.app.Fragment;
 
 import com.dubinostech.rideshareapp.R;
 import com.dubinostech.rideshareapp.repository.Data.LoggedUser;
+import com.dubinostech.rideshareapp.ui.activities.EditUserProfileActivity;
+import com.dubinostech.rideshareapp.ui.activities.ContactActivity;
 import com.dubinostech.rideshareapp.ui.activities.LoginActivity;
+import com.dubinostech.rideshareapp.ui.view.Terms;
 
 public class ProfileFragment extends Fragment {
 
@@ -46,9 +49,6 @@ public class ProfileFragment extends Fragment {
         /*buttons*/
         logout = rootView.findViewById(R.id.logout);
 
-
-
-
         /*Layouts*/
         personalinfo = rootView.findViewById(R.id.personalinfo);
         experience = rootView.findViewById(R.id.experience);
@@ -64,27 +64,69 @@ public class ProfileFragment extends Fragment {
 
         /*Setup onclick*/
         completedTrips.setOnClickListener(v -> {
-            //TODO
+            new AlertDialog.Builder(getContext())
+                    .setTitle("My completed Trips")
+                    .setMessage("This feature will be coming up soon.")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
         });
 
         postedTrips.setOnClickListener(v -> {
-            //TODO
+            new AlertDialog.Builder(getContext())
+                    .setTitle("My posted Trips")
+                    .setMessage("This feature will be coming up soon.")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
         });
 
         cancelledtrips.setOnClickListener(v -> {
-            //TODO
+            new AlertDialog.Builder(getContext())
+                    .setTitle("My cancelled Trips")
+                    .setMessage("This feature will be coming up soon.")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
         });
 
         terms.setOnClickListener(v -> {
-            //TODO
+            Intent intent = new Intent(getActivity(), Terms.class);
+            startActivity(intent);
         });
 
         contactUs.setOnClickListener(v -> {
-            //TODO
+            Intent intent = new Intent(getActivity(), ContactActivity.class);
+            startActivity(intent);
         });
 
         rate.setOnClickListener(v -> {
-            //TODO
+            new AlertDialog.Builder(getContext())
+                    .setTitle("Rate a driver")
+                    .setMessage("This feature will be coming up soon.")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
         });
 
         logout.setOnClickListener(v -> {
