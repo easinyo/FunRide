@@ -79,7 +79,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Date
 
         listview = groupView.findViewById(R.id.search_list);
 
-        String myFormat = "MM/dd/yy";
+        String myFormat = "yyyy-MM-dd";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         date.setText(sdf.format(myCalendar.getTime()));
 
