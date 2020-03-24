@@ -1,5 +1,7 @@
 package com.dubinostech.rideshareapp.ui.fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,7 +15,6 @@ import androidx.fragment.app.Fragment;
 
 import com.dubinostech.rideshareapp.R;
 import com.dubinostech.rideshareapp.repository.Data.LoggedUser;
-import com.dubinostech.rideshareapp.ui.activities.EditUserProfileActivity;
 import com.dubinostech.rideshareapp.ui.activities.ContactActivity;
 import com.dubinostech.rideshareapp.ui.activities.LoginActivity;
 import com.dubinostech.rideshareapp.ui.view.Terms;
