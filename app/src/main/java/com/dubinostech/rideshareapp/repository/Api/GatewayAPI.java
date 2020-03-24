@@ -14,12 +14,12 @@ import com.dubinostech.rideshareapp.repository.Api.Raws.LoginRaw;
 import com.dubinostech.rideshareapp.repository.Api.Raws.PostRaw;
 import com.dubinostech.rideshareapp.repository.Api.Raws.ReservationRaw;
 import com.dubinostech.rideshareapp.repository.Api.Raws.SearchRaw;
-import com.dubinostech.rideshareapp.repository.Api.Raws.SignupRaw;
+import com.dubinostech.rideshareapp.repository.Api.Raws.UserInfoRaw;
 import com.dubinostech.rideshareapp.repository.Api.Responses.LoginResponse;
 import com.dubinostech.rideshareapp.repository.Api.Responses.PostResponse;
 import com.dubinostech.rideshareapp.repository.Api.Responses.ReservationResponse;
 import com.dubinostech.rideshareapp.repository.Api.Responses.SearchResponse;
-import com.dubinostech.rideshareapp.repository.Api.Responses.SignupResponse;
+import com.dubinostech.rideshareapp.repository.Api.Responses.UserInfoResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -92,8 +92,12 @@ public class GatewayAPI {
         return service.login(raw);
     }
 
-    public Call<SignupResponse> signup(SignupRaw raw) {
+    public Call<UserInfoResponse> signup(UserInfoRaw raw) {
         return service.signup(raw);
+    }
+
+    public Call<UserInfoResponse> editProfile(String token, UserInfoRaw raw) {
+        return service.editProfile(token, raw);
     }
 
     public Call<PostResponse> postRide(String token,PostRaw raw) {

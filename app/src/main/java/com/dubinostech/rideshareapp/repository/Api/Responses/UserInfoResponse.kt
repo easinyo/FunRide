@@ -3,7 +3,7 @@ package com.dubinostech.rideshareapp.repository.Api.Responses
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-class SignupResponse {
+class UserInfoResponse {
 
     @SerializedName("id")
     @Expose
