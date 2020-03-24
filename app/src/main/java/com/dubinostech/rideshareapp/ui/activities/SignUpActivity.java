@@ -12,18 +12,16 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.dubinostech.rideshareapp.R;
-import com.dubinostech.rideshareapp.model.SignModel.SignUpModel;
-import com.dubinostech.rideshareapp.presenter.SignupPresenter;
-import com.dubinostech.rideshareapp.repository.Api.Responses.SignupResponse;
+import com.dubinostech.rideshareapp.model.SignModel.userModel;
+import com.dubinostech.rideshareapp.presenter.UserPresenter;
+import com.dubinostech.rideshareapp.repository.Api.Responses.UserInfoResponse;
 import com.dubinostech.rideshareapp.repository.Data.User;
 import com.dubinostech.rideshareapp.repository.ErrorHandler.ErrorCode;
 import com.dubinostech.rideshareapp.repository.Libraries.Utils;
-import com.dubinostech.rideshareapp.ui.view.SignUpView;
-
-import org.jetbrains.annotations.Nullable;
+import com.dubinostech.rideshareapp.ui.view.UserInfoView;
 
 
-public class SignUpActivity extends AppCompatActivity implements View.OnClickListener, SignUpView {
+public class SignUpActivity extends AppCompatActivity implements View.OnClickListener, UserInfoView {
     private Button signup;
     private TextView title;
     private ProgressDialog progressDialog;
@@ -196,7 +194,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             displayToast("password field empty");
         }
         else  if(confirmPasswordStr.isEmpty()){
-            displayToast("Sex field is empty ");
+            displayToast("confirmPasswordStr field is empty ");
         }
         else if(!confirmPasswordStr.equals(passwordStr)){
             displayToast("passwords don't match ");
@@ -204,16 +202,10 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             Utils.displayCommonAlertDialog(this, String.valueOf(R.string.connection_issue_msg));
         }
         else{
-            SignupPresenter presenter = new SignupPresenter(this, new SignUpModel());
+            UserPresenter presenter = new UserPresenter(this, new userModel());
             User user = new User(firstnameStr, lastnameStr, emailStr, phoneStr, passwordStr, confirmPasswordStr);
-            presenter.callSignUp(user);
+            presenter.callUserSignUpOrUpdate(user, Utils.SIGNUP);
         }
-    }
-
-    public void signupSuccess(@Nullable SignupResponse user) {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("home_msg", "This is HOME");
-        this.startActivity(intent);
     }
 
     private void displayToast(String message){
@@ -249,14 +241,14 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     @Override
-    public void signUpSuccess(SignupResponse user) {
-        Intent intent = new Intent(this, MainActivity.class);
+    public void onSuccess(UserInfoResponse user) {
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();
     }
 
     @Override
-    public void signUpFailure(ErrorCode code) {
+    public void onFailure(ErrorCode code) {
         if (code.getId() == 5) {
             Toast.makeText(
                     this,
@@ -267,7 +259,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     @Override
-    public void signUpFailure(String errMsg) {
+    public void onFailure(String errMsg) {
         Toast.makeText(this, errMsg, Toast.LENGTH_LONG).show();
     }
 }
