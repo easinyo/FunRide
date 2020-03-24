@@ -23,6 +23,7 @@ public class PostModel implements PostModelInterface {
 
     @Override
     public void postRide(PostData postData, IOnPostFinishedListener postFinishedListener) {
+        if (isDataValid(postData)) {
 
             gatewayAPI = new GatewayAPI(null);
             PostRaw postRaw = new PostRaw(
@@ -35,9 +36,10 @@ public class PostModel implements PostModelInterface {
                     postData.getDeparture_datetime()
             );
 
-            String token = (LoggedUser.token!=null)?("Bearer " + LoggedUser.token): "Bearer ";
+            String token = (LoggedUser.getToken()!=null)?("Bearer " + LoggedUser.getToken()): "Bearer ";
 
             Call<PostResponse> responsePostCallback = gatewayAPI.postRide(token, postRaw);
+
 
             responsePostCallback.enqueue(new Callback<PostResponse>(){
                 @Override
@@ -63,6 +65,25 @@ public class PostModel implements PostModelInterface {
                 public void onFailure(Call<PostResponse> call, Throwable t) {
                      postFinishedListener.errorMsg("Problem getting user !! Try again later.");
                 }
+
+
             });
+        }
     }
+
+    /**
+     *
+     * @param postData
+     * @return true is all the data is valid
+     */
+    private boolean isDataValid(PostData postData){
+        return true;
+    }
+
+//------------
+
+
+
+
+
 }

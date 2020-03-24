@@ -1,15 +1,11 @@
 package com.dubinostech.rideshareapp.ui.fragment;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -17,13 +13,12 @@ import androidx.fragment.app.Fragment;
 
 import com.dubinostech.rideshareapp.R;
 import com.dubinostech.rideshareapp.repository.Data.LoggedUser;
-import com.dubinostech.rideshareapp.ui.activities.EditUserProfileActivity;
 import com.dubinostech.rideshareapp.ui.activities.LoginActivity;
 
 public class ProfileFragment extends Fragment {
 
     LinearLayout personalinfo, experience, review, completedTrips, cancelledtrips, postedTrips, terms, contactUs, rate;
-    TextView personalinfobtn, experiencebtn, reviewbtn, tripsDone, name, email, phoneNumber, location, edit;
+    TextView personalinfobtn, experiencebtn, reviewbtn, tripsDone, name, email, phoneNumber, location;
     Button logout;
 
     @Override
@@ -36,7 +31,6 @@ public class ProfileFragment extends Fragment {
         email = rootView.findViewById(R.id.email);
         phoneNumber = rootView.findViewById(R.id.phoneNumber);
         location = rootView.findViewById(R.id.location);
-        edit = rootView.findViewById(R.id.edit);
         tripsDone = rootView.findViewById(R.id.tripsDone);
 
         /*Trips Layouts*/
@@ -69,12 +63,6 @@ public class ProfileFragment extends Fragment {
         review.setVisibility(View.GONE);
 
         /*Setup onclick*/
-        edit.setOnClickListener(v -> {
-            //TODO
-            Intent intent = new Intent(getActivity(), EditUserProfileActivity.class);
-
-            getActivity().startActivity(intent);
-        });
         completedTrips.setOnClickListener(v -> {
             //TODO
         });
@@ -154,7 +142,7 @@ public class ProfileFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
 
-        name.setText(LoggedUser.firstname + " " + LoggedUser.lastname);
+        name.setText(LoggedUser.name);
         email.setText(LoggedUser.email);
         phoneNumber.setText(LoggedUser.phone_number);
     }

@@ -1,13 +1,13 @@
 /**
-Interface UserInfoView
+Interface SignUpView
 To be implemented by SignUpActivity
 */
 package com.dubinostech.rideshareapp.ui.view;
 
 import com.dubinostech.rideshareapp.repository.ErrorHandler.ErrorCode;
-import com.dubinostech.rideshareapp.repository.Api.Responses.UserInfoResponse;
+import com.dubinostech.rideshareapp.repository.Api.Responses.SignupResponse;
 
-public interface UserInfoView {
+public interface SignUpView {
     void showLoading();
 
     void hideLoading();
@@ -16,9 +16,9 @@ public interface UserInfoView {
 
     void setPasswordError(ErrorCode code);
 
-    void onSuccess(UserInfoResponse user);
+    void signUpSuccess(SignupResponse user);
 
-    void onFailure(ErrorCode code);
+    void signUpFailure(ErrorCode code);
 
-    void onFailure(String errMsg);
+    void signUpFailure(String errMsg);
 }
