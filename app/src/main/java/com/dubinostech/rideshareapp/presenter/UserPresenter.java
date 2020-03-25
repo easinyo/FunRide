@@ -18,11 +18,11 @@ import org.jetbrains.annotations.NotNull;
 
 public class UserPresenter implements UserPresenterInterface {
 
-    UserInfoView signupView;
+    UserInfoView userInfoView;
     UserInfoCallback signupCallback;
 
-    public UserPresenter(UserInfoView signupView, UserInfoCallback signupCallback) {
-        this.signupView = signupView;
+    public UserPresenter(UserInfoView userInfoView, UserInfoCallback signupCallback) {
+        this.userInfoView = userInfoView;
         this.signupCallback = signupCallback;
     }
 
@@ -35,34 +35,45 @@ public class UserPresenter implements UserPresenterInterface {
      */
     @Override
     public void callUserSignUpOrUpdate(User user, int code) {
+        userInfoView.showLoading();
         signupCallback.signUpOrUpdate(user, new Integer(code), new UserInfoCallback.IValidationErrorListener() {
             @Override
             public void emailError(ErrorCode code) {
-                signupView.hideLoading();
-                signupView.setEmailError(code);
+                userInfoView.hideLoading();
+                userInfoView.setEmailError(code);
             }
 
             @Override
             public void passwordError(ErrorCode code) {
-                signupView.hideLoading();
-                signupView.setPasswordError(code);
+                userInfoView.hideLoading();
+                userInfoView.setPasswordError(code);
             }
 
         }, new UserInfoCallback.IOnSignUpFinishedListener() {
             @Override
-            public void getUserData(@NotNull UserInfoResponse user) {
-                signupView.hideLoading();
+            public void getUpdateResponse(@NotNull UserInfoResponse user) {
+                userInfoView.hideLoading();
                 if (user != null) {
-                    signupView.onSuccess(user);
+                    userInfoView.onSuccess(user);
                 } else {
-                    signupView.onFailure(ErrorCode.SIGNUP_FAILED);
+                    userInfoView.onFailure(ErrorCode.SIGNUP_FAILED);
+                }
+            }
+
+            @Override
+            public void getSignUpResponse(@NotNull UserInfoResponse user) {
+                userInfoView.hideLoading();
+                if (user != null) {
+                    userInfoView.onSuccess(user);
+                } else {
+                    userInfoView.onFailure(ErrorCode.SIGNUP_FAILED);
                 }
             }
 
             @Override
             public void errorMsg(String errorMsg) {
-                signupView.hideLoading();
-                signupView.onFailure(errorMsg);
+                userInfoView.hideLoading();
+                userInfoView.onFailure(errorMsg);
             }
 
         });
