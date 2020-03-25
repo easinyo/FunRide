@@ -44,7 +44,7 @@ public class PostModel implements PostModelInterface {
                 public void onResponse(Call<PostResponse> call, Response<PostResponse> response) {
                     if (response.body() != null && response.isSuccess()) {
                         if (response.code() == 202)
-                            postFinishedListener.errorMsg("Something is wrong !! Try again later.");
+                            postFinishedListener.errorMsg("Something went wrong !! Try again later.");
                         else postFinishedListener.getPostData(response.body());
                     } else {
 
@@ -54,14 +54,14 @@ public class PostModel implements PostModelInterface {
                                 postFinishedListener.errorMsg(error.getMessage());
                             }
                         } else {
-                            postFinishedListener.errorMsg("Problem getting user !! Try again later.");
+                            postFinishedListener.errorMsg("Problem sending the data !! Try again later.");
                         }
                     }
                 }
 
                 @Override
                 public void onFailure(Call<PostResponse> call, Throwable t) {
-                     postFinishedListener.errorMsg("Problem getting user !! Try again later.");
+                     postFinishedListener.errorMsg("Problem sending the data !! Try again later.");
                 }
             });
     }

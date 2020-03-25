@@ -17,7 +17,8 @@ interface UserInfoCallback {
 
     interface IOnSignUpFinishedListener {
 
-        fun getUserData(user: UserInfoResponse)
+        fun getSignUpResponse(user: UserInfoResponse)
+        fun getUpdateResponse(user: UserInfoResponse)
         fun errorMsg(errorMsg: String)
     }
 

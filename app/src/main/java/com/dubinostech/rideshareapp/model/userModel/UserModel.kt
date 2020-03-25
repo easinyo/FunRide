@@ -1,4 +1,4 @@
-package com.dubinostech.rideshareapp.model.SignModel
+package com.dubinostech.rideshareapp.model.userModel
 
 import com.dubinostech.rideshareapp.repository.Api.GatewayAPI
 import com.dubinostech.rideshareapp.repository.Api.Raws.UserInfoRaw
@@ -7,15 +7,14 @@ import com.dubinostech.rideshareapp.repository.Data.User
 import com.dubinostech.rideshareapp.repository.ErrorHandler.ErrorCode
 import com.dubinostech.rideshareapp.repository.ErrorHandler.WebErrorUtils
 import com.dubinostech.rideshareapp.repository.Libraries.Utils
-import com.dubinostech.rideshareapp.model.userModel.UserInfoCallback
 import com.dubinostech.rideshareapp.repository.Data.LoggedUser
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 
-class userModel : UserInfoCallback {
-    private val TAG = "SignupModel"
+class UserModel : UserInfoCallback {
+    private val TAG = "UserModel"
 
     private var gatewayAPI: GatewayAPI? = null
 
@@ -45,8 +44,7 @@ class userModel : UserInfoCallback {
                 user.confirmPassword
             )
 
-            val token =
-                if (LoggedUser.token != null) "Bearer " + LoggedUser.token else "Bearer "
+            val token = LoggedUser.token
 
             val responseUserInfoCallback =
                 if (code.equals(Integer(Utils.SIGNUP)))
@@ -61,15 +59,18 @@ class userModel : UserInfoCallback {
 
                     if (response.body() != null && response.isSuccess) {
                         if (response.code() == 202)
-                            signUpFinishedListener.errorMsg("Email or Password is wrong !! Try again later.")
-                        else signUpFinishedListener.getUserData(response.body())
+                            signUpFinishedListener.errorMsg("Something went wrong !! Try again later.")
+                        else if (code.equals(Integer(Utils.SIGNUP)))
+                            signUpFinishedListener.getSignUpResponse(response.body())
+                        else
+                            signUpFinishedListener.getUpdateResponse(response.body())
                     } else {
 
                         if (response.errorBody() != null) {
                             val error = WebErrorUtils.parseError(response)
                             error?.message?.let { signUpFinishedListener.errorMsg(it) }
                         } else {
-                            signUpFinishedListener.errorMsg("Problem getting user !! Try again later.")
+                            signUpFinishedListener.errorMsg("Problem getting user data !! Try again later.")
                         }
                     }
                 }

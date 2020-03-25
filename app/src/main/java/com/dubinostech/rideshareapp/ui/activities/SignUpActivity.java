@@ -12,7 +12,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.dubinostech.rideshareapp.R;
-import com.dubinostech.rideshareapp.model.SignModel.userModel;
+import com.dubinostech.rideshareapp.model.userModel.UserModel;
 import com.dubinostech.rideshareapp.presenter.UserPresenter;
 import com.dubinostech.rideshareapp.repository.Api.Responses.UserInfoResponse;
 import com.dubinostech.rideshareapp.repository.Data.User;
@@ -86,7 +86,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             Utils.displayCommonAlertDialog(this, String.valueOf(R.string.connection_issue_msg));
         }
         else{
-            UserPresenter presenter = new UserPresenter(this, new userModel());
+            UserPresenter presenter = new UserPresenter(this, new UserModel());
             User user = new User(firstnameStr, lastnameStr, emailStr, phoneStr, passwordStr, confirmPasswordStr);
             presenter.callUserSignUpOrUpdate(user, Utils.SIGNUP);
         }
@@ -106,7 +106,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void hideLoading() {
-        if (progressDialog != null && !progressDialog.isShowing())
+        if (progressDialog != null && progressDialog.isShowing())
             progressDialog.dismiss();
     }
 

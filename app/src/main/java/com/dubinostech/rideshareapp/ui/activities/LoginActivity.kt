@@ -132,7 +132,6 @@ class LoginActivity: BaseActivity() , LoginView {
         LoggedUser.phone_number = user?.phone
 
         val intent = Intent(this@LoginActivity, MainActivity::class.java)
-        intent.putExtra("home_msg", "This is HOME")
         startActivity(intent)
         finish()    }
 

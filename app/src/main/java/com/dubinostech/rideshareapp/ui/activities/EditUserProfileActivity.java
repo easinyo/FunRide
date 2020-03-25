@@ -1,18 +1,20 @@
 package com.dubinostech.rideshareapp.ui.activities;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentActivity;
 
 import com.dubinostech.rideshareapp.R;
-import com.dubinostech.rideshareapp.model.SignModel.userModel;
+import com.dubinostech.rideshareapp.model.userModel.UserModel;
 import com.dubinostech.rideshareapp.presenter.UserPresenter;
 import com.dubinostech.rideshareapp.repository.Api.Responses.UserInfoResponse;
 import com.dubinostech.rideshareapp.repository.Data.LoggedUser;
@@ -23,7 +25,9 @@ import com.dubinostech.rideshareapp.ui.view.UserInfoView;
 
 
 public class EditUserProfileActivity extends AppCompatActivity implements View.OnClickListener, UserInfoView {
-    private Button signup;
+    private final static String TAG = "EditUserProfileActivity";
+
+    private Button savesChanges;
     private ProgressDialog progressDialog;
     private EditText firstname, lastname,email,phone,password,confirmpassword;
 
@@ -33,28 +37,28 @@ public class EditUserProfileActivity extends AppCompatActivity implements View.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_user_profile);
 
-        signup = findViewById(R.id.signup);
-        firstname = findViewById(R.id.firstname);
-        lastname = findViewById(R.id.lastname);
-        email = findViewById(R.id.email);
-        phone = findViewById(R.id.phone);
-        password = findViewById(R.id.password);
-        confirmpassword = findViewById(R.id.confirmpassword);
+        savesChanges = findViewById(R.id.savesChanges);
+        firstname = findViewById(R.id.efirstname);
+        lastname = findViewById(R.id.elastname);
+        email = findViewById(R.id.eemail);
+        phone = findViewById(R.id.ephone);
+        password = findViewById(R.id.epassword);
+        confirmpassword = findViewById(R.id.econfirmpassword);
 
         firstname.setText(LoggedUser.firstname);
         lastname.setText(LoggedUser.lastname);
         email.setText(LoggedUser.email);
         phone.setText(LoggedUser.phone_number);
 
+        this.progressDialog = new ProgressDialog(this);
 
-        signup.setOnClickListener(this);
+        savesChanges.setOnClickListener(this);
 
     }
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.signup) {
-
+        if (v.getId() == R.id.savesChanges) {
             updateInfo();
         }
     }
@@ -66,7 +70,6 @@ public class EditUserProfileActivity extends AppCompatActivity implements View.O
         String phoneStr = phone.getText().toString();
         String passwordStr = password.getText().toString();
         String confirmPasswordStr = confirmpassword.getText().toString();
-        this.progressDialog = new ProgressDialog(this);
 
         if(firstnameStr.isEmpty())
         {
@@ -94,7 +97,7 @@ public class EditUserProfileActivity extends AppCompatActivity implements View.O
             Utils.displayCommonAlertDialog(this, String.valueOf(R.string.connection_issue_msg));
         }
         else{
-            UserPresenter presenter = new UserPresenter(this, new userModel());
+            UserPresenter presenter = new UserPresenter(this, new UserModel());
             User user = new User(firstnameStr, lastnameStr, emailStr, phoneStr, passwordStr, confirmPasswordStr);
             presenter.callUserSignUpOrUpdate(user , Utils.EDITPROFILE);
         }
@@ -113,7 +116,7 @@ public class EditUserProfileActivity extends AppCompatActivity implements View.O
 
     @Override
     public void hideLoading() {
-        if (progressDialog != null && !progressDialog.isShowing())
+        if (progressDialog != null && progressDialog.isShowing())
             progressDialog.dismiss();
     }
 
@@ -138,10 +141,24 @@ public class EditUserProfileActivity extends AppCompatActivity implements View.O
         LoggedUser.firstname = firstname.getText().toString();
         LoggedUser.lastname = lastname.getText().toString();
 
-        Utils.displayAlertDialogWithCounter(this, "Your changes are saved successfully");
-        Intent intent = new Intent(this, FragmentActivity.class);
+        Log.d(TAG, " -> " + LoggedUser.email + " - " + LoggedUser.phone_number + " - " + LoggedUser.firstname + " - " + LoggedUser.lastname + " - " + LoggedUser.token);
+
+       progressDialog.setMessage("Your changes are saved successfully");
+        progressDialog.show();
+
+        new CountDownTimer(3000, 1000) {
+
+            @Override
+            public void onTick(long millisUntilFinished) { }
+
+            @Override
+            public void onFinish() {
+                progressDialog.dismiss();
+            }
+        }.start();
+
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
-        finish();
     }
 
     @Override
