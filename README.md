@@ -39,9 +39,3 @@ Please follow those instruction fto set up your local work environment for the f
 3. Open the project on Android studio and you are good to go. 
 
 Learn more about Android studio and Android developement: https://developer.android.com/guide
-
-## Database Schema
-Note: 
-* Since we are based on an Agile methodology, we might be doing changes regarding our Database Schedma.
-
-![](funride.png)
