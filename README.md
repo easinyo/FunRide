@@ -4,6 +4,11 @@
 # License
 [![license](https://img.shields.io/badge/Licence-1.0-9cf)](https://github.com/kanouche/CapstoneFrontEnd/blob/master/Licence.md)
 
+# UIs
+![image](https://github.com/kanouche/CapstoneBackEnd/blob/master/images/FunRide_UI_1.JPG)
+![image](https://github.com/kanouche/CapstoneBackEnd/blob/master/images/FunRide_UI_2.JPG)
+![image](https://github.com/kanouche/CapstoneBackEnd/blob/master/images/FunRide_UI_3.JPG)
+
 # Team (Contributors)
 | Name                   | Email               |Role                 |
 |------------------------|---------------------|---------------------|
